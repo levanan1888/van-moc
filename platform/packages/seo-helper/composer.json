@@ -1,0 +1,34 @@
+{
+    "name": "botble/seo-helper",
+    "description": "SEO helper package",
+    "type": "package",
+    "autoload": {
+        "psr-4": {
+            "Botble\\SeoHelper\\": "src"
+        }
+    },
+    "require": {
+        "botble/platform": "*",
+        "botble/theme": "*"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Botble\\SeoHelper\\Providers\\SeoHelperServiceProvider"
+            ],
+            "aliases": {
+                "SeoHelper": "Botble\\SeoHelper\\Facades\\SeoHelperFacade"
+            }
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../../platform/core"
+        },
+        {
+            "type": "path",
+            "url": "../../../platform/packages/theme"
+        }
+    ]
+}

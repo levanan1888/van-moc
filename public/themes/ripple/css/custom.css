@@ -1,0 +1,29 @@
+.pt-10 {
+    padding-top: 10px;
+}
+
+td {
+    border: 1px solid;
+    padding: 5px;
+}
+
+.ck-content p > a {
+    color: #276ae6;
+}
+
+.widget .widget__content__featured .accordion-header-1 {
+    display: none !important;
+}
+
+.widget .widget__content__featured .accordion-collapse .accordion-item {
+    padding: 0px 0px 6px 0px !important;
+}
+
+.menu-sticky {
+    position: sticky;
+    top: 50px;
+}
+
+@media only screen and (max-width: 480px) {
+
+}

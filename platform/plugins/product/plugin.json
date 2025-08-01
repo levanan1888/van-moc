@@ -1,0 +1,9 @@
+{
+    "name": "Product",
+    "namespace": "Botble\\Product\\",
+    "provider": "Botble\\Product\\Providers\\ProductServiceProvider",
+    "author": "Ctrl Media Technologies",
+    "url": "https://ctrl.com.vn",
+    "version": "2.0",
+    "description": "Manage products, categories, tags"
+}

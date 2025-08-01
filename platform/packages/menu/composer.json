@@ -1,0 +1,34 @@
+{
+    "name": "botble/menu",
+    "description": "Menu package",
+    "type": "package",
+    "autoload": {
+        "psr-4": {
+            "Botble\\Menu\\": "src"
+        }
+    },
+    "require": {
+        "botble/platform": "*",
+        "botble/theme": "*"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Botble\\Menu\\Providers\\MenuServiceProvider"
+            ],
+            "aliases": {
+                "Menu": "Botble\\Menu\\Facades\\MenuFacade"
+            }
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../../platform/core"
+        },
+        {
+            "type": "path",
+            "url": "../../../platform/packages/theme"
+        }
+    ]
+}

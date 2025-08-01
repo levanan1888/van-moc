@@ -1,0 +1,18 @@
+RewriteEngine on
+
+# Redirect Trailing Slashes If Not A Folder...
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteCond %{REQUEST_URI} (.+)/$
+# RewriteRule ^ %1 [L,R=301]
+
+# Match any URL with www and rewrite it to https without the www
+RewriteCond %{HTTP_HOST} ^(www\.)(.*) [NC]
+RewriteRule (.*) https://%2%{REQUEST_URI} [L,R=301]
+
+# Match URLs that are non-https (without the www)
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} !^(www\.)(.*) [NC]
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Rewrite all requests to the public directory
+RewriteRule ^(.*)$ public/$1 [L]

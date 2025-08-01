@@ -1,0 +1,35 @@
+{
+    "name": "botble/widget",
+    "description": "Widget package",
+    "type": "package",
+    "autoload": {
+        "psr-4": {
+            "Botble\\Widget\\": "src"
+        }
+    },
+    "require": {
+        "botble/platform": "*",
+        "botble/theme": "*"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Botble\\Widget\\Providers\\WidgetServiceProvider"
+            ],
+            "aliases": {
+                "Widget": "Botble\\Widget\\Facades\\WidgetFacade",
+                "WidgetGroup": "Botble\\Widget\\Facades\\WidgetGroupFacade"
+            }
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../../platform/core"
+        },
+        {
+            "type": "path",
+            "url": "../../../platform/packages/theme"
+        }
+    ]
+}

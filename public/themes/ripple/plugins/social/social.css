@@ -1,0 +1,151 @@
+.sticky-icon {
+    z-index: 1;
+    position: fixed;
+    top: 45%;
+    right: 0%;
+    /* width: 200px; */
+    display: flex;
+    flex-direction: column;
+}
+
+.sticky-icon a {
+    transform: translate(110px, 0px);
+    border-radius: 50px 0px 0px 50px;
+    text-align: left;
+    margin-bottom: 5px;
+    text-decoration: none;
+    padding: 5px;
+    font-size: 13px;
+    transition: all 0.8s;
+}
+
+.sticky-icon a:hover {
+    color: #FFF;
+    transform: translate(30px, 50px);
+    transform: rotate(360deg);
+}
+
+.sticky-icon a:hover img {
+    transform: rotate(360deg);
+}
+
+.Quote {
+    background-color: #09C9BA;
+    color: #FFF;
+}
+
+.Messenger {
+    background-color: #0018E2;
+    color: #FFF;
+}
+
+.Phone {
+    background-color: #ff9900;
+    color: #FFF;
+}
+
+.Zalo {
+    background-color: #0087FD;
+    color: #FFF;
+}
+
+.sticky-icon a img {
+    height: 40px;
+    width: 40px;
+    color: #000;
+    text-align: center;
+    line-height: 40px;
+    margin-right: 5px;
+    transition: all 0.5s;
+    animation: zoom 1.5s linear infinite;
+    -webkit-animation: zoom 1.5s linear infinite;
+}
+
+.social-mobile-scroll {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 10000;
+}
+
+.sticky-mobile-icon a img {
+    color: #000;
+    text-align: center;
+    line-height: 40px;
+    height: auto !important;
+    transition: all 0.5s;
+    animation: zoom 1.5s linear infinite;
+    -webkit-animation: zoom 1.5s linear infinite;
+}
+
+.social-sticky {
+    display: block;
+}
+
+.social-mobile-sticky {
+    display: none;
+    margin-right: 12px;
+    margin-bottom: -2px;
+}
+
+
+@media screen and (max-width: 991px) {
+    .Phone {
+        background-color: #d19be7;
+    }
+    .social-sticky {
+        display: none;
+    }
+
+    .social-mobile-sticky {
+        display: block;
+    }
+}
+
+@keyframes zoom {
+    0% {
+        transform: scale(.5);
+        opacity: 0
+    }
+
+    50% {
+        opacity: 1
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1)
+    }
+}
+
+@-moz-keyframes zoom {
+    0% {
+        transform: scale(.5);
+        opacity: 0
+    }
+
+    50% {
+        opacity: 1
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1)
+    }
+}
+
+@-webkit-keyframes zoom {
+    0% {
+        transform: scale(.5);
+        opacity: 0
+    }
+
+    50% {
+        opacity: 1
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1)
+    }
+}

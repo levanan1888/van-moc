@@ -1,0 +1,31 @@
+{
+    "name": "botble/page",
+    "description": "Page package",
+    "type": "package",
+    "autoload": {
+        "psr-4": {
+            "Botble\\Page\\": "src"
+        }
+    },
+    "require": {
+        "botble/platform": "*",
+        "botble/revision": "*"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Botble\\Page\\Providers\\PageServiceProvider"
+            ]
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../../platform/core"
+        },
+        {
+            "type": "path",
+            "url": "../../../platform/packages/revision"
+        }
+    ]
+}

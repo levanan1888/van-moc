@@ -1,0 +1,410 @@
+/**
+TOP 5 CÔNG TY HÀNG ĐẦU
+*/
+.top5-company {
+  	margin-top: 80px;
+    margin-bottom: 40px;
+}
+
+.top5-company .header{
+    margin-bottom: 20px;
+}
+
+.top5-company .header h1 {
+    color: #ff9900;
+}
+
+.top5-company .header h2 {
+    color: #ff9900;
+}
+
+.top5-company .header .desc {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 8px 0;
+}
+
+.top5-company .header .btn-view-more {
+	color: white;
+    background: #ff9900;
+    padding: 8px 30px;
+    border-radius: 5px;
+}
+
+
+.top5-company .banner p {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.top5-company .banner img {
+    width: 95%;
+    height: auto;
+}
+
+.top5-company .embed-responsive{
+    margin-top: 25px;
+}
+
+.top5-company .embed-responsive .embed-responsive-item {
+    width: 100%;
+    min-height: 560px;
+    border-radius: 8px;
+}
+
+/**
+QUY TRÌNH SẢN XUẤT KHÉP KÍN
+*/
+
+.qtsxkk {
+    margin-top: 80px;
+    margin-bottom: 40px;
+}
+
+.qtsxkk .header h2 {
+    color: #ff9900;
+}
+
+.qtsxkk .desc {
+    text-align: center;
+}
+
+.qtsxkk .line span{
+    width: 25%;
+    border-bottom: dashed 2px #dfdfdf;
+}
+
+.qtsxkk .body .image img {
+    width: 300px;
+}
+
+.qtsxkk .list-items .item {
+    text-align: center;
+}
+
+.qtsxkk .list-items .item .widget{
+    /*background: #f5f5f5;*/
+}
+
+.qtsxkk .list-items .item .widget__content{
+    padding: 15px;
+  	background: #f5f5f5;
+}
+
+.qtsxkk .list-items .item .item-icon {
+    width: 100%;
+    height: auto;
+}
+
+.qtsxkk .list-items .item .item-icon img {
+    width: 45px;
+    height: 43px;
+    background: #ff9900;
+    border-radius: 30px;
+}
+
+.qtsxkk .list-items .item .item-content .title- {
+    color: #ff9900;
+    font-weight: 500;
+}
+
+.qtsxkk .list-items .item .item-content .desc- {
+    /*color: #666666;
+    text-align: left;*/
+    margin-top: 3px;
+  	line-height: 1.6;
+  	padding:0 15px;
+}
+
+> 78c16675bde5b6b15b7bb6cdd4f215ef8ea08e2d
+
+/**
+HƯỚNG DẪN ĐẶT HÀNG
+*/
+.box-hddd {
+	margin:0;
+	padding:0;
+}
+
+.hddh {
+  margin-bottom: 40px;
+  padding:0 5px;
+  width:100%;
+}
+
+.hddh .header h2 {
+    color: #ff9900;
+    border-bottom: dashed 2px #dfdfdf;
+    padding-bottom: 15px;
+}
+
+.hddh .line span {
+    border-bottom: dashed 2px #dfdfdf;
+    width: 25%;
+    text-align: center;
+    margin: 10px;
+}
+
+.hddh .list-items .item {
+    text-align: center;
+  	padding:0 5px;
+}
+
+.hddh .list-items .item .header {
+    width: 100%;
+}
+
+.hddh .list-items .item .footer {
+    width: 100%;
+}
+
+.hddh .list-items .item .footer img {
+    /*width: 80%;
+    height: auto;
+    padding: 30px;*/
+    border: dashed 1px #ff9900;
+    border-radius: 8px;
+}
+
+.hddh .list-items .item .step {
+    color: #ff9900;
+    font-weight: 600;
+  	margin-bottom: 7px;
+}
+
+/**
+Form Liên Hệ Trang Chủ
+*/
+.home-contact {
+    position: relative;
+    display: inline-block;
+}
+
+.home-contact img {
+    width: 100%;
+    height: auto;
+    min-height: 400px;
+    display: block;
+}
+
+.home-contact .content {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+}
+
+/**
+REWARD
+*/
+.reward {
+    background: #FEC267;
+    padding: 0px 10px 10px 10px;
+}
+
+.reward .item {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.reward .item .left {
+    width: 70px;
+    padding: 0;
+    position: relative;
+    text-align: center;
+}
+
+.reward .item .left .number {
+    font-size: 70px;
+    color: white;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.reward .item .left .alpha {
+    font-size: 20px;
+    color: white;
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.reward .item .right {
+    width: 140px;
+    padding: 0;
+}
+
+.reward .item .right .icon {
+    width: 100%;
+    text-align: center;
+}
+
+.reward .item .right .icon img {
+    width: 35px;
+    height: auto;
+}
+
+.reward .item .desc {
+    font-size: 13px;
+}
+
+@media screen and (max-width: 991px) {
+  .top5-company {
+  	margin-top: 40px !important;
+    margin-bottom: 20px !important;
+  }
+  .top5-company .embed-responsive .embed-responsive-item {
+  	min-height: 250px !important;
+  }
+  .reward .reward-row {
+        width: 100% !important;
+    }
+  .reward .item .left {
+        width: 60px !important;
+    }
+
+    .reward .item .left .number {
+        font-size: 55px !important;
+    }
+
+
+    .reward .item .left .alpha {
+        font-size: 15px !important;
+    }
+
+    .reward .item .right {
+        width: calc(100% - 60px) !important;
+        padding: 0;
+    }
+
+    .reward .item .right .icon img {
+        width: 25px !important;
+        height: auto !important;
+    }
+
+    .reward .item .desc {
+        font-size: 12px !important;
+    }
+  
+}
+
+/*------ Chỉnh css cho màu text ở header ------*/
+.page-header-content .desc {
+    color: #707070;
+}
+
+
+/*------ Chỉnh css cho footer cả mobile & desktop ------*/
+.page-footer
+{
+    position: relative;
+    background: #f5b95e;
+}
+.page-footer__bottom {
+    position: relative;
+    padding: 10px;
+    /* text-align: left; */
+    color: white;
+    background: #ff9900;
+    /* bottom: -2px; */
+}
+
+.page-copyright {
+    /* display: inline-block; */
+    /* line-height: 35px; */
+    /* color: white; */
+}
+.widget__about p {
+    font-size: 13px;
+    color: #fff;
+    line-height: 1.6em;
+}
+.widget__footer .widget__title {
+    /* text-transform: uppercase; */
+    /* font-size: 14px; */
+    color: #fff;
+}
+.widget--transparent .widget__header {
+    /* position: relative; */
+    margin-bottom: 18px;
+    /* padding-bottom: 5px; */
+    border: none;
+    background-color: transparent;
+}
+.widget__footer li a {
+    color: #fff;
+}
+@media screen and (max-width: 767px)
+.page-footer__bottom .page-copyright {
+    /* margin-bottom: 10px; */
+    /* color: white; */
+}
+
+@media screen and (max-width: 991px)
+.page-footer__bottom {
+    /* padding-bottom: 0px; */
+}
+
+@media screen and (max-width: 767px)
+.page-footer__bottom {
+    /* text-align: center; */
+}
+
+
+/*------ Đoạn css này làm chữ của heading bị mờ trong bài viết, anh bỏ đi thì mọi thứ ổn 
+https://uniform.ctrl.com.vn/dong-phuc-hoc-sinh-tren-the-gioi-va-lich-su-hinh-thanh/ ------*/
+* {
+    /* font-weight: 400; */
+}
+
+
+/*------ Đoạn css này tên "Bảng size" "Bảng màu" in đậm ------*/
+.product-detail .extra-info .item .icon {
+    margin-top: 5px;
+    /*padding: 3px;
+    height: 100%;*/
+    width: 100%;
+    border: solid 1px #dfdfdf;
+    border-radius: 5px;
+}
+
+.product-detail .extra-info .title {
+    text-align: center;
+    font-weight: 700;
+}
+
+/*------ Đoạn css này cho video ở page home ------*/
+.top5-company .embed-responsive .embed-responsive-item {
+    width: 100%;
+    min-height: 644px;
+    border-radius: 8px;
+}
+
+.ck-content ul {
+    list-style: inherit !important;
+    padding-left: 40px;
+    margin: 10px 0;
+    line-height: 1.8;
+}
+
+.toc-container .toc_list ul {
+    margin: 0 !important;
+}
+
+.toc-container .toc_list li {
+    margin: 5px 0;
+}
+
+.category-posts .widget .widget__title {
+    font-size: 18px;
+}
+
+.widget__recent-post .widget__title {
+    font-size: 18px;
+}

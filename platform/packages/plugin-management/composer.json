@@ -1,0 +1,26 @@
+{
+    "name": "botble/plugin-management",
+    "description": "Plugin management package",
+    "type": "package",
+    "autoload": {
+        "psr-4": {
+            "Botble\\PluginManagement\\": "src"
+        }
+    },
+    "require": {
+        "botble/platform": "*"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Botble\\PluginManagement\\Providers\\PluginManagementServiceProvider"
+            ]
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../../platform/core"
+        }
+    ]
+}

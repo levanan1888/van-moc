@@ -1,0 +1,119 @@
+<?php
+
+namespace Botble\Contact\Http\Controllers;
+
+use Botble\Base\Http\Responses\BaseHttpResponse;
+use Botble\Contact\Events\SentContactEvent;
+use Botble\Contact\Http\Requests\ContactRequest;
+use Botble\Contact\Repositories\Interfaces\ContactInterface;
+use EmailHandler;
+use Exception;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Str;
+use Throwable;
+
+class PublicController extends Controller
+{
+    /**
+     * @var ContactInterface
+     */
+    protected $contactRepository;
+
+    /**
+     * @param ContactInterface $contactRepository
+     */
+    public function __construct(ContactInterface $contactRepository)
+    {
+        $this->contactRepository = $contactRepository;
+    }
+
+    /**
+     * @param ContactRequest $request
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     * @throws Throwable
+     */
+    public function postSendContact(ContactRequest $request, BaseHttpResponse $response)
+    {
+        $blacklistDomains = setting('blacklist_email_domains');
+        if ($blacklistDomains) {
+            $emailDomain = Str::after(strtolower($request->input('email')), '@');
+
+            $blacklistDomains = collect(json_decode($blacklistDomains, true))->pluck('value')->all();
+
+            if (in_array($emailDomain, $blacklistDomains)) {
+                return $response
+                    ->setError()
+                    ->setMessage(__('Your email is in blacklist. Please use another email address.'));
+            }
+        }
+
+        $blacklistWords = trim(setting('blacklist_keywords', ''));
+
+        if ($blacklistWords) {
+            $content = strtolower($request->input('content'));
+
+            $badWords = collect(json_decode($blacklistWords, true))
+                ->filter(function ($item) use ($content) {
+                    $matches = [];
+                    $pattern = '/\b' . $item['value'] . '\b/iu';
+
+                    return preg_match($pattern, $content, $matches, PREG_UNMATCHED_AS_NULL);
+                })
+                ->pluck('value')
+                ->all();
+
+            if (count($badWords)) {
+                return $response
+                    ->setError()
+                    ->setMessage(__('Your message contains blacklist words: ":words".', ['words' => implode(', ', $badWords)]));
+            }
+        }
+
+        try {
+            $contact = $this->contactRepository->getModel();
+            $contact->fill($request->input());
+            if ($request->hasFile('media')) {
+                $fileName = upload_file("contact", $request->name, $request->media);
+                if ($fileName != "") {
+                    $contact->media = $fileName;
+                }
+            }
+            $this->contactRepository->createOrUpdate($contact);
+
+            event(new SentContactEvent($contact));
+
+            $args = [];
+
+            if ($contact->name && $contact->email) {
+                $args = [
+                    'replyTo' => [$contact->name => $contact->email]
+                ];
+            }
+
+            $sale_emails = @explode(';', theme_option('sale_emails'));
+            if (!empty($sale_emails)) {
+                $args['bcc'] = $sale_emails;
+            }
+
+            EmailHandler::setModule(CONTACT_MODULE_SCREEN_NAME)
+                ->setVariableValues([
+                    'contact_name' => $contact->name ?? 'N/A',
+                    'contact_subject' => $contact->subject ?? 'N/A',
+                    'contact_email' => $contact->email ?? 'N/A',
+                    'contact_phone' => $contact->phone ?? 'N/A',
+                    'contact_content' => $contact->content ?? 'N/A',
+                ])
+                ->sendUsingTemplate('notice', $contact->email , $args);
+
+            return $response->setMessage(__('Send message successfully!'));
+        } catch (Exception $exception) {
+            return $exception;
+            info($exception->getMessage());
+
+            return $response
+                ->setError()
+                ->setMessage(__("Can't send message on this time, please try again later!"));
+        }
+    }
+}
