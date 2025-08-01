@@ -1,0 +1,19 @@
+This directory should contain the following images:
+
+1. logo.png - Vạn Mộc logo
+2. arrow.svg - Navigation arrow icon
+3. search.png - Search icon
+4. cart.svg - Shopping cart icon
+5. button_arrow.svg - Button arrow icon
+6. icon_cart.svg - Add to cart icon
+7. button_docngay.svg - Read more arrow icon
+
+Subdirectories:
+- products/ - Product images
+- categories/ - Category images (srisri.png, moc-huong.png, brands.png, forganic.png)
+- sections/ - Section images (vanmocmall.png, agent.png)
+- icons/ - Icon images (icon-thuan-tu-nhien.jpg, icon-ben-vung.jpg, icon-lan-toa.jpg)
+- blog/ - Blog post images
+- social/ - Social media icons (facebook.svg, linkedin.svg, twitter.svg, pinterest.svg)
+
+Please copy the images from the test directory to these locations. 

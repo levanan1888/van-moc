@@ -1,0 +1,15 @@
+{
+    "name": "Vạn Mộc",
+    "version": "1.0.0",
+    "description": "Theme Vạn Mộc custom for Laravel",
+    "author": "Your Name",
+    "parent": null,
+    "assets": {
+        "css": [
+            "css/style.css"
+        ],
+        "js": [
+            "js/script.js"
+        ]
+    }
+}

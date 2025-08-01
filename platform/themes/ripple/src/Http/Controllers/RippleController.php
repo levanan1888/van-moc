@@ -16,7 +16,8 @@ class RippleController extends PublicController
      */
     public function getIndex()
     {
-        return Theme::scope('index')->render();
+       
+        return parent::getIndex();
     }
 
     /**

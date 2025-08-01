@@ -1,6 +1,5 @@
 let mix = require('laravel-mix');
 let glob = require('glob');
-const fs = require('fs');
 
 mix.options({
     processCssUrls: false,
@@ -16,15 +15,8 @@ mix.webpackConfig({
     },
 });
 
-// Run only for ripple theme
-require('./platform/themes/ripple/webpack.mix.js');
-
-// Original content for other modules (commented out)
-// glob.sync('./platform/**/**/webpack.mix.js').forEach(item => {
-//     let content = fs.readFileSync(item, 'utf8');
-//     content = content.replace(/\.sass\([^)]+\)/g, '');
-//     eval(content);
-// });
+// Run all webpack.mix.js in app
+glob.sync('./platform/**/**/webpack.mix.js').forEach(item => require(item));
 
 // Run only for a package, replace [package] by the name of package you want to compile assets
 // require('./platform/packages/[package]/webpack.mix.js');

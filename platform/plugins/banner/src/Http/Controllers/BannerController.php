@@ -60,7 +60,17 @@ class BannerController extends BaseController
      */
     public function store(BannerRequest $request, BaseHttpResponse $response)
     {
-        $banner = $this->bannerRepository->createOrUpdate($request->input());
+        $data = $request->input();
+        
+        // Tự động set author_id và author_type nếu chưa có
+        if (!isset($data['author_id'])) {
+            $data['author_id'] = auth()->id() ?: 1;
+        }
+        if (!isset($data['author_type'])) {
+            $data['author_type'] = 'Botble\ACL\Models\User';
+        }
+        
+        $banner = $this->bannerRepository->createOrUpdate($data);
 
         event(new CreatedContentEvent(BANNER_MODULE_SCREEN_NAME, $request, $banner));
 

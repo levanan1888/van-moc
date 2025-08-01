@@ -8,7 +8,5 @@ const dist = 'public/vendor/core/plugins/' + directory;
 
 mix
     .js(source + '/resources/assets/js/social-login.js', dist + '/js')
-    .sass(source + '/resources/assets/sass/social-login.scss', dist + '/css')
 
-    .copy(dist + '/css', source + '/public/css')
     .copy(dist + '/js', source + '/public/js');
