@@ -37,6 +37,7 @@ return [
         // you want inheriting.
         'before' => function (Theme $theme) {
         },
+        
         // Listen on event before render a theme,
         // this event should call to assign some assets,
         // breadcrumb template.
@@ -45,34 +46,26 @@ return [
 
             $version = get_cms_version();
 
+            // Add jQuery and Bootstrap
             $theme->asset()->container('footer')->usePath()->add('jquery', 'plugins/jquery/jquery.min.js');
             $theme->asset()->container('footer')->usePath()
                 ->add('bootstrap-js', 'plugins/bootstrap/js/bootstrap.min.js', ['jquery']);
+
+            // Add custom scripts
             $theme->asset()->container('footer')->usePath()
-                ->add('slick-js', 'plugins/slick/slick.min.js', []);
+                ->add('van-moc-custom', 'js/script.js', ['jquery'], [], $version);
 
-            $theme->asset()->container('footer')->usePath()
-                ->add('counter-js', 'plugins/counter/counter.min.js', []);
-
-            $theme->asset()->container('footer')->usePath()
-                ->add('custom', 'js/custom.min.js', ['jquery'], [], $version);
-
-            $theme->asset()->container('footer')->usePath()->add('ripple.js', 'js/ripple.js', ['jquery'], [], $version);
-
-            $theme->asset()->container('footer')->usePath()->add('menu.js', 'js/menu.js', ['jquery'], []);
-
+            // Add CSS
             if (BaseHelper::siteLanguageDirection() == 'rtl') {
                 $theme->asset()->usePath()->add('bootstrap-css', 'plugins/bootstrap/css/bootstrap.rtl.min.css');
             } else {
                 $theme->asset()->usePath()->add('bootstrap-css', 'plugins/bootstrap/css/bootstrap.min.css');
             }
 
-            $theme->asset()->usePath()->add('fontawesome', 'plugins/fontawesome5/css/fontawesome.min.css');
-            $theme->asset()->usePath()->add('ionicons', 'plugins/ionicons/css/ionicons.min.css');
-            $theme->asset()->usePath()->add('slick-css', 'plugins/slick/slick.min.css');
-            $theme->asset()->usePath()->add('social-css', 'plugins/social/social.css');
-            $theme->asset()->usePath()->add('style', 'css/main.css', [], [], $version);
+            // Add custom CSS
+            $theme->asset()->usePath()->add('van-moc-style', 'css/style.css', [], [], $version);
 
+            // Add shortcode support
             if (function_exists('shortcode')) {
                 $theme->composer(['page', 'post', 'product'], function (\Botble\Shortcode\View\View $view) {
                     $view->withShortcodes();

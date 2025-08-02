@@ -20,7 +20,7 @@
                 @if (theme_option('logo'))
                     <img src="{{ RvMedia::getImageUrl(theme_option('logo'), 'medium', false, RvMedia::getDefaultImage()) }}" alt="{{ theme_option('site_title', 'Vạn Mộc') }}">
                 @else
-                    <img src="{{ asset('themes/van-moc/images/logo.png') }}" alt="Vạn Mộc Logo">
+                    <img src="{{ asset('themes/van-moc/images/c88b292dea22637c3a33.jpg') }}" alt="Vạn Mộc Logo">
                 @endif
             </a>
         </div>
@@ -30,10 +30,12 @@
             <div class="bar"></div>
         </div>
         <nav class="main-nav">
-            {!! Menu::renderMenuLocation('main-menu', [
-                'options' => ['class' => 'main-menu'],
-                'view' => 'main-menu',
-            ]) !!}
+            {!!
+                Menu::renderMenuLocation('main-menu', [
+                    'options' => ['class' => 'main-menu'],
+                    'view'    => 'main-menu',
+                ])
+            !!}
         </nav>
         <div class="header-icons">
             <a href="#"><img src="{{ asset('themes/van-moc/images/search.png') }}" alt="Search"></a>

@@ -4,12 +4,14 @@ use Botble\Base\Forms\FormAbstract;
 use Botble\Blog\Models\Post;
 use Botble\Page\Models\Page;
 use Kris\LaravelFormBuilder\FormHelper;
-use Theme\Ripple\Fields\ThemeIconField;
 
+// Register page templates
 register_page_template([
     'no-sidebar' => __('No sidebar'),
+    'full-width' => __('Full width'),
 ]);
 
+// Register sidebars
 register_sidebar([
     'id' => 'top_sidebar',
     'name' => __('Top sidebar'),
@@ -28,9 +30,11 @@ register_sidebar([
     'description' => __('Area for introduce widgets'),
 ]);
 
+// Set RvMedia configuration
 RvMedia::setUploadPathAndURLToPublic();
 RvMedia::addSize('featured', 565, 375)->addSize('medium', 540, 360);
 
+// Add banner image field to posts and pages
 add_filter(BASE_FILTER_BEFORE_RENDER_FORM, function ($form, $data) {
     switch (get_class($data)) {
         case Post::class:
@@ -50,6 +54,7 @@ add_filter(BASE_FILTER_BEFORE_RENDER_FORM, function ($form, $data) {
     return $form;
 }, 124, 3);
 
+// Save banner image data
 add_action([BASE_ACTION_AFTER_CREATE_CONTENT, BASE_ACTION_AFTER_UPDATE_CONTENT], function ($type, $request, $object) {
     switch (get_class($object)) {
         case Post::class:
@@ -62,16 +67,13 @@ add_action([BASE_ACTION_AFTER_CREATE_CONTENT, BASE_ACTION_AFTER_UPDATE_CONTENT],
     }
 }, 175, 3);
 
-Form::component('themeIcon', Theme::getThemeNamespace() . '::partials.icons-field', [
-    'name',
-    'value' => null,
-    'attributes' => [],
-]);
-
+// Add custom form fields support
 add_filter('form_custom_fields', function (FormAbstract $form, FormHelper $formHelper) {
-    if (!$formHelper->hasCustomField('themeIcon')) {
-        $form->addCustomField('themeIcon', ThemeIconField::class);
-    }
-
     return $form;
 }, 29, 2);
+
+// Load theme functions
+require_once __DIR__ . '/shortcodes.php';
+require_once __DIR__ . '/theme-options.php';
+require_once __DIR__ . '/menu-locations.php';
+require_once __DIR__ . '/create-default-menus.php';

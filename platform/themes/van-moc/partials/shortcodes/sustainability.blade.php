@@ -16,28 +16,105 @@
         <div class="section-header">
             <h2>{{ $title }}</h2>
         </div>
-        <div class="sustainability-grid">
+        <div class="sustainability-flex">
             <div class="sustainability-item">
                 <div class="icon-wrapper">
-                    <img src="{{ asset($item1_icon) }}" alt="Icon 1">
+                    <img src="{{ asset('themes/van-moc/images/icon-phat-trien-ben-vung/icon-thuan-tu-nhien.jpg') }}" alt="Icon 1">
                 </div>
                 <h3>{{ $item1_title }}</h3>
                 <p>{{ $item1_content }}</p>
             </div>
             <div class="sustainability-item">
                 <div class="icon-wrapper">
-                    <img src="{{ asset($item2_icon) }}" alt="Icon 2">
+                    <img src="{{ asset('themes/van-moc/images/icon-phat-trien-ben-vung/icon-ben-vung.jpg') }}" alt="Icon 2">
                 </div>
                 <h3>{{ $item2_title }}</h3>
                 <p>{{ $item2_content }}</p>
             </div>
             <div class="sustainability-item">
                 <div class="icon-wrapper">
-                    <img src="{{ asset($item3_icon) }}" alt="Icon 3">
+                    <img src="{{ asset('themes/van-moc/images/icon-phat-trien-ben-vung/icon-lan-toa.jpg') }}" alt="Icon 3">
                 </div>
                 <h3>{{ $item3_title }}</h3>
                 <p>{{ $item3_content }}</p>
             </div>
         </div>
     </div>
-</section> 
+</section>
+
+<style>
+/* Sustainability Section */
+.sustainability {
+    padding: 80px 0;
+    background-color: #FFFFFF;
+}
+
+.sustainability .section-header h2 {
+    font-family: 'Prata', serif;
+    font-size: 28px;
+    text-align: center;
+    position: relative;
+    margin: 0 auto 40px;
+    padding-bottom: 10px;
+}
+
+.sustainability .section-header h2:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background-color: #4A7D4A;
+}
+
+.sustainability-flex {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.sustainability-item {
+    background-color: #F9F9F9;
+    padding: 50px 30px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.sustainability-item .icon-wrapper {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #244317;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 25px;
+}
+
+.sustainability-item img {
+    height: 50px;
+    width: 50px;
+}
+
+.sustainability-item h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #244317;
+}
+
+.sustainability-item p {
+    line-height: 1.8;
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .sustainability-flex {
+        grid-template-columns: 1fr;
+    }
+}
+</style> 

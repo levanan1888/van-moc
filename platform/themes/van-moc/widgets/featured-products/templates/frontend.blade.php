@@ -24,14 +24,14 @@
                 @foreach ($products as $product)
                     <div class="product-card">
                         <div class="product-image">
-                            @if (function_exists('RvMedia::getImageUrl'))
+                            @if ($product->image)
                                 <img src="{{ RvMedia::getImageUrl($product->image, 'medium', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}">
                             @else
-                                <img src="{{ asset($product->image) }}" alt="{{ $product->name }}">
+                                <img src="{{ RvMedia::getImageUrl(RvMedia::getDefaultImage(), 'medium') }}" alt="{{ $product->name }}">
                             @endif
                             <div class="add-to-cart">
                                 <a href="{{ $product->url }}" class="add-to-cart-btn" data-product-id="{{ $product->id }}">
-                                    <img src="{{ asset('themes/van-moc/images/icon_cart.svg') }}" alt="Add to cart">
+                                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_cart.svg') }}" alt="Add to cart">
                                 </a>
                             </div>
                         </div>
@@ -39,11 +39,7 @@
                             <h3>{{ $product->name }}</h3>
                             <p class="product-description">{{ Str::limit($product->description ?? $product->short_description ?? '', 50) }}</p>
                             <div class="product-price">
-                                @if (method_exists($product, 'getFrontSalePrice'))
-                                    {{ format_price($product->getFrontSalePrice()) }}
-                                @else
-                                    {{ $product->price ?? 'Liên hệ' }}
-                                @endif
+                                {{ get_product_price($product) }}
                             </div>
                         </div>
                     </div>

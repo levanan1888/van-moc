@@ -17,28 +17,28 @@
             (object)[
                 'name' => 'SRISRI',
                 'description' => 'Thương hiệu chăm sóc tóc tự nhiên',
-                'image' => 'themes/van-moc/images/categories/srisri.png',
+                'image' => null,
                 'url' => '#',
                 'products_count' => 15
             ],
             (object)[
                 'name' => 'MỘC HƯƠNG',
                 'description' => 'Sản phẩm tinh dầu thảo dược',
-                'image' => 'themes/van-moc/images/categories/moc-huong.png',
+                'image' => null,
                 'url' => '#',
                 'products_count' => 12
             ],
             (object)[
                 'name' => 'BRANDS\'',
                 'description' => 'Thương hiệu cao cấp',
-                'image' => 'themes/van-moc/images/categories/brands.png',
+                'image' => null,
                 'url' => '#',
                 'products_count' => 8
             ],
             (object)[
                 'name' => 'FORGANIC',
                 'description' => 'Sản phẩm hữu cơ tự nhiên',
-                'image' => 'themes/van-moc/images/categories/forganic.png',
+                'image' => null,
                 'url' => '#',
                 'products_count' => 20
             ]
@@ -56,10 +56,20 @@
             <div class="category-grid">
                 @foreach ($categories as $category)
                     <div class="category-item">
-                        @if (function_exists('RvMedia::getImageUrl'))
+                        @if ($category->image)
                             <img src="{{ RvMedia::getImageUrl($category->image, 'medium', false, RvMedia::getDefaultImage()) }}" alt="{{ $category->name }}">
                         @else
-                            <img src="{{ asset($category->image) }}" alt="{{ $category->name }}">
+                            @if ($loop->index == 0)
+                                <img src="{{ asset('themes/van-moc/images/category-homepage/srisri.png') }}" alt="{{ $category->name }}">
+                            @elseif ($loop->index == 1)
+                                <img src="{{ asset('themes/van-moc/images/category-homepage/moc-huong.png') }}" alt="{{ $category->name }}">
+                            @elseif ($loop->index == 2)
+                                <img src="{{ asset('themes/van-moc/images/category-homepage/brands.png') }}" alt="{{ $category->name }}">
+                            @elseif ($loop->index == 3)
+                                <img src="{{ asset('themes/van-moc/images/category-homepage/forganic.png') }}" alt="{{ $category->name }}">
+                            @else
+                                <img src="{{ RvMedia::getImageUrl(RvMedia::getDefaultImage(), 'medium') }}" alt="{{ $category->name }}">
+                            @endif
                         @endif
                         <div class="category-info">
                             <h3>{{ $category->name }}</h3>
@@ -78,4 +88,72 @@
             </div>
         @endif
     </div>
-</section> 
+</section>
+
+<style>
+/* Categories Section */
+.categories {
+    padding: 80px 0;
+}
+
+.categories .section-header h2 {
+    font-family: 'Prata', serif;
+    font-size: 28px;
+    text-align: center;
+    position: relative;
+    margin: 0;
+    padding-bottom: 10px;
+}
+
+.categories .section-header h2:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background-color: #4A7D4A;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 40px;
+}
+
+.category-item {
+    text-align: center;
+}
+
+.category-item img {
+    width: 100%;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.category-item img:hover {
+    transform: scale(1.05);
+}
+
+.category-item h3 {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .category-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style> 

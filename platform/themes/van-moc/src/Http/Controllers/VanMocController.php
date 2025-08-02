@@ -72,4 +72,60 @@ class VanMocController extends PublicController
             ->setError()
             ->setMessage(__('No results found, please try with different keywords.'));
     }
+
+    /**
+     * Handle contact form submission
+     *
+     * @param Request $request
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     */
+    public function sendContact(Request $request, BaseHttpResponse $response)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'content' => 'required|string|max:1000',
+        ]);
+
+        try {
+            // Save to database if contact plugin is active
+            if (class_exists('Botble\Contact\Models\Contact')) {
+                \Botble\Contact\Models\Contact::create([
+                    'name' => $request->input('name'),
+                    'email' => $request->input('email'),
+                    'phone' => $request->input('phone'),
+                    'content' => $request->input('content'),
+                    'status' => 'unread',
+                ]);
+            }
+
+            return $response
+                ->setMessage(__('Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi sớm nhất có thể!'))
+                ->setNextUrl(route('public.index'));
+        } catch (\Exception $e) {
+            return $response
+                ->setError()
+                ->setMessage(__('Có lỗi xảy ra. Vui lòng thử lại sau!'));
+        }
+    }
+
+    /**
+     * Get products page
+     *
+     * @param Request $request
+     * @param ProductInterface $productRepository
+     * @return \Illuminate\View\View
+     */
+    public function getProducts(Request $request, ProductInterface $productRepository)
+    {
+        $products = $productRepository->getAllProducts(12, true, ['slugable', 'categories', 'tags']);
+        
+        Theme::breadcrumb()
+            ->add(__('Home'), route('public.index'))
+            ->add(__('Products'), route('public.products'));
+
+        return Theme::scope('products', compact('products'))->render();
+    }
 }

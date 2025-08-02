@@ -32,3 +32,11 @@ add_shortcode('blog-section', 'Blog Section', 'Blog Section', function ($shortco
 add_shortcode('agent-signup', 'Agent Signup', 'Agent Signup', function ($shortcode) {
     return Theme::partial('shortcodes.agent-signup', compact('shortcode'));
 });
+
+add_shortcode('contact-form', 'Contact Form', 'Contact Form', function ($shortcode) {
+    return Theme::partial('shortcodes.contact-form', compact('shortcode'));
+});
+
+add_shortcode('product-list', 'Product List', 'Product List', function ($shortcode) {
+    return Theme::partial('shortcodes.product-list', compact('shortcode'));
+});

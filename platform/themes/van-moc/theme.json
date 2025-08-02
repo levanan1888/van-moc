@@ -1,15 +1,14 @@
 {
     "name": "Vạn Mộc",
-    "version": "1.0.0",
-    "description": "Theme Vạn Mộc custom for Laravel",
+    "namespace": "Theme\\VanMoc\\",
+    "description": "Theme Vạn Mộc custom for Botble CMS",
     "author": "Your Name",
-    "parent": null,
-    "assets": {
-        "css": [
-            "css/style.css"
-        ],
-        "js": [
-            "js/script.js"
-        ]
-    }
+    "required_plugins": [
+        "blog",
+        "contact",
+        "gallery",
+        "language",
+        "block",
+        "member"
+    ]
 }

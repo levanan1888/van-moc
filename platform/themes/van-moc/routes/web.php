@@ -3,29 +3,20 @@
 // Custom routes for Van Moc theme
 
 use Illuminate\Support\Facades\Route;
+use Botble\Theme\Facades\ThemeFacade;
 
-Route::group(['namespace' => 'Theme\\VanMoc\\Http\\Controllers', 'middleware' => ['web', 'core']], function () {
-    Route::group(apply_filters(BASE_FILTER_GROUP_PUBLIC_ROUTE, []), function () {
-        // Add your custom route here
+ThemeFacade::routes();
 
-        Route::get('ajax/search', 'VanMocController@getSearch')->name('public.ajax.search');
+Route::group(['namespace' => 'Theme\VanMoc\Http\Controllers', 'middleware' => ['web', 'core']], function () {
+
+    Route::group(['prefix' => 'van-moc', 'as' => 'van-moc.'], function () {
+        Route::get('search', 'VanMocController@getSearch')->name('search');
+        Route::get('sitemap', 'VanMocController@getSiteMap')->name('sitemap');
     });
-});
 
-\Botble\Theme\Facades\ThemeFacade::routes();
-
-Route::group(['namespace' => 'Theme\\VanMoc\\Http\\Controllers', 'middleware' => ['web', 'core']], function () {
-    Route::group(apply_filters(BASE_FILTER_GROUP_PUBLIC_ROUTE, []), function () {
-        Route::get('/', 'VanMocController@getIndex')->name('public.index');
-
-        Route::get('sitemap.xml', [
-            'as' => 'public.sitemap',
-            'uses' => 'VanMocController@getSiteMap',
-        ]);
-
-        Route::get('{slug?}' . config('core.base.general.public_single_ending_url'), [
-            'as' => 'public.single',
-            'uses' => 'VanMocController@getView',
-        ]);
-    });
+    // Contact form route
+    Route::post('send-contact', 'VanMocController@sendContact')->name('public.send.contact');
+    
+    // Products route
+    Route::get('products', 'VanMocController@getProducts')->name('public.products');
 });
