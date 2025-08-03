@@ -2,5 +2,7 @@
 @if (Theme::get('section-name'))
     {!! Theme::partial('breadcrumbs') !!}
 @endif
-{!! Theme::content() !!}
+<main class="main-content-wrapper">
+    {!! Theme::content() !!}
+</main>
 {!! Theme::partial('footer') !!} 

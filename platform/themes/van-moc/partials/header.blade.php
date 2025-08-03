@@ -39,7 +39,7 @@
         </nav>
         <div class="header-icons">
             <a href="#"><img src="{{ asset('themes/van-moc/images/search.png') }}" alt="Search"></a>
-            <a href="#"><img src="{{ asset('themes/van-moc/images/cart.svg') }}" alt="Cart"></a>
+            <a href="{{ route('public.cart') }}" class="cart-link"><img src="{{ asset('themes/van-moc/images/cart.svg') }}" alt="Cart"></a>
         </div>
     </div>
 </header> 

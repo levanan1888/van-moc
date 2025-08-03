@@ -1,18 +1,7 @@
-@php Theme::layout('default'); @endphp
+@php Theme::layout('default'); Theme::set('section-name', $product->name); if ($product->categories->count()) { Theme::set('breadcrumb_category', $product->categories->first()->name); Theme::set('breadcrumb_category_url', $product->categories->first()->url); } @endphp
 
-<div class="product-detail-page">
+
     <div class="container">
-        <!-- 🧭 1. Điều hướng (Breadcrumbs) -->
-        <div class="breadcrumb-wrapper">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('public.index') }}">Trang chủ</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('public.products') }}">Chăm sóc da</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ $product->name }}</li>
-                </ol>
-            </nav>
-        </div>
-
         <!-- 🖼️ 2. Bố cục hiển thị - Layout 2 cột -->
         <div class="product-main-section">
             <!-- Cột trái - Ảnh sản phẩm -->
@@ -87,7 +76,7 @@
 
                 <!-- Các biểu tượng: "Không cồn", "Không dầu khoáng", v.v... -->
                 <div class="product-features">
-                    <div class="feature-item">
+                    <div class="feature-item feature-highlight">
                         <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_noidung.svg') }}" alt="No Alcohol">
                         <span>Không cồn</span>
                     </div>
@@ -99,7 +88,7 @@
                         <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_noidung.svg') }}" alt="No Paraben">
                         <span>Không paraben</span>
                     </div>
-                    <div class="feature-item">
+                    <div class="feature-item feature-highlight">
                         <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_noidung.svg') }}" alt="No Mineral Oil">
                         <span>Không dầu khoáng</span>
                     </div>
@@ -148,72 +137,69 @@
                 <div id="description" class="tab-pane active">
                     <div class="product-full-description">
                         <h3>Thành phần chiết xuất 100% từ thiên nhiên</h3>
+                        <p>Sản phẩm của chúng tôi tự hào với công thức độc đáo, kết hợp các thành phần tinh túy từ thiên nhiên, được lựa chọn kỹ lưỡng để mang lại hiệu quả tối ưu và an toàn cho làn da của bạn. Mỗi thành phần đều có một vai trò quan trọng trong việc nuôi dưỡng và bảo vệ da.</p>
                         <ul>
-                            <li><strong>Lá trầu không:</strong> ức chế và ngăn chặn sự phát triển của vi khuẩn gây viêm vùng kín.</li>
-                            <li><strong>Lactic acid:</strong> duy trì độ pH an toàn cho vùng nhạy cảm.</li>
-                            <li><strong>Lô hội:</strong> giúp dưỡng ẩm vùng kín mịn màng và hồng hào.</li>
-                            <li><strong>Chiết xuất cúc la mã:</strong> làm dịu da, ngăn ngừa mụn, giảm viêm, giảm ngứa.</li>
-                            <li><strong>Chiết xuất nhụy hoa nghệ tây:</strong> làm dịu da, tăng độ kháng cho vùng da nhạy cảm.</li>
+                            <li><strong>Lá trầu không:</strong> Nổi tiếng với khả năng kháng khuẩn tự nhiên, giúp ức chế và ngăn chặn sự phát triển của vi khuẩn gây viêm, giữ cho vùng da nhạy cảm luôn sạch sẽ và khỏe mạnh.</li>
+                            <li><strong>Lactic acid:</strong> Là một AHA nhẹ nhàng, giúp duy trì độ pH cân bằng, bảo vệ lớp màng axit tự nhiên của da và ngăn ngừa các vấn đề về da.</li>
+                            <li><strong>Lô hội:</strong> Cung cấp độ ẩm sâu, làm dịu da tức thì, giúp vùng kín luôn mịn màng, hồng hào và đầy sức sống.</li>
+                            <li><strong>Chiết xuất cúc la mã:</strong> Với đặc tính chống viêm và làm dịu da, cúc la mã giúp giảm ngứa, ngăn ngừa mụn và các dấu hiệu kích ứng.</li>
+                            <li><strong>Chiết xuất nhụy hoa nghệ tây:</strong> Một thành phần quý giá giúp làm dịu, tăng cường sức đề kháng cho vùng da nhạy cảm, mang lại cảm giác thoải mái suốt cả ngày.</li>
                         </ul>
                         
-                        <h3>Hướng dẫn sử dụng</h3>
-                        <ol>
-                            <li>Bước 1: Làm ướt mặt.</li>
-                            <li>Bước 2: Lấy một lượng nhỏ vừa đủ dung dịch.</li>
-                            <li>Bước 3: Thoa đều khắp mặt.</li>
-                            <li>Bước 4: Sau 30 phút rửa sạch lại.</li>
-                        </ol>
+                        <h3>Cam kết chất lượng</h3>
+                        <p>Chúng tôi cam kết sản phẩm không chứa cồn, paraben, sulfate hay dầu khoáng, đảm bảo an toàn tuyệt đối cho cả những làn da nhạy cảm nhất.</p>
                     </div>
                 </div>
                 
                 <div id="ingredients" class="tab-pane">
                     <div class="product-ingredients">
                         <h3>Thành phần chi tiết:</h3>
+                        <p>Sản phẩm là sự kết hợp hoàn hảo giữa các thành phần thiên nhiên và khoa học, mang lại giải pháp chăm sóc da toàn diện.</p>
                         <ul>
-                            <li><strong>Tinh dầu bưởi tự nhiên:</strong> Làm sáng da, chống oxy hóa</li>
-                            <li><strong>Vitamin E:</strong> Dưỡng ẩm, chống lão hóa</li>
-                            <li><strong>Dầu dừa nguyên chất:</strong> Dưỡng ẩm sâu</li>
-                            <li><strong>Chiết xuất từ thảo dược:</strong> Kháng khuẩn, làm dịu da</li>
-                            <li><strong>Nước tinh khiết:</strong> Làm mát, cân bằng độ ẩm</li>
+                            <li><strong>Tinh dầu bưởi tự nhiên (Citrus Grandis Peel Oil):</strong> Giàu chất chống oxy hóa, giúp làm sáng da, mờ thâm và mang lại hương thơm tươi mát, thư giãn.</li>
+                            <li><strong>Vitamin E (Tocopherol):</strong> Một chất chống oxy hóa mạnh mẽ, giúp bảo vệ da khỏi các gốc tự do, dưỡng ẩm sâu và làm chậm quá trình lão hóa.</li>
+                            <li><strong>Dầu dừa nguyên chất (Cocos Nucifera Oil):</strong> Cung cấp độ ẩm cần thiết, giúp da mềm mại, mịn màng và tăng cường hàng rào bảo vệ da.</li>
+                            <li><strong>Chiết xuất từ thảo dược (Herbal Extracts):</strong> Bao gồm các loại thảo dược quý, có tác dụng kháng khuẩn, làm dịu da và giảm kích ứng.</li>
+                            <li><strong>Nước tinh khiết (Aqua):</strong> Là dung môi an toàn, giúp hòa tan các thành phần và mang lại cảm giác mát lạnh, sảng khoái khi sử dụng.</li>
                         </ul>
                         
                         <div class="ingredient-note">
-                            <p><strong>Lưu ý:</strong> Sản phẩm không chứa paraben, sulfate, cồn hay các hóa chất độc hại khác.</p>
+                            <p><strong>Lưu ý:</strong> Sản phẩm đã được kiểm nghiệm da liễu, không chứa paraben, sulfate, cồn hay các hóa chất độc hại khác, phù hợp với mọi loại da.</p>
                         </div>
                     </div>
                 </div>
                 
                 <div id="usage" class="tab-pane">
                     <div class="product-usage">
-                        <h3>Hướng dẫn sử dụng chi tiết:</h3>
+                        <h3>Hướng dẫn sử dụng chi tiết để đạt hiệu quả tốt nhất:</h3>
                         
                         <div class="usage-step">
                             <h4>Bước 1: Làm sạch da</h4>
-                            <p>Rửa mặt bằng sữa rửa mặt dịu nhẹ và lau khô bằng khăn mềm.</p>
+                            <p>Luôn bắt đầu với một làn da sạch. Sử dụng sữa rửa mặt dịu nhẹ phù hợp với loại da của bạn để loại bỏ bụi bẩn và dầu thừa. Dùng khăn mềm thấm khô da nhẹ nhàng.</p>
                         </div>
                         
                         <div class="usage-step">
                             <h4>Bước 2: Thoa sản phẩm</h4>
-                            <p>Lấy một lượng vừa đủ (khoảng 2-3 giọt) thoa đều lên toàn bộ khuôn mặt.</p>
+                            <p>Lấy một lượng sản phẩm vừa đủ, khoảng 2-3 giọt hoặc một lượng bằng hạt đậu, ra lòng bàn tay. Xoa nhẹ hai tay để làm ấm sản phẩm trước khi thoa đều lên mặt và cổ.</p>
                         </div>
                         
                         <div class="usage-step">
-                            <h4>Bước 3: Massage</h4>
-                            <p>Massage nhẹ nhàng theo chiều từ trong ra ngoài trong 2-3 phút.</p>
+                            <h4>Bước 3: Massage nhẹ nhàng</h4>
+                            <p>Dùng các đầu ngón tay massage nhẹ nhàng theo chuyển động tròn, từ trong ra ngoài và từ dưới lên trên. Việc này giúp sản phẩm thẩm thấu sâu hơn và kích thích tuần hoàn máu.</p>
                         </div>
                         
                         <div class="usage-step">
-                            <h4>Bước 4: Để yên</h4>
-                            <p>Để sản phẩm thấm vào da trong 5-10 phút trước khi thoa kem dưỡng ẩm.</p>
+                            <h4>Bước 4: Vỗ nhẹ và để yên</h4>
+                            <p>Sau khi massage, vỗ nhẹ lên da để sản phẩm thẩm thấu hoàn toàn. Chờ khoảng 5-10 phút trước khi tiếp tục các bước chăm sóc da tiếp theo như thoa kem dưỡng ẩm hoặc kem chống nắng.</p>
                         </div>
                         
                         <div class="usage-tips">
-                            <h4>Mẹo sử dụng:</h4>
+                            <h4>Mẹo sử dụng hiệu quả:</h4>
                             <ul>
-                                <li>Sử dụng 2 lần/ngày (sáng và tối)</li>
-                                <li>Tránh tiếp xúc với mắt</li>
-                                <li>Bảo quản ở nơi khô ráo, thoáng mát</li>
-                                <li>Ngưng sử dụng nếu có dấu hiệu dị ứng</li>
+                                <li><strong>Sử dụng đều đặn:</strong> Để có kết quả tốt nhất, hãy sử dụng sản phẩm 2 lần mỗi ngày, vào buổi sáng và buổi tối.</li>
+                                <li><strong>Thứ tự sử dụng:</strong> Áp dụng sản phẩm sau bước toner và trước bước kem dưỡng ẩm.</li>
+                                <li><strong>Bảo quản đúng cách:</strong> Giữ sản phẩm ở nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp để bảo toàn chất lượng.</li>
+                                <li><strong>Kiểm tra phản ứng da:</strong> Nếu bạn có làn da nhạy cảm, hãy thử sản phẩm trên một vùng da nhỏ trước khi sử dụng cho toàn bộ khuôn mặt.</li>
                             </ul>
                         </div>
                     </div>
@@ -223,44 +209,131 @@
 
         <!-- Product Reviews Section -->
         <div class="customer-reviews-section">
-            <h2 class="section-title">REVIEW {{ strtoupper($product->name) }}</h2>
             <div class="reviews-header">
-                <span class="reviews-count">28 đánh giá sản phẩm này</span>
+                <div>
+                    <h2 class="section-title">REVIEW {{ strtoupper($product->name) }}</h2>
+                    <p class="reviews-count">{{ $product->reviews_count }} đánh giá sản phẩm này</p>
+                </div>
                 <a href="#" class="view-all-reviews">Xem tất cả <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/button_arrow.svg') }}" alt="Arrow"></a>
             </div>
-            
-            <div class="reviews-pagination">
-                <span>Trang 1 / 1</span>
-                <div class="pagination-controls">
-                    <button class="pagination-btn">-</button>
-                    <button class="pagination-btn">+</button>
-                    <button class="pagination-btn search-btn">
-                        <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_noidung.svg') }}" alt="Search">
-                    </button>
-                </div>
+            <div class="customer-reviews-grid">
+                @if ($product->reviews && $product->reviews->count() > 0)
+                    @foreach ($product->reviews as $review)
+                        <div class="review-item">
+                            <div class="review-author">
+                                <div class="review-avatar">
+                                    <img src="{{ $review->user->avatar_url ? RvMedia::getImageUrl($review->user->avatar_url, 'thumb') : Theme::asset()->url('images/default-avatar.jpg') }}" alt="{{ $review->user_name }}">
+                                </div>
+                                <div class="author-info">
+                                    <div class="author-name">{{ $review->user_name }}</div>
+                                    <div class="purchase-info">Đã mua 29 sản phẩm</div>
+                                </div>
+                            </div>
+                            <div class="review-comment">
+                                <p>{{ $review->comment }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
             </div>
         </div>
-    </div>
-</div>
+        
+        <!-- Related Products Section -->
+        <div class="related-products-section">
+            <div class="section-header">
+                <h2 class="section-title">Sản phẩm liên quan</h2>
+                <a href="#" class="view-all-link">Xem tất cả <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/button_arrow.svg') }}" alt="Arrow"></a>
+            </div>
+            
+            <div class="related-products-grid">
+                @php
+                    $relatedProducts = get_related_products($product->id, 4);
+                    if (count($relatedProducts) == 0) {
+                        $relatedProducts = get_latest_products(4, [
+                            'author',
+                            'categories',
+                            'slugable',
+                        ]);
+                    }
+                @endphp
+                @foreach ($relatedProducts as $relatedProduct)
+                    <div class="product-card">
+                        <a href="{{ $relatedProduct->url }}">
+                            <img src="{{ RvMedia::getImageUrl($relatedProduct->image, 'medium', false, RvMedia::getDefaultImage()) }}" alt="{{ $relatedProduct->name }}" class="product-card-image">
+                        </a>
+                        <div class="product-card-info">
+                            <h4 class="product-card-name"><a href="{{ $relatedProduct->url }}">{{ $relatedProduct->name }}</a></h4>
+                            <div class="product-card-price">{{ number_format($relatedProduct->price, 0, ',', '.') }} ₫</div>
+                            <div class="product-card-rating">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star">★</span>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
 
+        <!-- Customer Feedback Form -->
+        <div class="feedback-section">
+            <div class="commitments-grid">
+                <div class="commitment-item full-width">
+                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_camket.svg') }}" alt="Genuine Commitment">
+                    <span>Cam kết chính hãng</span>
+                </div>
+                <div class="commitment-item">
+                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_giaohang.svg') }}" alt="Nationwide Delivery">
+                    <span>Giao hàng toàn quốc</span>
+                </div>
+                <div class="commitment-item">
+                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_hotro.svg') }}" alt="24/7 Support">
+                    <span>Hỗ trợ khách hàng 24/7</span>
+                </div>
+            </div>
+            <div class="feedback-form">
+                <h3>Đánh giá của bạn</h3>
+                <form action="#" method="POST">
+                    <div class="form-group">
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Họ và tên" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Nhập tiêu đề đánh giá của bạn">
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Viết nhận xét của bạn vào đây" rows="5"></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit-review">Gửi đánh giá</button>
+                </form>
+            </div>
+        </div>
+    
 <style>
-/* 🎨 6. Thiết kế tổng thể - Tông màu trắng và xanh lá */
-.product-detail-page {
+/* Main Content Wrapper */
+.main-content-wrapper {
+    background-color: #FFFFFF;
     padding: 40px 0;
-    background: #fff;
-    font-family: 'Be Vietnam Pro', sans-serif;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
+/* Breadcrumb Section */
+.breadcrumb-section {
+    background-color: #F7F7F7;
+    padding: 20px 0;
+}
+
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin: 0;
 }
 
 /* 🧭 1. Điều hướng (Breadcrumbs) */
-.breadcrumb-wrapper {
-    margin-bottom: 30px;
-}
+
 
 .breadcrumb {
     background: transparent;
@@ -357,7 +430,8 @@
     display: flex;
     flex-direction: column;
     gap: 25px;
-    padding-left: 0;
+    align-items: flex-start; /* Align items to the left */
+    background-color: #fff; /* Set background to white */
 }
 
 .product-title {
@@ -457,7 +531,8 @@
 .action-buttons {
     display: flex;
     gap: 15px;
-    flex: 1;
+    flex: 1 1 auto; /* Ensure buttons stay in a row */
+    white-space: nowrap; /* Prevent wrapping */
 }
 
 .btn-add-to-cart,
@@ -479,8 +554,8 @@
 
 .btn-buy-now {
     background: white;
-    color: #28a745;
-    border: 2px solid #28a745;
+    color: #000; /* Change text to black */
+    border: 1px solid #28a745; /* Thinner border */
 }
 
 .btn-buy-now:hover {
@@ -501,24 +576,25 @@
 .product-features {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    gap: 20px;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
     margin-bottom: 25px;
-    padding-left: 0;
+    width: 100%; /* Ensure it spans full width */
 }
 
 .feature-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 12px 15px;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-    background: transparent;
+    background: transparent; /* No individual background */
+    border: none; /* No individual border */
+    padding: 0;
 }
 
-.feature-item:nth-child(1),
-.feature-item:nth-child(4) {
-    background: #f8f9fa;
+.feature-item.feature-highlight {
+    background: transparent; /* No individual highlight background */
 }
 
 .feature-item img {
@@ -544,6 +620,8 @@
     color: #333;
     margin-bottom: 15px;
     background: transparent;
+    text-decoration: underline;
+    text-underline-offset: 6px;
 }
 
 .product-uses ul {
@@ -590,8 +668,8 @@
 }
 
 .social-icon {
-    width: 35px;
-    height: 35px;
+    width: 40px; /* Larger icon */
+    height: 40px; /* Larger icon */
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -633,33 +711,33 @@
 
 .tab-buttons {
     display: flex;
-    border-bottom: 2px solid #eee;
-    margin-bottom: 30px;
+    border-bottom: none; /* Remove bottom border */
+    margin-bottom: 0;
+    background: #f1f1f1;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .tab-btn {
-    padding: 15px 30px;
+    flex: 1;
+    padding: 18px 25px;
     border: none;
-    background: transparent;
-    font-size: 16px;
-    font-weight: 500;
-    color: #666;
+    background: #f1f1f1;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
     transition: all 0.3s ease;
+    text-align: center;
 }
 
 .tab-btn.active {
-    color: #28a745;
-    background: #e8f5e8;
-    border-radius: 8px 8px 0 0;
+    background: #28a745;
+    color: white;
 }
 
 .tab-pane {
     display: none;
-}
-
-.tab-pane.active {
-    display: block;
 }
 
 .product-full-description,
@@ -728,75 +806,296 @@
 
 /* Product Reviews Section */
 .customer-reviews-section {
-    margin-bottom: 60px;
+    margin-top: 60px;
+    background-color: #F8F8F8; /* Match feedback section background */
+    padding: 40px 0; /* Add padding to match full-width design */
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding-left: calc(50vw - 50%);
+    padding-right: calc(50vw - 50%);
 }
 
 .reviews-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 22px; /* Adjusted font size */
+    font-weight: 600;
+    margin: 0;
+    color: #333;
+}
+
+.reviews-count {
+    color: #6c757d;
+    margin-top: 5px;
+}
+
+.view-all-reviews {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.view-all-reviews img {
+    margin-left: 8px;
+}
+
+.review-item {
+    background: #FFFFFF;
+    border: 1px solid #EAEAEA;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+}
+
+.review-author {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.review-avatar img {
+    width: 50px; /* Adjusted size */
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.author-name {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.purchase-info {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.review-comment {
+    color: #555;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+/* Related Products Section */
+.related-products-section {
+    margin-top: 60px;
+    background-color: #FFFFFF; /* Ensure white background */
+    padding: 40px 0; /* Add padding for consistency */
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding-left: calc(50vw - 50%);
+    padding-right: calc(50vw - 50%);
+}
+
+.section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
 }
 
-.reviews-count {
-    color: #666;
-    font-size: 16px;
+.section-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
 }
 
-.view-all-reviews {
+.view-all-link {
     color: #28a745;
     text-decoration: none;
     font-weight: 500;
     display: flex;
     align-items: center;
     gap: 5px;
-}
-
-.view-all-reviews img {
-    width: 16px;
-    height: 16px;
-}
-
-.reviews-pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.reviews-pagination span {
-    color: #666;
     font-size: 14px;
 }
 
-.pagination-controls {
-    display: flex;
-    gap: 10px;
+.view-all-link img {
+    width: 16px;
+    height: 16px;
 }
 
-.pagination-btn {
-    width: 35px;
-    height: 35px;
-    border: 1px solid #ddd;
+.related-products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.product-card {
     background: white;
-    border-radius: 6px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    overflow: hidden;
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
-.pagination-btn:hover {
-    background: #f8f9fa;
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     border-color: #28a745;
 }
 
-.search-btn img {
-    width: 16px;
-    height: 16px;
-    opacity: 0.7;
+.product-card .product-image {
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: #f8f9fa;
+}
+
+.product-card .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.05);
+}
+
+.product-card .product-info {
+    padding: 20px;
+}
+
+.product-card .product-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 10px 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-card .product-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #28a745;
+    margin-bottom: 8px;
+}
+
+.product-card .product-rating {
+    display: flex;
+    gap: 2px;
+}
+
+.product-card .product-rating .star {
+    color: #ffc107;
+    font-size: 14px;
+}
+
+/* Feedback Section */
+.feedback-section {
+    background: #f8f9fa;
+    padding: 40px 0;
+    margin: 60px -15px 0;
+}
+
+.feedback-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.feedback-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.feedback-icon {
+    width: 60px;
+    height: 60px;
+    background: #28a745;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.feedback-icon img {
+    width: 30px;
+    height: 30px;
+    filter: brightness(0) invert(1);
+}
+
+.feedback-text h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 8px 0;
+}
+
+.feedback-text p {
+    color: #666;
+    margin: 0;
+    font-size: 16px;
+}
+
+.feedback-form {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #28a745;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.submit-feedback-btn {
+    width: 100%;
+    padding: 15px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-feedback-btn:hover {
+    background: #218838;
 }
 
 /* Responsive Design */
@@ -864,6 +1163,100 @@
         padding: 20px;
     }
 }
+
+/* Feedback and Commitments Section */
+.feedback-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 50px;
+    align-items: start;
+    background-color: #F8F8F8; /* Light grey background matching footer */
+    padding: 40px 0; /* Add padding to match full-width design */
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding-left: calc(50vw - 50%);
+    padding-right: calc(50vw - 50%);
+}
+
+.commitments-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.commitment-item {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    min-height: 150px; /* Ensure consistent height */
+}
+
+.commitment-item.full-width {
+    grid-column: span 2;
+}
+
+.commitment-item img {
+    margin-bottom: 15px;
+    height: 48px;
+}
+
+.commitment-item span {
+    font-weight: 500;
+}
+
+.feedback-form {
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.feedback-form h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.feedback-form .form-group {
+    margin-bottom: 20px;
+}
+
+.feedback-form input,
+.feedback-form textarea {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background: #f0f2f5;
+    font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.feedback-form .btn-submit-review {
+    width: 100%;
+    padding: 15px;
+    background: #6D8B74;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.feedback-form .btn-submit-review:hover {
+    background: #5a7d6a;
+}
 </style>
 
 <script>
@@ -908,20 +1301,247 @@ function showTab(tabName) {
     event.target.classList.add('active');
 }
 
-// Add to cart functionality
+// Add to cart functionality with animation
 function addToCart() {
     const quantity = document.getElementById('quantity').value;
     const productName = document.querySelector('.product-title').textContent;
+    const productPrice = document.querySelector('.price-current').textContent;
+    const productImage = document.getElementById('mainProductImage').src;
     
-    alert(`Đã thêm ${quantity} sản phẩm "${productName}" vào giỏ hàng!`);
+    // Create cart item object
+    const cartItem = {
+        id: '{{ $product->id }}',
+        name: productName,
+        price: productPrice,
+        image: productImage,
+        quantity: parseInt(quantity)
+    };
+    
+    // Add to cart with animation
+    addToCartWithAnimation(cartItem);
+    
+    // Update cart counter
+    updateCartCounter();
+    
+    // Show subtle success message
+    showNotification(`Đã thêm ${quantity} sản phẩm vào giỏ hàng!`, 'success');
 }
 
 // Buy now functionality
 function buyNow() {
     const quantity = document.getElementById('quantity').value;
     const productName = document.querySelector('.product-title').textContent;
+    const productPrice = document.querySelector('.price-current').textContent;
+    const productImage = document.getElementById('mainProductImage').src;
     
-    alert(`Chuyển đến trang thanh toán cho ${quantity} sản phẩm "${productName}"!`);
+    // Create cart item object
+    const cartItem = {
+        id: '{{ $product->id }}',
+        name: productName,
+        price: productPrice,
+        image: productImage,
+        quantity: parseInt(quantity)
+    };
+    
+    // Add to cart first
+    addToCartWithAnimation(cartItem);
+    
+    // Show loading state
+    const buyBtn = document.querySelector('.btn-buy-now');
+    const originalText = buyBtn.textContent;
+    buyBtn.textContent = 'ĐANG XỬ LÝ...';
+    buyBtn.disabled = true;
+    
+    // Redirect to checkout after animation
+    setTimeout(() => {
+        window.location.href = '{{ route("public.checkout") }}';
+    }, 1000);
+}
+
+// Cart animation and notification functions
+function addToCartWithAnimation(cartItem) {
+    // Get the product image for animation
+    const productImg = document.getElementById('mainProductImage');
+    const cartIcon = document.querySelector('.cart-link') || document.querySelector('.header-icons a:last-child');
+    
+    if (productImg && cartIcon) {
+        // Create flying image animation
+        const flyingImg = productImg.cloneNode(true);
+        flyingImg.style.position = 'fixed';
+        flyingImg.style.width = '100px';
+        flyingImg.style.height = '100px';
+        flyingImg.style.zIndex = '99999';
+        flyingImg.style.transition = 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        flyingImg.style.borderRadius = '12px';
+        flyingImg.style.boxShadow = '0 8px 30px rgba(40, 167, 69, 0.4)';
+        flyingImg.style.border = '3px solid #28a745';
+        flyingImg.style.pointerEvents = 'none';
+        
+        // Get positions
+        const imgRect = productImg.getBoundingClientRect();
+        const cartRect = cartIcon.getBoundingClientRect();
+        
+        // Set initial position
+        flyingImg.style.left = (imgRect.left + imgRect.width/2 - 50) + 'px';
+        flyingImg.style.top = (imgRect.top + imgRect.height/2 - 50) + 'px';
+        
+        document.body.appendChild(flyingImg);
+        
+        // Animate to cart with parabolic path
+        setTimeout(() => {
+            flyingImg.style.left = (cartRect.left + cartRect.width/2 - 15) + 'px';
+            flyingImg.style.top = (cartRect.top + cartRect.height/2 - 15) + 'px';
+            flyingImg.style.width = '30px';
+            flyingImg.style.height = '30px';
+            flyingImg.style.opacity = '0.8';
+            flyingImg.style.transform = 'rotate(360deg) scale(0.3)';
+        }, 100);
+        
+        // Final fade out
+        setTimeout(() => {
+            flyingImg.style.opacity = '0';
+            flyingImg.style.transform = 'rotate(720deg) scale(0.1)';
+        }, 800);
+        
+        // Remove after animation
+        setTimeout(() => {
+            if (document.body.contains(flyingImg)) {
+                document.body.removeChild(flyingImg);
+            }
+        }, 1300);
+        
+        // Cart bounce animation with green glow
+        cartIcon.style.transition = 'all 0.3s ease';
+        cartIcon.style.transform = 'scale(1.3)';
+        cartIcon.style.filter = 'drop-shadow(0 0 10px #28a745)';
+        
+        setTimeout(() => {
+            cartIcon.style.transform = 'scale(1.1)';
+        }, 150);
+        
+        setTimeout(() => {
+            cartIcon.style.transform = 'scale(1)';
+            cartIcon.style.filter = 'none';
+        }, 300);
+    }
+    
+    // Save to localStorage
+    saveToCart(cartItem);
+}
+
+function saveToCart(cartItem) {
+    let cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
+    
+    // Check if item already exists
+    const existingItemIndex = cart.findIndex(item => item.id === cartItem.id);
+    
+    if (existingItemIndex > -1) {
+        // Update quantity
+        cart[existingItemIndex].quantity += cartItem.quantity;
+    } else {
+        // Add new item
+        cart.push(cartItem);
+    }
+    
+    localStorage.setItem('vanmoc_cart', JSON.stringify(cart));
+}
+
+function updateCartCounter() {
+    const cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    
+    // Update cart counter if exists
+    let cartCounter = document.querySelector('.cart-counter');
+    if (!cartCounter && totalItems > 0) {
+        // Create cart counter
+        const cartIcon = document.querySelector('.cart-link') || document.querySelector('.header-icons a:last-child');
+        if (cartIcon) {
+            cartCounter = document.createElement('span');
+            cartCounter.className = 'cart-counter';
+            cartCounter.style.cssText = `
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                background: #dc3545;
+                color: white;
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+                font-size: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                z-index: 10;
+            `;
+            cartIcon.style.position = 'relative';
+            cartIcon.appendChild(cartCounter);
+        }
+    }
+    
+    if (cartCounter) {
+        cartCounter.textContent = totalItems;
+        cartCounter.style.display = totalItems > 0 ? 'flex' : 'none';
+        
+        // Add bounce animation when counter updates
+        if (totalItems > 0) {
+            cartCounter.style.transform = 'scale(1.3)';
+            setTimeout(() => {
+                cartCounter.style.transform = 'scale(1)';
+            }, 200);
+        }
+    }
+}
+
+function showNotification(message, type = 'success') {
+    // Remove existing notification
+    const existingNotification = document.querySelector('.notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create notification
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.style.cssText = `
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        background: ${type === 'success' ? 'rgba(40, 167, 69, 0.95)' : 'rgba(220, 53, 69, 0.95)'};
+        color: white;
+        padding: 12px 18px;
+        border-radius: 25px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        z-index: 9999;
+        font-family: 'Be Vietnam Pro', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        max-width: 250px;
+        transform: translateX(100%) scale(0.8);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        opacity: 0;
+        backdrop-filter: blur(10px);
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0) scale(1)';
+        notification.style.opacity = '1';
+    }, 100);
+    
+    // Auto remove after 2 seconds
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%) scale(0.8)';
+        notification.style.opacity = '0';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 400);
+    }, 2000);
 }
 
 // Initialize page
@@ -931,5 +1551,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (firstThumbnail) {
         firstThumbnail.classList.add('active');
     }
+    
+    // Initialize cart counter
+    updateCartCounter();
 });
 </script> 

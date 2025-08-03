@@ -22,3 +22,8 @@ Route::get('/ao-thun-cong-ty', function () {
 Route::get('/ao-thun-team-building', function () {
   return Redirect::to('/dong-phuc-team-building', 301);
 });
+
+// Van Moc Cart and Checkout Routes
+Route::get('/cart', 'Theme\VanMoc\Http\Controllers\VanMocController@getCart')->name('public.cart');
+Route::get('/checkout', 'Theme\VanMoc\Http\Controllers\VanMocController@getCheckout')->name('public.checkout');
+Route::post('/checkout', 'Theme\VanMoc\Http\Controllers\VanMocController@postCheckout')->name('public.checkout.post');

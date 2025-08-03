@@ -20,3 +20,10 @@ Route::group(['namespace' => 'Theme\VanMoc\Http\Controllers', 'middleware' => ['
     // Products route
     Route::get('products', 'VanMocController@getProducts')->name('public.products');
 });
+
+// Cart and Checkout routes (outside namespace group)
+Route::group(['middleware' => ['web', 'core']], function () {
+    Route::get('cart', 'Theme\VanMoc\Http\Controllers\VanMocController@getCart')->name('public.cart');
+    Route::get('checkout', 'Theme\VanMoc\Http\Controllers\VanMocController@getCheckout')->name('public.checkout');
+    Route::post('checkout', 'Theme\VanMoc\Http\Controllers\VanMocController@postCheckout')->name('public.checkout.post');
+});

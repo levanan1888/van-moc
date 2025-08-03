@@ -128,4 +128,71 @@ class VanMocController extends PublicController
 
         return Theme::scope('products', compact('products'))->render();
     }
+
+    /**
+     * Get cart page
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function getCart(Request $request)
+    {
+        Theme::breadcrumb()
+            ->add(__('Home'), route('public.index'))
+            ->add(__('Cart'), route('public.cart'));
+
+        return Theme::scope('cart')->render();
+    }
+
+    /**
+     * Get checkout page
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function getCheckout(Request $request)
+    {
+        Theme::breadcrumb()
+            ->add(__('Home'), route('public.index'))
+            ->add(__('Cart'), route('public.cart'))
+            ->add(__('Checkout'), route('public.checkout'));
+
+        return Theme::scope('checkout')->render();
+    }
+
+    /**
+     * Process checkout form
+     *
+     * @param Request $request
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     */
+    public function postCheckout(Request $request, BaseHttpResponse $response)
+    {
+        $request->validate([
+            'fullName' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'paymentMethod' => 'required|string',
+            'province' => 'required|string',
+            'district' => 'required|string',
+            'ward' => 'required|string',
+            'address' => 'required|string|max:500',
+            'orderNotes' => 'nullable|string|max:1000',
+        ]);
+
+        try {
+            // Process the order here
+            // This is where you would integrate with your e-commerce system
+            // For now, we'll just return a success message
+            
+            return $response
+                ->setMessage(__('Đơn hàng của bạn đã được đặt thành công! Chúng tôi sẽ liên hệ với bạn sớm nhất.'))
+                ->setNextUrl(route('public.index'));
+        } catch (\Exception $e) {
+            return $response
+                ->setError()
+                ->setMessage(__('Có lỗi xảy ra khi đặt hàng. Vui lòng thử lại sau!'));
+        }
+    }
 }
