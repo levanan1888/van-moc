@@ -105,7 +105,14 @@
         @if ($products->count())
             <div class="product-grid">
                 @foreach ($products as $product)
-                    <div class="product-item">
+                    <div class="product-item"
+                        @if(isset($product->id))
+                            data-id="{{ $product->id }}"
+                            data-name="{{ e($product->name) }}"
+                            data-price="{{ is_numeric($product->price) ? $product->price : preg_replace('/[^0-9]/', '', $product->price) }}"
+                            data-image="{{ RvMedia::getImageUrl($product->image, 'medium', false, RvMedia::getDefaultImage()) }}"
+                        @endif
+                    >
                         <div class="product-image">
                             <a href="{{ $product->url }}">
                                 @if ($product->image)
@@ -125,14 +132,28 @@
                                 <h3><a href="{{ $product->url }}">{{ $product->name }}</a></h3>
                                 <p class="product-brand">{{ $product->description ?? $product->short_description ?? '' }}</p>
                                 <div class="price-wrapper">
-                                    @if (isset($product->original_price) && $product->original_price)
-                                        <span class="original-price">{{ $product->original_price }}</span>
+                                    @if (isset($product->original_price) && $product->original_price && $product->original_price > $product->price)
+                                        <span class="original-price">
+                                            @if(is_numeric($product->original_price))
+                                                {{ number_format($product->original_price, 0, ',', '.') }}₫
+                                            @else
+                                                {{ $product->original_price }}
+                                            @endif
+                                        </span>
                                     @endif
-                                    <span class="price">{{ $product->price }}</span>
+                                    <span class="price">
+                                        @if(is_numeric($product->price))
+                                            {{ number_format($product->price, 0, ',', '.') }}₫
+                                        @else
+                                            {{ $product->price }}
+                                        @endif
+                                    </span>
                                 </div>
                             </div>
                             <div class="add-to-cart">
-                                <a href="{{ $product->url }}"><img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_cart.svg') }}" alt="Add to cart"></a>
+                                <button type="button" class="btn-add-to-cart-featured" title="Thêm vào giỏ hàng" @if(!isset($product->id)) disabled @endif>
+                                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_cart.svg') }}" alt="Add to cart">
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -329,6 +350,10 @@
 
 /* Cart icon styling */
 .add-to-cart {
+    flex-shrink: 0;
+}
+
+.add-to-cart .btn-add-to-cart-featured {
     background-color: #e8f5e9;
     border-radius: 5px;
     width: 45px;
@@ -337,10 +362,12 @@
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    flex-shrink: 0;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
 
-.add-to-cart img {
+.add-to-cart .btn-add-to-cart-featured img {
     width: 24px;
     height: 24px;
 }
@@ -349,6 +376,34 @@
     text-align: center;
     padding: 60px 20px;
     color: #666;
+}
+
+/* Toast Notification */
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast-notification {
+    background-color: #28a745;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    font-size: 16px;
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 /* Responsive */
@@ -366,27 +421,112 @@
 </style>
 
 <script>
-// Add to cart functionality
-document.querySelectorAll('.add-to-cart a').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const productItem = this.closest('.product-item');
-        const productName = productItem.querySelector('h3').textContent;
-        alert(`Đã thêm "${productName}" vào giỏ hàng!`);
-    });
-});
-
-// Product item click to go to detail page
-document.querySelectorAll('.product-item').forEach(item => {
-    item.addEventListener('click', function(e) {
-        // Don't trigger if clicking on add to cart button
-        if (!e.target.closest('.add-to-cart')) {
-            const productLink = this.querySelector('.product-image img').closest('a') || 
-                               this.querySelector('.product-text h3').closest('a');
-            if (productLink) {
-                window.location.href = productLink.href;
-            }
+document.addEventListener('DOMContentLoaded', function() {
+    // --- Toast Notification --- //
+    function showToast(message) {
+        let toastContainer = document.getElementById('toast-container');
+        if (!toastContainer) {
+            toastContainer = document.createElement('div');
+            toastContainer.id = 'toast-container';
+            document.body.appendChild(toastContainer);
         }
+
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.textContent = message;
+        
+        toastContainer.appendChild(toast);
+
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 100);
+
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 500);
+        }, 3000);
+    }
+
+    // --- Cart Counter Update --- //
+    function updateCartCounter() {
+        try {
+            const cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            const cartCounters = document.querySelectorAll('.cart-counter'); 
+            cartCounters.forEach(counter => {
+                if (counter) {
+                    counter.textContent = totalItems;
+                    counter.style.display = totalItems > 0 ? 'flex' : 'none';
+                }
+            });
+        } catch (e) {
+            console.error('Error updating cart counter:', e);
+        }
+    }
+
+    // --- Add to Cart Functionality --- //
+    document.querySelectorAll('.btn-add-to-cart-featured').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation(); // Ngăn sự kiện click lan ra product-item
+
+            const productItem = this.closest('.product-item');
+            const productId = productItem.dataset.id;
+            const productName = productItem.dataset.name;
+            const productPrice = parseInt(productItem.dataset.price);
+            const productImage = productItem.dataset.image;
+            const quantity = 1; // Mặc định thêm 1 sản phẩm từ danh sách
+
+            if (!productId) {
+                console.error('Product ID not found for item:', productItem);
+                return;
+            }
+
+            try {
+                let cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
+                let existingProduct = cart.find(item => item.id === productId);
+
+                if (existingProduct) {
+                    existingProduct.quantity += quantity;
+                } else {
+                    cart.push({
+                        id: productId,
+                        name: productName,
+                        price: productPrice,
+                        image: productImage,
+                        quantity: quantity
+                    });
+                }
+
+                localStorage.setItem('vanmoc_cart', JSON.stringify(cart));
+                showToast(`Đã thêm "${productName}" vào giỏ hàng!`);
+                updateCartCounter();
+            } catch (error) {
+                console.error('Failed to add to cart:', error);
+                showToast('Có lỗi xảy ra, không thể thêm vào giỏ hàng.');
+            }
+        });
     });
+
+    // --- Product Item Click to Detail Page --- //
+    document.querySelectorAll('.product-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+            // Chỉ chuyển hướng nếu không click vào nút thêm giỏ hàng
+            if (!e.target.closest('.add-to-cart')) {
+                const productLink = this.querySelector('a');
+                if (productLink && productLink.href) {
+                    window.location.href = productLink.href;
+                }
+            }
+        });
+    });
+
+    // Initial cart counter update on page load
+    updateCartCounter();
 });
-</script> 
+</script>

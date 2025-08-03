@@ -346,196 +346,126 @@
 </style>
 
 <script>
-// Load cart from localStorage and render
-function loadCart() {
-    const cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
-    const cartItemsContainer = document.getElementById('cartItems');
-    const cartSubtitle = document.querySelector('.cart-section-title');
-    const emptyCartContainer = document.querySelector('.empty-cart-container');
+    // Function to format price to VND currency
+    function formatPrice(price) {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+    }
 
-    if (cart.length === 0) {
-        if (emptyCartContainer) emptyCartContainer.style.display = 'block';
-        if (cartItemsContainer) cartItemsContainer.style.display = 'none';
-        cartSubtitle.textContent = 'Không có sản phẩm nào trong giỏ hàng';
+    // Load cart from localStorage and render the UI
+    function loadCart() {
+        const cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
+        const cartItemsContainer = document.getElementById('cartItems');
+        const cartSubtitle = document.querySelector('.cart-section-title');
+        const emptyCartContainer = document.querySelector('.empty-cart-container');
+        const cartContent = document.querySelector('.cart-content');
+
+        // Ensure containers exist before manipulating them
+        if (!cartItemsContainer || !cartSubtitle || !emptyCartContainer || !cartContent) {
+            console.error('Cart elements not found in the DOM.');
+            return;
+        }
+
+        // Clear previous content
+        cartItemsContainer.innerHTML = '';
+
+        if (cart.length === 0) {
+            emptyCartContainer.style.display = 'block';
+            cartItemsContainer.style.display = 'none';
+            cartSubtitle.textContent = 'Giỏ hàng của bạn đang trống';
+        } else {
+            emptyCartContainer.style.display = 'none';
+            cartItemsContainer.style.display = 'block';
+            cartSubtitle.textContent = `Có ${cart.length} sản phẩm trong giỏ hàng`;
+
+            cart.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('cart-item');
+                itemElement.dataset.id = item.id;
+                const itemTotalPrice = (parseFloat(item.price) || 0) * item.quantity;
+
+                itemElement.innerHTML = `
+                    <div class="item-image">
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="item-details">
+                        <p class="item-name">${item.name}</p>
+                        ${item.attributes ? `<p class="item-description">TÁC DỤNG: ${item.attributes}</p>` : ''}
+                        <button class="remove-btn" onclick="removeFromCart('${item.id}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>
+                            XOÁ SẢN PHẨM
+                        </button>
+                    </div>
+                    <div class="item-actions">
+                        <div class="quantity-controls">
+                            <button class="qty-btn" onclick="changeQuantity('${item.id}', -1)">−</button>
+                            <span class="qty-display">${item.quantity}</span>
+                            <button class="qty-btn" onclick="changeQuantity('${item.id}', 1)">+</button>
+                        </div>
+                        <div class="item-price">
+                             <span class="price">${formatPrice(itemTotalPrice)}</span>
+                        </div>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(itemElement);
+            });
+        }
         updateSummary(cart);
-        return;
     }
 
-    if (emptyCartContainer) emptyCartContainer.style.display = 'none';
-    if (cartItemsContainer) cartItemsContainer.style.display = 'block';
+    // Update order summary
+    function updateSummary(cart) {
+        const subtotalEl = document.getElementById('subtotal');
+        const freeShipNote = document.querySelector('.shipping-note .note-item:last-child');
+        const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) || 0) * item.quantity, 0);
 
-    cartSubtitle.textContent = `Có ${cart.length} sản phẩm trong giỏ hàng`;
-    cartItemsContainer.innerHTML = ''; // Clear existing items
-
-    cart.forEach(item => {
-        const itemElement = document.createElement('div');
-        itemElement.classList.add('cart-item');
-        itemElement.dataset.id = item.id;
-
-        itemElement.innerHTML = `
-            <div class="item-image">
-                <img src="${item.image}" alt="${item.name}">
-            </div>
-            <div class="item-info">
-                <p class="item-name">${item.name}</p>
-                ${item.attributes ? `<p class="item-description">TÁC DỤNG: ${item.attributes}</p>` : ''}
-                <button class="remove-btn" onclick="removeFromCart('${item.id}')">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>
-                    XOÁ SẢN PHẨM
-                </button>
-            </div>
-            <div class="item-actions">
-                <div class="quantity-controls">
-                    <button class="qty-btn" onclick="changeQuantity('${item.id}', -1)">−</button>
-                    <span class="qty-display">${item.quantity}</span>
-                    <button class="qty-btn" onclick="changeQuantity('${item.id}', 1)">+</button>
-                </div>
-                <div class="item-price">
-                     <span class="price">${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format((parseFloat(item.price) || 0) * item.quantity)}</span>
-                </div>
-            </div>
-        `;
-        cartItemsContainer.appendChild(itemElement);
-    });
-
-    updateSummary(cart);
-}
-
-function updateQuantity(itemId, delta) {
-    let cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
-    const itemIndex = cart.findIndex(item => item.id === itemId);
-    
-    if (itemIndex > -1) {
-        cart[itemIndex].quantity += delta;
-        
-        if (cart[itemIndex].quantity <= 0) {
-            cart.splice(itemIndex, 1);
+        if (subtotalEl) {
+            subtotalEl.textContent = formatPrice(subtotal);
         }
-        
-        localStorage.setItem('vanmoc_cart', JSON.stringify(cart));
-        loadCart();
-        updateCartCounter();
-    }
-}
 
-function removeItem(id) {
-    let cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
-    cart = cart.filter(item => item.id !== id);
-    localStorage.setItem('vanmoc_cart', JSON.stringify(cart));
-    loadCart();
-    updateCartNotification();
-}
-
-function updateCartTotal() {
-    const cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
-    let subtotal = 0;
-    
-    cart.forEach(item => {
-        const price = parseInt(item.price.replace(/[^\d]/g, ''));
-        subtotal += price * item.quantity;
-    });
-    
-    // Update summary using ID
-    const subtotalEl = document.getElementById('subtotal');
-    if (subtotalEl) {
-        subtotalEl.textContent = formatPrice(subtotal);
-    }
-}
-
-function formatPrice(price) {
-    return new Intl.NumberFormat('vi-VN').format(price) + '₫';
-}
-
-function updateCartCounter() {
-    const cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    
-    let cartCounter = document.querySelector('.cart-counter');
-    if (!cartCounter && totalItems > 0) {
-        const cartIcon = document.querySelector('.cart-link');
-        if (cartIcon) {
-            cartCounter = document.createElement('span');
-            cartCounter.className = 'cart-counter';
-            cartCounter.style.cssText = `
-                position: absolute;
-                top: -8px;
-                right: -8px;
-                background: #dc3545;
-                color: white;
-                border-radius: 50%;
-                width: 20px;
-                height: 20px;
-                font-size: 12px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: bold;
-            `;
-            cartIcon.style.position = 'relative';
-            cartIcon.appendChild(cartCounter);
-        }
-    }
-    
-    if (cartCounter) {
-        cartCounter.textContent = totalItems;
-        cartCounter.style.display = totalItems > 0 ? 'flex' : 'none';
-    }
-}
-
-function showNotification(message, type = 'success') {
-    const existingNotification = document.querySelector('.notification');
-    if (existingNotification) {
-        existingNotification.remove();
-    }
-    
-    const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${type === 'success' ? '#28a745' : '#dc3545'};
-        color: white;
-        padding: 15px 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        z-index: 10000;
-        font-family: 'Be Vietnam Pro', sans-serif;
-        font-size: 14px;
-        max-width: 300px;
-        transform: translateX(100%);
-        transition: transform 0.3s ease-in-out;
-    `;
-    notification.textContent = message;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
-    
-    setTimeout(() => {
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
+        if (freeShipNote) {
+            if (subtotal >= 1000000) {
+                freeShipNote.style.display = 'flex';
+            } else {
+                freeShipNote.style.display = 'none';
             }
-        }, 300);
-    }, 3000);
-}
-
-function proceedToCheckout() {
-    const cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
-    if (cart.length === 0) {
-        showNotification('Giỏ hàng của bạn đang trống', 'error');
-        return;
+        }
     }
-    window.location.href = '{{ route("public.checkout") }}';
-}
 
-// Initialize cart on page load
-document.addEventListener('DOMContentLoaded', function() {
-    loadCart();
-    updateCartCounter();
-});
+    // Change item quantity
+    function changeQuantity(itemId, delta) {
+        let cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
+        const itemIndex = cart.findIndex(i => i.id === itemId);
+
+        if (itemIndex > -1) {
+            const newQuantity = cart[itemIndex].quantity + delta;
+            // Prevent quantity from going below 1
+            if (newQuantity >= 1) {
+                cart[itemIndex].quantity = newQuantity;
+            }
+        }
+
+        localStorage.setItem('vanmoc_cart', JSON.stringify(cart));
+        loadCart(); // Reload the cart to reflect changes
+    }
+
+    // Remove item from cart
+    function removeFromCart(itemId) {
+        let cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
+        cart = cart.filter(i => i.id !== itemId);
+        localStorage.setItem('vanmoc_cart', JSON.stringify(cart));
+        loadCart(); // Reload the cart
+    }
+
+    // Proceed to checkout
+    function proceedToCheckout() {
+        const cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
+        if (cart.length === 0) {
+            alert('Giỏ hàng của bạn đang trống.');
+            return;
+        }
+        window.location.href = '{{ route("public.checkout") }}';
+    }
+
+    // Initial load
+    document.addEventListener('DOMContentLoaded', loadCart);
 </script>

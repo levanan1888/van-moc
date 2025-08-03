@@ -398,13 +398,13 @@
 }
 
 .product-title {
-    font-size: 28px;
-    font-weight: 700;
-    color: #333;
+    font-family: 'Prata', serif;
+    font-size: 28px; /* Adjusted font size */
+    font-weight: 400; /* Standard weight */
+    color: #333333;
+    text-transform: uppercase;
     margin: 0;
-    line-height: 1.3;
-    text-align: left;
-    padding-left: 0;
+    line-height: 1.4;
 }
 
 /* ⭐ 7. Đánh giá sản phẩm */
@@ -416,23 +416,22 @@
     padding-left: 0;
 }
 
-.stars {
+.product-rating .stars {
     display: flex;
-    gap: 2px;
+    color: #ccc; /* Light grey for stars */
 }
 
-.star {
-    color: #ddd;
-    font-size: 18px;
+.product-rating .star {
+    font-size: 18px; /* Adjusted size */
 }
 
-.star.filled {
-    color: #ffc107;
+.product-rating .star.filled {
+    color: #FFC107; /* Keep filled stars yellow */
 }
 
-.rating-text {
-    color: #666;
+.product-rating .rating-text {
     font-size: 14px;
+    color: #999; /* Light grey for review text */
 }
 
 /* Giá bán: xanh lá, nổi bật */
@@ -442,10 +441,13 @@
 }
 
 .price-current {
-    font-size: 32px;
-    font-weight: 700;
-    color: #28a745;
-    padding-left: 0;
+    font-family: 'Prata', serif;
+    font-size: 28px; /* Adjusted font size */
+    font-weight: 400; /* Standard weight */
+    color: #333333;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1.4;
 }
 
 /* Số lượng điều chỉnh và nút mua */
