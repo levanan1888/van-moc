@@ -437,7 +437,7 @@
     }
 }
 </style>
-
+<script>
 // Load cart items and update checkout summary
 function loadCheckoutSummary() {
     const cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
