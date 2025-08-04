@@ -74,13 +74,6 @@ return [
                 $theme->composer(['page', 'post', 'product'], function (\Botble\Shortcode\View\View $view) {
                     $view->withShortcodes();
                 });
-                
-                // Register custom shortcodes
-                if (function_exists('add_shortcode')) {
-                    add_shortcode('blog-section', 'Blog Section', 'Blog Section', function ($shortcode) {
-                        return Theme::partial('shortcodes.blog-section', compact('shortcode'));
-                    });
-                }
             }
         },
 
