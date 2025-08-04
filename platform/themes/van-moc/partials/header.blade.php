@@ -44,7 +44,7 @@
                 <i class="fa fa-search"></i>
             </a>
             <a href="{{ route('public.cart') }}" class="cart-icon" title="Giỏ hàng">
-                <i class="fa fa-shopping-cart"></i>
+                <i class="fa fa-shopping-bag"></i>
                 <span class="cart-count">0</span>
             </a>
         </div>

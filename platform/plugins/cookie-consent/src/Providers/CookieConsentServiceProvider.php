@@ -21,7 +21,9 @@ class CookieConsentServiceProvider extends ServiceProvider
             ->loadAndPublishViews()
             ->publishAssets();
 
-        if (defined('THEME_FRONT_FOOTER') && theme_option('cookie_consent_enable', 'yes') == 'yes') {
+        // Comment out cookie consent to disable it completely
+        /*
+        if (defined('THEME_FRONT_FOOTER') && theme_option('cookie_consent_enable', 'no') == 'yes') {
             $this->app->resolving(EncryptCookies::class, function (EncryptCookies $encryptCookies) {
                 $encryptCookies->disableFor(config('plugins.cookie-consent.general.cookie_name'));
             });
@@ -58,7 +60,10 @@ class CookieConsentServiceProvider extends ServiceProvider
 
             add_filter(THEME_FRONT_FOOTER, [$this, 'registerCookieConsent'], 1346);
         }
+        */
 
+        // Comment out theme options to hide from admin
+        /*
         theme_option()
             ->setSection([
                 'title' => trans('plugins/cookie-consent::cookie-consent.theme_options.name'),
@@ -203,6 +208,7 @@ class CookieConsentServiceProvider extends ServiceProvider
                     ],
                 ],
             ]);
+        */
     }
 
     /**
@@ -210,8 +216,10 @@ class CookieConsentServiceProvider extends ServiceProvider
      * @return string
      * @throws \Throwable
      */
+    /*
     public function registerCookieConsent($html): string
     {
         return $html . view('plugins/cookie-consent::index')->render();
     }
+    */
 }
