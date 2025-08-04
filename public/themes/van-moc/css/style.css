@@ -868,26 +868,28 @@ header nav ul .sub-menu .sub-menu {
 
 .philosophy-box {
     grid-area: philosophy;
-    background: linear-gradient(rgba(45, 85, 56, 0.6), rgba(45, 85, 56, 0.6)), url('VMM_image/VMM_image/background5.png');
-    background-size: cover;
-    background-position: center;
+    position: relative;
     color: white;
-    padding: 50px;
+    padding: 0;
     border-radius: 12px;
-    display: flex;
-    align-items: center;
-    gap: 30px;
+    overflow: hidden;
+    min-height: 400px;
 }
 
-.philosophy-image {
-    flex: 0 0 200px;
-}
-
-.philosophy-image img {
+.philosophy-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 150px;
+    height: 100%;
+    z-index: 1;
+}
+
+.philosophy-bg img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 8px;
+    display: block;
 }
 
 .philosophy-logo {
@@ -898,7 +900,15 @@ header nav ul .sub-menu .sub-menu {
 }
 
 .philosophy-content {
+    position: relative;
+    z-index: 2;
+    padding: 50px;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    background: linear-gradient(rgba(45, 85, 56, 0.7), rgba(45, 85, 56, 0.7));
 }
 
 .philosophy-content h3 {
@@ -936,33 +946,39 @@ header nav ul .sub-menu .sub-menu {
 
 .vision-content, .mission-content {
     color: white;
-    padding: 40px;
+    padding: 0;
     border-radius: 12px;
-    background-size: cover;
-    background-position: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;
+}
+
+.vision-bg, .mission-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.vision-bg img, .mission-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.vision-text, .mission-text {
+    position: relative;
+    z-index: 2;
+    padding: 40px;
+    text-align: left;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    text-align: left;
-}
-
-.vision-image, .mission-image {
-    margin-bottom: 20px;
-}
-
-.vision-image img, .mission-image img {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.vision-content {
-    background: linear-gradient(rgba(45, 85, 56, 0.6), rgba(45, 85, 56, 0.6)), url('VMM_image/VMM_image/background7.png');
-}
-
-.mission-content {
-    background: linear-gradient(rgba(45, 85, 56, 0.6), rgba(45, 85, 56, 0.6)), url('VMM_image/VMM_image/background3.png');
+    height: 100%;
+    background: linear-gradient(rgba(45, 85, 56, 0.7), rgba(45, 85, 56, 0.7));
 }
 
 .vision-content h4, .mission-content h4 {
@@ -1433,26 +1449,6 @@ footer .container {
             "vision"
             "mission";
     }
-    
-    .philosophy-box {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-    }
-    
-    .philosophy-image {
-        flex: 0 0 auto;
-        width: 150px;
-        margin: 0 auto;
-    }
-    
-    .philosophy-image img {
-        height: 120px;
-    }
-    
-    .vision-image img, .mission-image img {
-        height: 100px;
-    }
 }
 
 @media (max-width: 768px) {
@@ -1490,27 +1486,6 @@ footer .container {
     }
     .banner-container { min-height: 400px; }
     .banner-item { height: 200px; }
-    
-    .philosophy-box {
-        flex-direction: column;
-        text-align: center;
-        gap: 15px;
-        padding: 30px;
-    }
-    
-    .philosophy-image {
-        flex: 0 0 auto;
-        width: 120px;
-        margin: 0 auto;
-    }
-    
-    .philosophy-image img {
-        height: 100px;
-    }
-    
-    .vision-image img, .mission-image img {
-        height: 80px;
-    }
 }
 
 /* Social Icons Sticky */

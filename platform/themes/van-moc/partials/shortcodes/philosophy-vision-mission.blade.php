@@ -33,7 +33,7 @@
             </div>
             <div class="mission-content">
                 <div class="mission-bg">
-                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh_trietly/hinhtrietly3.png') }}" alt="Mission Background">
+                    <img src="{{ asset('themes/van-moc/assets/images/VMM_image/VMM_image/hinh_trietly/hinhtrietly3.png') }}" alt="Mission Background">
                 </div>
                 <div class="mission-text">
                     <h4>{{ $mission_title }}</h4>

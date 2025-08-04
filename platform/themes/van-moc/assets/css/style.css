@@ -872,11 +872,14 @@ header nav ul .sub-menu .sub-menu {
     color: white;
     padding: 50px;
     border-radius: 12px;
+    overflow: hidden;
+    min-height: 400px;
+    background: linear-gradient(rgba(45, 85, 56, 0.7), rgba(45, 85, 56, 0.7)), url('/themes/van-moc/images/VMM_image/VMM_image/hinh_trietly/hinhtrietly.png');
+    background-size: cover;
+    background-position: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    overflow: hidden;
-    min-height: 400px;
 }
 
 .philosophy-bg {
@@ -893,6 +896,12 @@ header nav ul .sub-menu .sub-menu {
     height: 100%;
     object-fit: cover;
     display: block;
+}
+
+.philosophy-content {
+    position: relative;
+    z-index: 10;
+    text-align: left;
 }
 
 .philosophy-logo {
@@ -945,13 +954,25 @@ header nav ul .sub-menu .sub-menu {
     color: white;
     padding: 40px;
     border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     text-align: left;
     position: relative;
     overflow: hidden;
     min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.vision-content {
+    background: linear-gradient(rgba(45, 85, 56, 0.7), rgba(45, 85, 56, 0.7)), url('/themes/van-moc/images/VMM_image/VMM_image/hinh_trietly/hinhtrietly2.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.mission-content {
+    background: linear-gradient(rgba(45, 85, 56, 0.7), rgba(45, 85, 56, 0.7)), url('/themes/van-moc/images/VMM_image/VMM_image/hinh_trietly/hinhtrietly3.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .vision-bg, .mission-bg {
@@ -972,7 +993,7 @@ header nav ul .sub-menu .sub-menu {
 
 .vision-text, .mission-text {
     position: relative;
-    z-index: 2;
+    z-index: 10;
 }
 
 .vision-content h4, .mission-content h4 {

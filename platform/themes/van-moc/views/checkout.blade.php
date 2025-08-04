@@ -13,20 +13,25 @@
                 <form class="checkout-form" id="checkoutForm">
                     <!-- Customer Information -->
                     <div class="form-section">
-                        <h3>Thông tin khách hàng</h3>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="fullName">Họ và tên *</label>
+                                <label for="fullName">Họ và tên</label>
                                 <input type="text" id="fullName" name="fullName" required>
                             </div>
                             <div class="form-group">
-                                <label for="phone">Số điện thoại *</label>
-                                <input type="tel" id="phone" name="phone" required>
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Số điện thoại</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Địa chỉ</label>
+                                <input type="text" id="address" name="address" placeholder="Số nhà, tên đường..." required>
+                            </div>
                         </div>
                     </div>
 
@@ -48,42 +53,21 @@
                                     Chuyển khoản ngân hàng
                                 </span>
                             </label>
-                            <label class="payment-option">
+                            <!-- <label class="payment-option">
                                 <input type="radio" name="paymentMethod" value="momo">
                                 <span class="payment-label">
                                     <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/momo-icon.svg') }}" alt="MoMo">
                                     Ví điện tử MoMo
                                 </span>
-                            </label>
+                            </label> -->
                         </div>
                     </div>
 
                     <!-- Shipping Address -->
-                    <div class="form-section">
-                        <h3>Địa chỉ giao hàng</h3>
+                    <!-- <div class="form-section">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="province">Tỉnh/Thành phố *</label>
-                                <select id="province" name="province" required>
-                                    <option value="">Chọn tỉnh/thành phố</option>
-                                    <option value="ho-chi-minh">TP. Hồ Chí Minh</option>
-                                    <option value="ha-noi">Hà Nội</option>
-                                    <option value="da-nang">Đà Nẵng</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="district">Quận/Huyện *</label>
-                                <select id="district" name="district" required>
-                                    <option value="">Chọn quận/huyện</option>
-                                    <option value="quan-1">Quận 1</option>
-                                    <option value="quan-3">Quận 3</option>
-                                    <option value="binh-thanh">Bình Thạnh</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="ward">Phường/Xã *</label>
+                                <label for="ward">Phường/Xã</label>
                                 <select id="ward" name="ward" required>
                                     <option value="">Chọn phường/xã</option>
                                     <option value="phuong-1">Phường 1</option>
@@ -92,19 +76,13 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="address">Địa chỉ cụ thể *</label>
-                                <input type="text" id="address" name="address" placeholder="Số nhà, tên đường..." required>
+                                <label for="notes">Ghi chú</label>
+                                <textarea id="notes" name="notes" placeholder="Ghi chú về đơn hàng..."></textarea>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <!-- Order Notes -->
-                    <div class="form-section">
-                        <h3>Ghi chú đơn hàng</h3>
-                        <div class="form-group">
-                            <textarea id="orderNotes" name="orderNotes" placeholder="Ghi chú về đơn hàng, ví dụ: thời gian hay chỉ dẫn địa điểm giao hàng chi tiết hơn."></textarea>
-                        </div>
-                    </div>
+
                 </form>
             </div>
 
@@ -118,54 +96,68 @@
                             <div class="item-info">
                                 <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property11.png') }}" alt="Product">
                                 <div class="item-details">
-                                    <span class="item-name">Combo 3 Bộ Dưỡng Ẩm Cho Da Khô</span>
-                                    <span class="item-qty">x1</span>
+                                    <span class="item-name">Combo 3 Kem đánh răng Sudanta</span>
+                                    <span class="item-qty">SL:1</span>
                                 </div>
                             </div>
-                            <span class="item-price">279.000₫</span>
+                            <div class="item-price">
+                                <span class="original-price">179.400₫</span>
+                                <span class="current-price">149.400₫</span>
+                            </div>
                         </div>
                         
                         <div class="order-item">
                             <div class="item-info">
                                 <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property11.png') }}" alt="Product">
                                 <div class="item-details">
-                                    <span class="item-name">Sữa Rửa Mặt Tẩy Tế Bào Chết</span>
-                                    <span class="item-qty">x1</span>
+                                    <span class="item-name">Sữa tắm tinh dầu thảo dược Mộc Hương</span>
+                                    <span class="item-qty">SL:1</span>
                                 </div>
                             </div>
-                            <span class="item-price">384.000₫</span>
+                            <span class="item-price">284.000₫</span>
+                        </div>
+                        
+                        <div class="order-item">
+                            <div class="item-info">
+                                <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property11.png') }}" alt="Product">
+                                <div class="item-details">
+                                    <span class="item-name">Nước cốt gà Brand's</span>
+                                    <span class="item-qty">SL:1</span>
+                                </div>
+                            </div>
+                            <span class="item-price">39.500₫</span>
                         </div>
                     </div>
                     
                     <div class="summary-calculations">
                         <div class="summary-row">
-                            <span>Tạm tính</span>
-                            <span>663.000₫</span>
+                            <span>Tổng tiền hàng</span>
+                            <span>503.900₫</span>
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Giá khuyến mãi sản phẩm</span>
+                            <span>30.000₫</span>
                         </div>
                         
                         <div class="summary-row">
                             <span>Phí vận chuyển</span>
-                            <span>Miễn phí</span>
+                            <span>30.000₫</span>
                         </div>
                         
                         <div class="summary-row">
-                            <span>Giảm giá (10%)</span>
-                            <span class="discount">-66.300₫</span>
-                        </div>
-                        
-                        <div class="summary-row">
-                            <span>Thuế VAT (10%)</span>
-                            <span>59.670₫</span>
+                            <span>Giảm phí vận chuyển</span>
+                            <span>10.000₫</span>
                         </div>
                         
                         <div class="summary-row total">
-                            <span>Tổng cộng</span>
-                            <span>656.370₫</span>
+                            <span>Tổng thanh toán</span>
+                            <span>493.900₫</span>
                         </div>
                     </div>
                     
                     <button class="place-order-btn" onclick="placeOrder()">
-                        Đặt hàng
+                        HOÀN TẤT THANH TOÁN
                     </button>
                 </div>
             </div>
@@ -371,6 +363,20 @@
     font-size: 14px;
     font-weight: 600;
     color: #28a745;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 12px;
+}
+
+.current-price {
+    color: #28a745;
+    font-weight: 600;
 }
 
 .summary-calculations {
@@ -562,40 +568,11 @@ function showNotification(message, type = 'success') {
     }, 3000);
 }
 
-// Update district options based on province selection
-document.getElementById('province').addEventListener('change', function() {
-    const district = document.getElementById('district');
-    const ward = document.getElementById('ward');
-    
-    // Clear existing options
-    district.innerHTML = '<option value="">Chọn quận/huyện</option>';
-    ward.innerHTML = '<option value="">Chọn phường/xã</option>';
-    
-    // Add districts based on province (simplified example)
-    if (this.value === 'ho-chi-minh') {
-        district.innerHTML += '<option value="quan-1">Quận 1</option>';
-        district.innerHTML += '<option value="quan-3">Quận 3</option>';
-        district.innerHTML += '<option value="binh-thanh">Bình Thạnh</option>';
-    }
-});
 
-// Update ward options based on district selection
-document.getElementById('district').addEventListener('change', function() {
-    const ward = document.getElementById('ward');
-    
-    // Clear existing options
-    ward.innerHTML = '<option value="">Chọn phường/xã</option>';
-    
-    // Add wards based on district (simplified example)
-    if (this.value) {
-        ward.innerHTML += '<option value="phuong-1">Phường 1</option>';
-        ward.innerHTML += '<option value="phuong-2">Phường 2</option>';
-        ward.innerHTML += '<option value="phuong-3">Phường 3</option>';
-    }
-});
 
 // Initialize checkout page
 document.addEventListener('DOMContentLoaded', function() {
     loadCheckoutSummary();
 });
 </script>
+
