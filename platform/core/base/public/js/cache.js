@@ -1,1 +1,49 @@
-(()=>{function t(e){return t="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},t(e)}function e(t,e){for(var n=0;n<e.length;n++){var o=e[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,r(o.key),o)}}function r(e){var r=function(e,r){if("object"!=t(e)||!e)return e;var n=e[Symbol.toPrimitive];if(void 0!==n){var o=n.call(e,r||"default");if("object"!=t(o))return o;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===r?String:Number)(e)}(e,"string");return"symbol"==t(r)?r:r+""}var n=function(){return t=function t(){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t)},(r=[{key:"init",value:function(){$(document).on("click",".btn-clear-cache",function(t){t.preventDefault();var e=$(t.currentTarget);e.addClass("button-loading"),$.ajax({url:e.data("url"),type:"POST",data:{type:e.data("type")},success:function(t){e.removeClass("button-loading"),t.error?Botble.showError(t.message):Botble.showSuccess(t.message)},error:function(t){e.removeClass("button-loading"),Botble.handleError(t)}})})}}])&&e(t.prototype,r),n&&e(t,n),Object.defineProperty(t,"prototype",{writable:!1}),t;var t,r,n}();$(document).ready(function(){(new n).init()})})();
+/******/ (() => { // webpackBootstrap
+/*!*********************************************************!*\
+  !*** ./platform/core/base/resources/assets/js/cache.js ***!
+  \*********************************************************/
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var CacheManagement = /*#__PURE__*/function () {
+  function CacheManagement() {
+    _classCallCheck(this, CacheManagement);
+  }
+  return _createClass(CacheManagement, [{
+    key: "init",
+    value: function init() {
+      $(document).on('click', '.btn-clear-cache', function (event) {
+        event.preventDefault();
+        var _self = $(event.currentTarget);
+        _self.addClass('button-loading');
+        $.ajax({
+          url: _self.data('url'),
+          type: 'POST',
+          data: {
+            type: _self.data('type')
+          },
+          success: function success(data) {
+            _self.removeClass('button-loading');
+            if (data.error) {
+              Botble.showError(data.message);
+            } else {
+              Botble.showSuccess(data.message);
+            }
+          },
+          error: function error(data) {
+            _self.removeClass('button-loading');
+            Botble.handleError(data);
+          }
+        });
+      });
+    }
+  }]);
+}();
+$(document).ready(function () {
+  new CacheManagement().init();
+});
+/******/ })()
+;

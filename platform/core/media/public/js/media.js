@@ -1,1 +1,2291 @@
-(()=>{"use strict";var e={1756:(e,t,r)=>{r.d(t,{K:()=>l});var n=r(4241),i=r(9849);function o(e){return o="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},o(e)}function a(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,s(n.key),n)}}function s(e){var t=function(e,t){if("object"!=o(e)||!e)return e;var r=e[Symbol.toPrimitive];if(void 0!==r){var n=r.call(e,t||"default");if("object"!=o(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===t?String:Number)(e)}(e,"string");return"symbol"==o(t)?t:t+""}var l=function(){function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e)}return t=e,o=[{key:"initContext",value:function(){jQuery().contextMenu&&($.contextMenu({selector:'.js-context-menu[data-context="file"]',build:function(){return{items:e._fileContextMenu()}}}),$.contextMenu({selector:'.js-context-menu[data-context="folder"]',build:function(){return{items:e._folderContextMenu()}}}))}},{key:"_fileContextMenu",value:function(){var e={preview:{name:"Preview",icon:function(e,t,r,n){return t.html('<i class="fa fa-eye" aria-hidden="true"></i> '+n.name),"context-menu-icon-updated"},callback:function(){n.d.handlePreview()}}};_.each(i.M.getConfigs().actions_list,function(t,r){_.each(t,function(t){e[t.action]={name:t.name,icon:function(e,n,i,o){return n.html('<i class="'+t.icon+'" aria-hidden="true"></i> '+(RV_MEDIA_CONFIG.translations.actions_list[r][t.action]||o.name)),"context-menu-icon-updated"},callback:function(){$('.js-files-action[data-action="'+t.action+'"]').trigger("click")}}})});var t=[];switch(i.M.getRequestParams().view_in){case"all_media":t=["remove_favorite","delete","restore"];break;case"recent":t=["remove_favorite","delete","restore","make_copy"];break;case"favorites":t=["favorite","delete","restore","make_copy"];break;case"trash":e={preview:e.preview,rename:e.rename,download:e.download,delete:e.delete,restore:e.restore}}_.each(t,function(t){e[t]=void 0}),i.M.getSelectedFolder().length>0&&(e.preview=void 0,e.copy_link=void 0,_.includes(RV_MEDIA_CONFIG.permissions,"folders.create")||(e.make_copy=void 0),_.includes(RV_MEDIA_CONFIG.permissions,"folders.edit")||(e.rename=void 0),_.includes(RV_MEDIA_CONFIG.permissions,"folders.trash")||(e.trash=void 0,e.restore=void 0),_.includes(RV_MEDIA_CONFIG.permissions,"folders.destroy")||(e.delete=void 0),_.includes(RV_MEDIA_CONFIG.permissions,"folders.favorite")||(e.favorite=void 0,e.remove_favorite=void 0));var r=i.M.getSelectedFiles();return r.length>0&&(_.includes(RV_MEDIA_CONFIG.permissions,"files.create")||(e.make_copy=void 0),_.includes(RV_MEDIA_CONFIG.permissions,"files.edit")||(e.rename=void 0),_.includes(RV_MEDIA_CONFIG.permissions,"files.trash")||(e.trash=void 0,e.restore=void 0),_.includes(RV_MEDIA_CONFIG.permissions,"files.destroy")||(e.delete=void 0),_.includes(RV_MEDIA_CONFIG.permissions,"files.favorite")||(e.favorite=void 0,e.remove_favorite=void 0)),_.filter(r,function(e){return e.preview_url}).length||(e.preview=void 0),e}},{key:"_folderContextMenu",value:function(){var t=e._fileContextMenu();return t.preview=void 0,t.copy_link=void 0,t}},{key:"destroyContext",value:function(){jQuery().contextMenu&&$.contextMenu("destroy")}}],(r=null)&&a(t.prototype,r),o&&a(t,o),Object.defineProperty(t,"prototype",{writable:!1}),t;var t,r,o}()},3051:(e,t,r)=>{r.d(t,{T:()=>n,y:()=>o});var n=$.parseJSON(localStorage.getItem("MediaConfig"))||{},i={app_key:RV_MEDIA_CONFIG.random_hash?RV_MEDIA_CONFIG.random_hash:"21d06709fe1d3abcc0efddda89c4b279",request_params:{view_type:"tiles",filter:"everything",view_in:"all_media",sort_by:"created_at-desc",folder_id:0},hide_details_pane:!1,icons:{folder:"fa fa-folder"},actions_list:{basic:[{icon:"fa fa-eye",name:"Preview",action:"preview",order:0,class:"rv-action-preview"}],file:[{icon:"fa fa-link",name:"Copy link",action:"copy_link",order:0,class:"rv-action-copy-link"},{icon:"far fa-edit",name:"Rename",action:"rename",order:1,class:"rv-action-rename"},{icon:"fa fa-copy",name:"Make a copy",action:"make_copy",order:2,class:"rv-action-make-copy"}],user:[{icon:"fa fa-star",name:"Favorite",action:"favorite",order:2,class:"rv-action-favorite"},{icon:"fa fa-star",name:"Remove favorite",action:"remove_favorite",order:3,class:"rv-action-favorite"}],other:[{icon:"fa fa-download",name:"Download",action:"download",order:0,class:"rv-action-download"},{icon:"fa fa-trash",name:"Move to trash",action:"trash",order:1,class:"rv-action-trash"},{icon:"fa fa-eraser",name:"Delete permanently",action:"delete",order:2,class:"rv-action-delete"},{icon:"fa fa-undo",name:"Restore",action:"restore",order:3,class:"rv-action-restore"}]}};n.app_key&&n.app_key===i.app_key||(n=i),n.request_params.search="";var o=$.parseJSON(localStorage.getItem("RecentItems"))||[]},3801:(e,t,r)=>{r.d(t,{x:()=>u});var n=r(9849),i=r(3051),o=r(1756);function a(e){return a="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},a(e)}function s(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function l(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,d(n.key),n)}}function c(e,t,r){return t&&l(e.prototype,t),r&&l(e,r),Object.defineProperty(e,"prototype",{writable:!1}),e}function d(e){var t=function(e,t){if("object"!=a(e)||!e)return e;var r=e[Symbol.toPrimitive];if(void 0!==r){var n=r.call(e,t||"default");if("object"!=a(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===t?String:Number)(e)}(e,"string");return"symbol"==a(t)?t:t+""}var u=function(){return c(function e(){s(this,e)},null,[{key:"editorSelectFile",value:function(e){var t=n.M.getUrlParam("CKEditor")||n.M.getUrlParam("CKEditorFuncNum");if(window.opener&&t){var r=_.first(e);window.opener.CKEDITOR.tools.callFunction(n.M.getUrlParam("CKEditorFuncNum"),r.full_url),window.opener&&window.close()}}}])}(),f=c(function e(t,r){s(this,e),window.rvMedia=window.rvMedia||{};var a=$("body");r=$.extend(!0,{multiple:!0,type:"*",onSelectFiles:function(e,t){}},r);var l=function(e){e.preventDefault();var t=$(e.currentTarget);$("#rv_media_modal").modal("show"),window.rvMedia.options=r,window.rvMedia.options.open_in="modal",window.rvMedia.$el=t,i.T.request_params.filter="everything",n.M.storeConfig();var a=window.rvMedia.$el.data("rv-media");void 0!==a&&a.length>0&&(a=a[0],window.rvMedia.options=$.extend(!0,window.rvMedia.options,a||{}),void 0!==a.selected_file_id?window.rvMedia.options.is_popup=!0:void 0!==window.rvMedia.options.is_popup&&(window.rvMedia.options.is_popup=void 0)),0===$("#rv_media_body .rv-media-container").length?$("#rv_media_body").load(RV_MEDIA_URL.popup,function(e){e.error&&alert(e.message),$("#rv_media_body").removeClass("media-modal-loading").closest(".modal-content").removeClass("bb-loading"),$(document).find(".rv-media-container .js-change-action[data-type=refresh]").trigger("click"),"everything"!==n.M.getRequestParams().filter&&$(".rv-media-actions .btn.js-rv-media-change-filter-group.js-filter-by-type").hide(),o.K.destroyContext(),o.K.initContext()}):$(document).find(".rv-media-container .js-change-action[data-type=refresh]").trigger("click")};"string"==typeof t?a.off("click",t).on("click",t,l):t.off("click").on("click",l)});window.RvMediaStandAlone=f,$(".js-insert-to-editor").off("click").on("click",function(e){e.preventDefault();var t=n.M.getSelectedFiles();_.size(t)>0&&u.editorSelectFile(t)}),$.fn.rvMedia=function(e){var t=$(this);i.T.request_params.filter="everything",$(document).find(".js-insert-to-editor").prop("disabled","trash"===i.T.request_params.view_in),n.M.storeConfig(),new f(t,e)}},4241:(e,t,r)=>{r.d(t,{d:()=>c});var n=r(3051),i=r(9849),o=r(4893);function a(e){return a="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},a(e)}function s(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,l(n.key),n)}}function l(e){var t=function(e,t){if("object"!=a(e)||!e)return e;var r=e[Symbol.toPrimitive];if(void 0!==r){var n=r.call(e,t||"default");if("object"!=a(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===t?String:Number)(e)}(e,"string");return"symbol"==a(t)?t:t+""}var c=function(){function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e)}return t=e,a=[{key:"handleDropdown",value:function(){var t=_.size(i.M.getSelectedItems());e.renderActions(),t>0?$(".rv-dropdown-actions").removeClass("disabled"):$(".rv-dropdown-actions").addClass("disabled")}},{key:"handlePreview",value:function(){var e=[];_.each(i.M.getSelectedFiles(),function(t){t.preview_url&&(e.push({src:t.preview_url,type:t.preview_type}),n.y.push(t.id))}),_.size(e)>0?($.fancybox.open(e),i.M.storeRecentItems()):this.handleGlobalAction("download")}},{key:"handleCopyLink",value:function(){var e="";_.each(i.M.getSelectedFiles(),function(t){_.isEmpty(e)||(e+="\n"),e+=t.full_url});var t=$(".js-rv-clipboard-temp");t.data("clipboard-text",e),new Clipboard(".js-rv-clipboard-temp",{text:function(){return e}}),o.b.showMessage("success",RV_MEDIA_CONFIG.translations.clipboard.success,RV_MEDIA_CONFIG.translations.message.success_header),t.trigger("click")}},{key:"handleGlobalAction",value:function(t,r){var n=[];switch(_.each(i.M.getSelectedItems(),function(e){n.push({is_folder:e.is_folder,id:e.id,full_url:e.full_url})}),t){case"rename":$("#modal_rename_items").modal("show").find("form.rv-form").data("action",t);break;case"copy_link":e.handleCopyLink();break;case"preview":e.handlePreview();break;case"trash":$("#modal_trash_items").modal("show").find("form.rv-form").data("action",t);break;case"delete":$("#modal_delete_items").modal("show").find("form.rv-form").data("action",t);break;case"empty_trash":$("#modal_empty_trash").modal("show").find("form.rv-form").data("action",t);break;case"download":var a=RV_MEDIA_URL.download,s=0;_.each(i.M.getSelectedItems(),function(e){_.includes(i.M.getConfigs().denied_download,e.mime_type)||(a+=(0===s?"?":"&")+"selected["+s+"][is_folder]="+e.is_folder+"&selected["+s+"][id]="+e.id,s++)}),a!==RV_MEDIA_URL.download?window.open(a,"_blank"):o.b.showMessage("error",RV_MEDIA_CONFIG.translations.download.error,RV_MEDIA_CONFIG.translations.message.error_header);break;default:e.processAction({selected:n,action:t},r)}}},{key:"processAction",value:function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:null;$.ajax({url:RV_MEDIA_URL.global_actions,type:"POST",data:e,dataType:"json",beforeSend:function(){i.M.showAjaxLoading()},success:function(e){i.M.resetPagination(),e.error?o.b.showMessage("error",e.message,RV_MEDIA_CONFIG.translations.message.error_header):o.b.showMessage("success",e.message,RV_MEDIA_CONFIG.translations.message.success_header),t&&t(e)},complete:function(){i.M.hideAjaxLoading()},error:function(e){o.b.handleError(e)}})}},{key:"renderRenameItems",value:function(){var e=$("#rv_media_rename_item").html(),t=$("#modal_rename_items .rename-items").empty();_.each(i.M.getSelectedItems(),function(r){var n=e.replace(/__icon__/gi,r.icon||"fa fa-file").replace(/__placeholder__/gi,"Input file name").replace(/__value__/gi,r.name),i=$(n);i.data("id",r.id),i.data("is_folder",r.is_folder),i.data("name",r.name),t.append(i)})}},{key:"renderActions",value:function(){var e=i.M.getSelectedFolder().length>0,t=$("#rv_action_item").html(),r=0,n=$(".rv-dropdown-actions .dropdown-menu");n.empty();var o=$.extend({},!0,i.M.getConfigs().actions_list);e&&(o.basic=_.reject(o.basic,function(e){return"preview"===e.action}),o.file=_.reject(o.file,function(e){return"copy_link"===e.action}),_.includes(RV_MEDIA_CONFIG.permissions,"folders.create")||(o.file=_.reject(o.file,function(e){return"make_copy"===e.action})),_.includes(RV_MEDIA_CONFIG.permissions,"folders.edit")||(o.file=_.reject(o.file,function(e){return _.includes(["rename"],e.action)}),o.user=_.reject(o.user,function(e){return _.includes(["rename"],e.action)})),_.includes(RV_MEDIA_CONFIG.permissions,"folders.trash")||(o.other=_.reject(o.other,function(e){return _.includes(["trash","restore"],e.action)})),_.includes(RV_MEDIA_CONFIG.permissions,"folders.destroy")||(o.other=_.reject(o.other,function(e){return _.includes(["delete"],e.action)})),_.includes(RV_MEDIA_CONFIG.permissions,"folders.favorite")||(o.other=_.reject(o.other,function(e){return _.includes(["favorite","remove_favorite"],e.action)})));var a=i.M.getSelectedFiles();_.filter(a,function(e){return e.preview_url}).length||(o.basic=_.reject(o.basic,function(e){return"preview"===e.action})),a.length>0&&(_.includes(RV_MEDIA_CONFIG.permissions,"files.create")||(o.file=_.reject(o.file,function(e){return"make_copy"===e.action})),_.includes(RV_MEDIA_CONFIG.permissions,"files.edit")||(o.file=_.reject(o.file,function(e){return _.includes(["rename"],e.action)})),_.includes(RV_MEDIA_CONFIG.permissions,"files.trash")||(o.other=_.reject(o.other,function(e){return _.includes(["trash","restore"],e.action)})),_.includes(RV_MEDIA_CONFIG.permissions,"files.destroy")||(o.other=_.reject(o.other,function(e){return _.includes(["delete"],e.action)})),_.includes(RV_MEDIA_CONFIG.permissions,"files.favorite")||(o.other=_.reject(o.other,function(e){return _.includes(["favorite","remove_favorite"],e.action)}))),_.each(o,function(e,o){_.each(e,function(e,a){var s=!1;switch(i.M.getRequestParams().view_in){case"all_media":_.includes(["remove_favorite","delete","restore"],e.action)&&(s=!0);break;case"recent":_.includes(["remove_favorite","delete","restore","make_copy"],e.action)&&(s=!0);break;case"favorites":_.includes(["favorite","delete","restore","make_copy"],e.action)&&(s=!0);break;case"trash":_.includes(["preview","delete","restore","rename","download"],e.action)||(s=!0)}if(!s){var l=t.replace(/__action__/gi,e.action||"").replace(/__icon__/gi,e.icon||"").replace(/__name__/gi,RV_MEDIA_CONFIG.translations.actions_list[o][e.action]||e.name);!a&&r&&(l='<li role="separator" class="divider"></li>'+l),n.append(l)}}),e.length>0&&r++})}}],(r=null)&&s(t.prototype,r),a&&s(t,a),Object.defineProperty(t,"prototype",{writable:!1}),t;var t,r,a}()},4893:(e,t,r)=>{function n(e){return n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},n(e)}function i(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,o(n.key),n)}}function o(e){var t=function(e,t){if("object"!=n(e)||!e)return e;var r=e[Symbol.toPrimitive];if(void 0!==r){var i=r.call(e,t||"default");if("object"!=n(i))return i;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===t?String:Number)(e)}(e,"string");return"symbol"==n(t)?t:t+""}r.d(t,{b:()=>a});var a=function(){function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e)}return t=e,n=[{key:"showMessage",value:function(e,t){toastr.options={closeButton:!0,progressBar:!0,positionClass:"toast-bottom-right",onclick:null,showDuration:1e3,hideDuration:1e3,timeOut:1e4,extendedTimeOut:1e3,showEasing:"swing",hideEasing:"linear",showMethod:"fadeIn",hideMethod:"fadeOut"};var r="";switch(e){case"error":r=RV_MEDIA_CONFIG.translations.message.error_header;break;case"success":r=RV_MEDIA_CONFIG.translations.message.success_header}toastr[e](t,r)}},{key:"handleError",value:function(t){void 0===t.responseJSON||_.isArray(t.errors)?void 0!==t.responseJSON?void 0!==t.responseJSON.errors?422===t.status&&e.handleValidationError(t.responseJSON.errors):void 0!==t.responseJSON.message?e.showMessage("error",t.responseJSON.message):$.each(t.responseJSON,function(t,r){$.each(r,function(t,r){e.showMessage("error",r)})}):e.showMessage("error",t.statusText):e.handleValidationError(t.responseJSON.errors)}},{key:"handleValidationError",value:function(t){var r="";$.each(t,function(e,t){r+=t+"<br />",$('*[name="'+e+'"]').addClass("field-has-error"),$('*[name$="['+e+']"]').addClass("field-has-error")}),e.showMessage("error",r)}}],(r=null)&&i(t.prototype,r),n&&i(t,n),Object.defineProperty(t,"prototype",{writable:!1}),t;var t,r,n}()},9849:(e,t,r)=>{r.d(t,{M:()=>s});var n=r(3051);function i(e){return i="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},i(e)}function o(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,a(n.key),n)}}function a(e){var t=function(e,t){if("object"!=i(e)||!e)return e;var r=e[Symbol.toPrimitive];if(void 0!==r){var n=r.call(e,t||"default");if("object"!=i(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===t?String:Number)(e)}(e,"string");return"symbol"==i(t)?t:t+""}var s=function(){function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e)}return t=e,i=[{key:"getUrlParam",value:function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:null;t||(t=window.location.search);var r=new RegExp("(?:[?&]|&)"+e+"=([^&]+)","i"),n=t.match(r);return n&&n.length>1?n[1]:null}},{key:"asset",value:function(e){if("//"===e.substring(0,2)||"http://"===e.substring(0,7)||"https://"===e.substring(0,8))return e;var t="/"!==RV_MEDIA_URL.base_url.substr(-1,1)?RV_MEDIA_URL.base_url+"/":RV_MEDIA_URL.base_url;return"/"===e.substring(0,1)?t+e.substring(1):t+e}},{key:"showAjaxLoading",value:function(){(arguments.length>0&&void 0!==arguments[0]?arguments[0]:$(".rv-media-main")).addClass("on-loading").append($("#rv_media_loading").html())}},{key:"hideAjaxLoading",value:function(){(arguments.length>0&&void 0!==arguments[0]?arguments[0]:$(".rv-media-main")).removeClass("on-loading").find(".loading-wrapper").remove()}},{key:"isOnAjaxLoading",value:function(){return(arguments.length>0&&void 0!==arguments[0]?arguments[0]:$(".rv-media-items")).hasClass("on-loading")}},{key:"jsonEncode",value:function(e){return void 0===e&&(e=null),JSON.stringify(e)}},{key:"jsonDecode",value:function(e,t){if(!e)return t;if("string"==typeof e){var r;try{r=$.parseJSON(e)}catch(e){r=t}return r}return e}},{key:"getRequestParams",value:function(){return window.rvMedia.options&&"modal"===window.rvMedia.options.open_in?$.extend(!0,n.T.request_params,window.rvMedia.options||{}):n.T.request_params}},{key:"setSelectedFile",value:function(e){void 0!==window.rvMedia.options?window.rvMedia.options.selected_file_id=e:n.T.request_params.selected_file_id=e}},{key:"getConfigs",value:function(){return n.T}},{key:"storeConfig",value:function(){localStorage.setItem("MediaConfig",e.jsonEncode(n.T))}},{key:"storeRecentItems",value:function(){localStorage.setItem("RecentItems",e.jsonEncode(n.y))}},{key:"addToRecent",value:function(e){e instanceof Array?_.each(e,function(e){n.y.push(e)}):(n.y.push(e),this.storeRecentItems())}},{key:"getItems",value:function(){var e=[];return $(".js-media-list-title").each(function(t,r){var n=$(r),i=n.data()||{};i.index_key=n.index(),e.push(i)}),e}},{key:"getSelectedItems",value:function(){var e=[];return $(".js-media-list-title input[type=checkbox]:checked").each(function(t,r){var n=$(r).closest(".js-media-list-title"),i=n.data()||{};i.index_key=n.index(),e.push(i)}),e}},{key:"getSelectedFiles",value:function(){var e=[];return $(".js-media-list-title[data-context=file] input[type=checkbox]:checked").each(function(t,r){var n=$(r).closest(".js-media-list-title"),i=n.data()||{};i.index_key=n.index(),e.push(i)}),e}},{key:"getSelectedFolder",value:function(){var e=[];return $(".js-media-list-title[data-context=folder] input[type=checkbox]:checked").each(function(t,r){var n=$(r).closest(".js-media-list-title"),i=n.data()||{};i.index_key=n.index(),e.push(i)}),e}},{key:"isUseInModal",value:function(){return window.rvMedia&&window.rvMedia.options&&"modal"===window.rvMedia.options.open_in}},{key:"resetPagination",value:function(){RV_MEDIA_CONFIG.pagination={paged:1,posts_per_page:40,in_process_get_media:!1,has_more:!0}}}],(r=null)&&o(t.prototype,r),i&&o(t,i),Object.defineProperty(t,"prototype",{writable:!1}),t;var t,r,i}()}},t={};function r(n){var i=t[n];if(void 0!==i)return i.exports;var o=t[n]={exports:{}};return e[n](o,o.exports,r),o.exports}r.d=(e,t)=>{for(var n in t)r.o(t,n)&&!r.o(e,n)&&Object.defineProperty(e,n,{enumerable:!0,get:t[n]})},r.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t);var n=r(3051),i=r(9849),o=r(4893),a=r(4241),s=r(1756);function l(e){return l="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},l(e)}function c(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,d(n.key),n)}}function d(e){var t=function(e,t){if("object"!=l(e)||!e)return e;var r=e[Symbol.toPrimitive];if(void 0!==r){var n=r.call(e,t||"default");if("object"!=l(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===t?String:Number)(e)}(e,"string");return"symbol"==l(t)?t:t+""}var u=function(){return e=function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.group={},this.group.list=$("#rv_media_items_list").html(),this.group.tiles=$("#rv_media_items_tiles").html(),this.item={},this.item.list=$("#rv_media_items_list_element").html(),this.item.tiles=$("#rv_media_items_tiles_element").html(),this.$groupContainer=$(".rv-media-items")},t=[{key:"renderData",value:function(e){var t=arguments.length>1&&void 0!==arguments[1]&&arguments[1],r=arguments.length>2&&void 0!==arguments[2]&&arguments[2],n=this,o=i.M.getConfigs(),s=n.group[i.M.getRequestParams().view_type],l=i.M.getRequestParams().view_in;_.includes(["all_media","public","trash","favorites","recent"],l)||(l="all_media"),s=s.replace(/__noItemIcon__/gi,RV_MEDIA_CONFIG.translations.no_item[l].icon||"").replace(/__noItemTitle__/gi,RV_MEDIA_CONFIG.translations.no_item[l].title||"").replace(/__noItemMessage__/gi,RV_MEDIA_CONFIG.translations.no_item[l].message||"");var c=$(s),d=c.find("ul");r&&this.$groupContainer.find(".rv-media-grid ul").length>0&&(d=this.$groupContainer.find(".rv-media-grid ul")),_.size(e.folders)>0||_.size(e.files)>0||r?$(".rv-media-items").addClass("has-items"):$(".rv-media-items").removeClass("has-items"),_.forEach(e.folders,function(e){var t=n.item[i.M.getRequestParams().view_type];t=t.replace(/__type__/gi,"folder").replace(/__id__/gi,e.id).replace(/__name__/gi,e.name||"").replace(/__size__/gi,"").replace(/__date__/gi,e.created_at||"").replace(/__thumb__/gi,'<i class="fa fa-folder"></i>');var r=$(t);_.forEach(e,function(e,t){r.data(t,e)}),r.data("is_folder",!0),r.data("icon",o.icons.folder),d.append(r)}),_.forEach(e.files,function(e){var t=n.item[i.M.getRequestParams().view_type];t=t.replace(/__type__/gi,"file").replace(/__id__/gi,e.id).replace(/__name__/gi,e.name||"").replace(/__size__/gi,e.size||"").replace(/__date__/gi,e.created_at||""),t="list"===i.M.getRequestParams().view_type?t.replace(/__thumb__/gi,'<i class="'+e.icon+'"></i>'):t.replace(/__thumb__/gi,"image"===e.type?'<img src="'+(e.thumb?e.thumb:e.full_url)+'" alt="'+e.name+'">':'<i class="'+e.icon+'"></i>');var r=$(t);r.data("is_folder",!1),_.forEach(e,function(e,t){r.data(t,e)}),d.append(r)}),!1!==t&&n.$groupContainer.empty(),r&&this.$groupContainer.find(".rv-media-grid ul").length>0||n.$groupContainer.append(c),n.$groupContainer.find(".loading-wrapper").remove(),a.d.handleDropdown(),$(".js-media-list-title[data-id="+e.selected_file_id+"]").trigger("click")}}],t&&c(e.prototype,t),r&&c(e,r),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,t,r}();function f(e){return f="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},f(e)}function p(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,m(n.key),n)}}function m(e){var t=function(e,t){if("object"!=f(e)||!e)return e;var r=e[Symbol.toPrimitive];if(void 0!==r){var n=r.call(e,t||"default");if("object"!=f(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===t?String:Number)(e)}(e,"string");return"symbol"==f(t)?t:t+""}var v=function(){return e=function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.$detailsWrapper=$(".rv-media-main .rv-media-details"),this.descriptionItemTemplate='<div class="rv-media-name"><p>__title__</p>__url__</div>',this.onlyFields=["name","full_url","size","mime_type","created_at","updated_at","nothing_selected"]},(t=[{key:"renderData",value:function(e){var t=this,r=this,n="image"===e.type?'<img src="'+e.full_url+'" alt="'+e.name+'">':'<i class="'+e.icon+'"></i>',o="",a=!1;_.forEach(e,function(e,t){_.includes(r.onlyFields,t)&&(_.includes(["size","mime_type"],t)||(o+=r.descriptionItemTemplate.replace(/__title__/gi,RV_MEDIA_CONFIG.translations[t]).replace(/__url__/gi,e?"full_url"===t?'<div class="input-group"><input id="file_details_url" type="text" value="'+e+'" class="form-control"><span class="input-group-text"><button class="btn btn-default js-btn-copy-to-clipboard" type="button" data-clipboard-target="#file_details_url" title="Copied"><img class="clippy" src="'+i.M.asset("/vendor/core/core/media/images/clippy.svg")+'" width="13" alt="Copy to clipboard"></button></span></div>':'<span title="'+e+'">'+e+"</span>":""),"full_url"===t&&(a=!0)))}),r.$detailsWrapper.find(".rv-media-thumbnail").html(n),r.$detailsWrapper.find(".rv-media-description").html(o),a&&(new Clipboard(".js-btn-copy-to-clipboard"),$(".js-btn-copy-to-clipboard").tooltip().on("mouseenter",function(){$(t).tooltip("hide")}).on("mouseleave",function(){$(t).tooltip("hide")}))}}])&&p(e.prototype,t),r&&p(e,r),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,t,r}();function y(e){return y="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},y(e)}function h(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,g(n.key),n)}}function g(e){var t=function(e,t){if("object"!=y(e)||!e)return e;var r=e[Symbol.toPrimitive];if(void 0!==r){var n=r.call(e,t||"default");if("object"!=y(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===t?String:Number)(e)}(e,"string");return"symbol"==y(t)?t:t+""}var b=function(){function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.MediaList=new u,this.MediaDetails=new v,this.breadcrumbTemplate=$("#rv_media_breadcrumb_item").html()}return t=e,r=[{key:"getMedia",value:function(){var t=arguments.length>0&&void 0!==arguments[0]&&arguments[0],r=arguments.length>1&&void 0!==arguments[1]&&arguments[1],s=arguments.length>2&&void 0!==arguments[2]&&arguments[2];if(void 0!==RV_MEDIA_CONFIG.pagination){if(RV_MEDIA_CONFIG.pagination.in_process_get_media)return;RV_MEDIA_CONFIG.pagination.in_process_get_media=!0}var l=this;l.getFileDetails({icon:"far fa-image",nothing_selected:""});var c=i.M.getRequestParams();"recent"===c.view_in&&(c.recent_items=n.y),c.is_popup=!0===r||void 0,c.onSelectFiles=void 0,void 0!==c.search&&""!=c.search&&void 0!==c.selected_file_id&&(c.selected_file_id=void 0),c.load_more_file=s,void 0!==RV_MEDIA_CONFIG.pagination&&(c.paged=RV_MEDIA_CONFIG.pagination.paged,c.posts_per_page=RV_MEDIA_CONFIG.pagination.posts_per_page),$.ajax({url:RV_MEDIA_URL.get_media,type:"GET",data:c,dataType:"json",beforeSend:function(){i.M.showAjaxLoading()},success:function(r){l.MediaList.renderData(r.data,t,s),l.renderBreadcrumbs(r.data.breadcrumbs),e.refreshFilter(),a.d.renderActions(),void 0!==RV_MEDIA_CONFIG.pagination&&(void 0!==RV_MEDIA_CONFIG.pagination.paged&&(RV_MEDIA_CONFIG.pagination.paged+=1),void 0!==RV_MEDIA_CONFIG.pagination.in_process_get_media&&(RV_MEDIA_CONFIG.pagination.in_process_get_media=!1),void 0!==RV_MEDIA_CONFIG.pagination.posts_per_page&&r.data.files.length+r.data.folders.length<RV_MEDIA_CONFIG.pagination.posts_per_page&&void 0!==RV_MEDIA_CONFIG.pagination.has_more&&(RV_MEDIA_CONFIG.pagination.has_more=!1))},complete:function(){i.M.hideAjaxLoading()},error:function(e){o.b.handleError(e)}})}},{key:"getFileDetails",value:function(e){this.MediaDetails.renderData(e)}},{key:"renderBreadcrumbs",value:function(e){var t=this,r=$(".rv-media-breadcrumb .breadcrumb");r.find("li").remove(),_.each(e,function(e){var n=t.breadcrumbTemplate;n=n.replace(/__name__/gi,e.name||"").replace(/__icon__/gi,e.icon?'<i class="'+e.icon+'"></i>':"").replace(/__folderId__/gi,e.id||0),r.append($(n))}),$(".rv-media-container").attr("data-breadcrumb-count",_.size(e))}}],l=[{key:"refreshFilter",value:function(){var e=$(".rv-media-container"),t=i.M.getRequestParams().view_in;"all_media"===t||i.M.getRequestParams().folder_id?($('.rv-media-actions .btn:not([data-type="refresh"]):not(label)').removeClass("disabled"),e.attr("data-allow-upload","true")):($('.rv-media-actions .btn:not([data-type="refresh"]):not(label)').addClass("disabled"),e.attr("data-allow-upload","false")),$(".rv-media-actions .btn.js-rv-media-change-filter-group").removeClass("disabled");var r=$('.rv-media-actions .btn[data-action="empty_trash"]');"trash"===t?(r.removeClass("hidden").removeClass("disabled"),_.size(i.M.getItems())||r.addClass("hidden").addClass("disabled")):r.addClass("hidden"),s.K.destroyContext(),s.K.initContext(),e.attr("data-view-in",t)}}],r&&h(t.prototype,r),l&&h(t,l),Object.defineProperty(t,"prototype",{writable:!1}),t;var t,r,l}();function w(e){return w="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},w(e)}function M(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,k(n.key),n)}}function k(e){var t=function(e,t){if("object"!=w(e)||!e)return e;var r=e[Symbol.toPrimitive];if(void 0!==r){var n=r.call(e,t||"default");if("object"!=w(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===t?String:Number)(e)}(e,"string");return"symbol"==w(t)?t:t+""}var S=function(){function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.MediaService=new b,$(document).on("shown.bs.modal","#modal_add_folder",function(e){$(e.currentTarget).find(".form-add-folder input[type=text]").focus()})}return t=e,a=[{key:"closeModal",value:function(){$(document).find("#modal_add_folder").modal("hide")}}],(r=[{key:"create",value:function(t){var r=this;$.ajax({url:RV_MEDIA_URL.create_folder,type:"POST",data:{parent_id:i.M.getRequestParams().folder_id,name:t},dataType:"json",beforeSend:function(){i.M.showAjaxLoading()},success:function(t){t.error?o.b.showMessage("error",t.message,RV_MEDIA_CONFIG.translations.message.error_header):(o.b.showMessage("success",t.message,RV_MEDIA_CONFIG.translations.message.success_header),i.M.resetPagination(),r.MediaService.getMedia(!0),e.closeModal())},complete:function(){i.M.hideAjaxLoading()},error:function(e){o.b.handleError(e)}})}},{key:"changeFolder",value:function(e){n.T.request_params.folder_id=e,i.M.storeConfig(),this.MediaService.getMedia(!0)}}])&&M(t.prototype,r),a&&M(t,a),Object.defineProperty(t,"prototype",{writable:!1}),t;var t,r,a}();function j(e){return j="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},j(e)}function I(e,t){var r=Object.keys(e);if(Object.getOwnPropertySymbols){var n=Object.getOwnPropertySymbols(e);t&&(n=n.filter(function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable})),r.push.apply(r,n)}return r}function C(e){for(var t=1;t<arguments.length;t++){var r=null!=arguments[t]?arguments[t]:{};t%2?I(Object(r),!0).forEach(function(t){O(e,t,r[t])}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(r)):I(Object(r)).forEach(function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(r,t))})}return e}function O(e,t,r){return(t=P(t))in e?Object.defineProperty(e,t,{value:r,enumerable:!0,configurable:!0,writable:!0}):e[t]=r,e}function E(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,P(n.key),n)}}function P(e){var t=function(e,t){if("object"!=j(e)||!e)return e;var r=e[Symbol.toPrimitive];if(void 0!==r){var n=r.call(e,t||"default");if("object"!=j(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===t?String:Number)(e)}(e,"string");return"symbol"==j(t)?t:t+""}var D=function(){function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.$body=$("body"),this.dropZone=null,this.uploadUrl=RV_MEDIA_URL.upload_file,this.uploadProgressBox=$(".rv-upload-progress"),this.uploadProgressContainer=$(".rv-upload-progress .rv-upload-progress-table"),this.uploadProgressTemplate=$("#rv_media_upload_progress_item").html(),this.totalQueued=1,this.MediaService=new b,this.totalError=0}return t=e,n=[{key:"formatFileSize",value:function(e){var t=arguments.length>1&&void 0!==arguments[1]&&arguments[1]?1e3:1024;if(Math.abs(e)<t)return e+" B";var r=["KB","MB","GB","TB","PB","EB","ZB","YB"],n=-1;do{e/=t,++n}while(Math.abs(e)>=t&&n<r.length-1);return e.toFixed(1)+" "+r[n]}}],(r=[{key:"init",value:function(){_.includes(RV_MEDIA_CONFIG.permissions,"files.create")&&$(".rv-media-items").length>0&&this.setupDropZone(),this.handleEvents()}},{key:"setupDropZone",value:function(){var e=this,t=this.getDropZoneConfig();e.filesUpload=0,e.dropZone&&e.dropZone.destroy(),e.dropZone=new Dropzone(document.querySelector(".rv-media-items"),C(C({},t),{},{thumbnailWidth:!1,thumbnailHeight:!1,parallelUploads:1,autoQueue:!0,clickable:".js-dropzone-upload",previewTemplate:!1,previewsContainer:!1,sending:function(e,t,r){r.append("_token",$('meta[name="csrf-token"]').attr("content")),r.append("folder_id",i.M.getRequestParams().folder_id),r.append("view_in",i.M.getRequestParams().view_in),r.append("path",e.fullPath)},chunksUploaded:function(t,r){e.uploadProgressContainer.find(".progress-percent").html("100%"),r()},accept:function(t,r){e.filesUpload++,e.totalError=0,r()},uploadprogress:function(t,r,n){var i=n/t.size*100;t.upload.chunked&&i>99&&(i-=1);var o=(i>100?"100":parseInt(i))+"%";e.uploadProgressContainer.find("li").eq(t.index-1).find(".progress-percent").html(o)}})),e.dropZone.on("addedfile",function(t){t.index=e.totalQueued,e.totalQueued++}),e.dropZone.on("sending",function(t){e.initProgress(t.name,t.size)}),e.dropZone.on("complete",function(t){t.accepted&&e.changeProgressStatus(t),e.filesUpload=0}),e.dropZone.on("queuecomplete",function(){i.M.resetPagination(),e.MediaService.getMedia(!0),0===e.totalError&&setTimeout(function(){$(".rv-upload-progress .close-pane").trigger("click")},5e3)})}},{key:"handleEvents",value:function(){var e=this;e.$body.off("click",".rv-upload-progress .close-pane").on("click",".rv-upload-progress .close-pane",function(t){t.preventDefault(),$(".rv-upload-progress").addClass("hide-the-pane"),e.totalError=0,setTimeout(function(){$(".rv-upload-progress li").remove(),e.totalQueued=1},300)})}},{key:"initProgress",value:function(t,r){var n=this.uploadProgressTemplate.replace(/__fileName__/gi,t).replace(/__fileSize__/gi,e.formatFileSize(r)).replace(/__status__/gi,"warning").replace(/__message__/gi,"Uploading");this.checkUploadTotalProgress()&&this.uploadProgressContainer.find("li").length>=1||(this.uploadProgressContainer.append(n),this.uploadProgressBox.removeClass("hide-the-pane"),this.uploadProgressBox.find(".panel-body").animate({scrollTop:this.uploadProgressContainer.height()},150))}},{key:"changeProgressStatus",value:function(e){var t=this,r=t.uploadProgressContainer.find("li:nth-child("+e.index+")");this.checkUploadTotalProgress()&&(r=t.uploadProgressContainer.find("li:first"));var n=r.find(".label");n.removeClass("label-success label-danger label-warning");var o=i.M.jsonDecode(e.xhr.responseText||"",{});if(t.totalError=t.totalError+(!0===o.error||"error"===e.status?1:0),n.addClass(!0===o.error||"error"===e.status?"label-danger":"label-success"),n.html(!0===o.error||"error"===e.status?"Error":"Uploaded"),"error"===e.status)if(422===e.xhr.status){var a="";$.each(o.errors,function(e,t){a+='<span class="text-danger">'+t+"</span><br>"}),r.find(".file-error").html(a)}else 500===e.xhr.status&&r.find(".file-error").html('<span class="text-danger">'+e.xhr.statusText+"</span>");else o.error?r.find(".file-error").html('<span class="text-danger">'+o.message+"</span>"):(i.M.addToRecent(o.data.id),i.M.setSelectedFile(o.data.id))}},{key:"getDropZoneConfig",value:function(){return{url:this.uploadUrl,uploadMultiple:!RV_MEDIA_CONFIG.chunk.enabled,chunking:RV_MEDIA_CONFIG.chunk.enabled,forceChunking:!0,parallelChunkUploads:!1,chunkSize:RV_MEDIA_CONFIG.chunk.chunk_size,retryChunks:!0,retryChunksLimit:3,timeout:0,maxFilesize:RV_MEDIA_CONFIG.chunk.max_file_size,maxFiles:null}}},{key:"checkUploadTotalProgress",value:function(){return 1===this.filesUpload}}])&&E(t.prototype,r),n&&E(t,n),Object.defineProperty(t,"prototype",{writable:!1}),t;var t,r,n}();function R(e){return R="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},R(e)}function F(e){if(null!=e){var t=e["function"==typeof Symbol&&Symbol.iterator||"@@iterator"],r=0;if(t)return t.call(e);if("function"==typeof e.next)return e;if(!isNaN(e.length))return{next:function(){return e&&r>=e.length&&(e=void 0),{value:e&&e[r++],done:!e}}}}throw new TypeError(R(e)+" is not iterable")}function x(){/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */var e,t,r="function"==typeof Symbol?Symbol:{},n=r.iterator||"@@iterator",i=r.toStringTag||"@@toStringTag";function o(r,n,i,o){var l=n&&n.prototype instanceof s?n:s,c=Object.create(l.prototype);return T(c,"_invoke",function(r,n,i){var o,s,l,c=0,d=i||[],u=!1,f={p:0,n:0,v:e,a:p,f:p.bind(e,4),d:function(t,r){return o=t,s=0,l=e,f.n=r,a}};function p(r,n){for(s=r,l=n,t=0;!u&&c&&!i&&t<d.length;t++){var i,o=d[t],p=f.p,m=o[2];r>3?(i=m===n)&&(l=o[(s=o[4])?5:(s=3,3)],o[4]=o[5]=e):o[0]<=p&&((i=r<2&&p<o[1])?(s=0,f.v=n,f.n=o[1]):p<m&&(i=r<3||o[0]>n||n>m)&&(o[4]=r,o[5]=n,f.n=m,s=0))}if(i||r>1)return a;throw u=!0,n}return function(i,d,m){if(c>1)throw TypeError("Generator is already running");for(u&&1===d&&p(d,m),s=d,l=m;(t=s<2?e:l)||!u;){o||(s?s<3?(s>1&&(f.n=-1),p(s,l)):f.n=l:f.v=l);try{if(c=2,o){if(s||(i="next"),t=o[i]){if(!(t=t.call(o,l)))throw TypeError("iterator result is not an object");if(!t.done)return t;l=t.value,s<2&&(s=0)}else 1===s&&(t=o.return)&&t.call(o),s<2&&(l=TypeError("The iterator does not provide a '"+i+"' method"),s=1);o=e}else if((t=(u=f.n<0)?l:r.call(n,f))!==a)break}catch(t){o=e,s=1,l=t}finally{c=1}}return{value:t,done:u}}}(r,i,o),!0),c}var a={};function s(){}function l(){}function c(){}t=Object.getPrototypeOf;var d=[][n]?t(t([][n]())):(T(t={},n,function(){return this}),t),u=c.prototype=s.prototype=Object.create(d);function f(e){return Object.setPrototypeOf?Object.setPrototypeOf(e,c):(e.__proto__=c,T(e,i,"GeneratorFunction")),e.prototype=Object.create(u),e}return l.prototype=c,T(u,"constructor",c),T(c,"constructor",l),l.displayName="GeneratorFunction",T(c,i,"GeneratorFunction"),T(u),T(u,i,"Generator"),T(u,n,function(){return this}),T(u,"toString",function(){return"[object Generator]"}),(x=function(){return{w:o,m:f}})()}function T(e,t,r,n){var i=Object.defineProperty;try{i({},"",{})}catch(e){i=0}T=function(e,t,r,n){function o(t,r){T(e,t,function(e){return this._invoke(t,r,e)})}t?i?i(e,t,{value:r,enumerable:!n,configurable:!n,writable:!n}):e[t]=r:(o("next",0),o("throw",1),o("return",2))},T(e,t,r,n)}function A(e,t){var r="undefined"!=typeof Symbol&&e[Symbol.iterator]||e["@@iterator"];if(!r){if(Array.isArray(e)||(r=function(e,t){if(e){if("string"==typeof e)return N(e,t);var r={}.toString.call(e).slice(8,-1);return"Object"===r&&e.constructor&&(r=e.constructor.name),"Map"===r||"Set"===r?Array.from(e):"Arguments"===r||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(r)?N(e,t):void 0}}(e))||t&&e&&"number"==typeof e.length){r&&(e=r);var n=0,i=function(){};return{s:i,n:function(){return n>=e.length?{done:!0}:{done:!1,value:e[n++]}},e:function(e){throw e},f:i}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var o,a=!0,s=!1;return{s:function(){r=r.call(e)},n:function(){var e=r.next();return a=e.done,e},e:function(e){s=!0,o=e},f:function(){try{a||null==r.return||r.return()}finally{if(s)throw o}}}}function N(e,t){(null==t||t>e.length)&&(t=e.length);for(var r=0,n=Array(t);r<t;r++)n[r]=e[r];return n}function G(e,t,r,n,i,o,a){try{var s=e[o](a),l=s.value}catch(e){return void r(e)}s.done?t(l):Promise.resolve(l).then(n,i)}function V(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,q(n.key),n)}}function q(e){var t=function(e,t){if("object"!=R(e)||!e)return e;var r=e[Symbol.toPrimitive];if(void 0!==r){var n=r.call(e,t||"default");if("object"!=R(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===t?String:Number)(e)}(e,"string");return"symbol"==R(t)?t:t+""}var U=function(){function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.MediaService=new b,$(document).on("shown.bs.modal","#modal_download_url",function(e){$(e.currentTarget).find(".form-download-url input[type=text]").focus()})}return t=e,r=[{key:"download",value:(a=x().m(function t(r,n){var a,s,l,c,d,u,f;return x().w(function(t){for(;;)switch(t.p=t.n){case 0:a=this,r=$.trim(r).split(/\r?\n/),s=0,l=!1,c=A(r),t.p=1,u=x().m(function e(){var t,a,c;return x().w(function(e){for(;;)switch(e.n){case 0:t=d.value,a="";try{a=new URL(t).pathname.split("/").pop()}catch(e){a=t}return c=n("".concat(s," / ").concat(r.length),a,t),e.n=1,new Promise(function(e){$.ajax({url:RV_MEDIA_URL.download_url,type:"POST",data:{folderId:i.M.getRequestParams().folder_id,url:t},dataType:"json",success:function(t){var r,n,i,o;t.error?(l=!0,c(!1,null!==(r=t.message)&&void 0!==r?r:null===(n=t.data)||void 0===n?void 0:n.message)):c(!0,null!==(i=t.message)&&void 0!==i?i:null===(o=t.data)||void 0===o?void 0:o.message),e()},error:function(e){o.b.handleError(e)}})});case 1:s+=1;case 2:return e.a(2)}},e)}),c.s();case 2:if((d=c.n()).done){t.n=4;break}return t.d(F(u()),3);case 3:t.n=2;break;case 4:t.n=6;break;case 5:t.p=5,f=t.v,c.e(f);case 6:return t.p=6,c.f(),t.f(6);case 7:i.M.resetPagination(),a.MediaService.getMedia(!0),l||(e.closeModal(),o.b.showMessage("success",RV_MEDIA_CONFIG.translations.message.success_header));case 8:return t.a(2)}},t,this,[[1,5,6,7]])}),s=function(){var e=this,t=arguments;return new Promise(function(r,n){var i=a.apply(e,t);function o(e){G(i,r,n,o,s,"next",e)}function s(e){G(i,r,n,o,s,"throw",e)}o(void 0)})},function(e,t){return s.apply(this,arguments)})}],n=[{key:"closeModal",value:function(){$(document).find("#modal_download_url").modal("hide")}}],r&&V(t.prototype,r),n&&V(t,n),Object.defineProperty(t,"prototype",{writable:!1}),t;var t,r,n,a,s}(),L=r(3801);function z(e){return z="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},z(e)}function B(){/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */var e,t,r="function"==typeof Symbol?Symbol:{},n=r.iterator||"@@iterator",i=r.toStringTag||"@@toStringTag";function o(r,n,i,o){var l=n&&n.prototype instanceof s?n:s,c=Object.create(l.prototype);return K(c,"_invoke",function(r,n,i){var o,s,l,c=0,d=i||[],u=!1,f={p:0,n:0,v:e,a:p,f:p.bind(e,4),d:function(t,r){return o=t,s=0,l=e,f.n=r,a}};function p(r,n){for(s=r,l=n,t=0;!u&&c&&!i&&t<d.length;t++){var i,o=d[t],p=f.p,m=o[2];r>3?(i=m===n)&&(l=o[(s=o[4])?5:(s=3,3)],o[4]=o[5]=e):o[0]<=p&&((i=r<2&&p<o[1])?(s=0,f.v=n,f.n=o[1]):p<m&&(i=r<3||o[0]>n||n>m)&&(o[4]=r,o[5]=n,f.n=m,s=0))}if(i||r>1)return a;throw u=!0,n}return function(i,d,m){if(c>1)throw TypeError("Generator is already running");for(u&&1===d&&p(d,m),s=d,l=m;(t=s<2?e:l)||!u;){o||(s?s<3?(s>1&&(f.n=-1),p(s,l)):f.n=l:f.v=l);try{if(c=2,o){if(s||(i="next"),t=o[i]){if(!(t=t.call(o,l)))throw TypeError("iterator result is not an object");if(!t.done)return t;l=t.value,s<2&&(s=0)}else 1===s&&(t=o.return)&&t.call(o),s<2&&(l=TypeError("The iterator does not provide a '"+i+"' method"),s=1);o=e}else if((t=(u=f.n<0)?l:r.call(n,f))!==a)break}catch(t){o=e,s=1,l=t}finally{c=1}}return{value:t,done:u}}}(r,i,o),!0),c}var a={};function s(){}function l(){}function c(){}t=Object.getPrototypeOf;var d=[][n]?t(t([][n]())):(K(t={},n,function(){return this}),t),u=c.prototype=s.prototype=Object.create(d);function f(e){return Object.setPrototypeOf?Object.setPrototypeOf(e,c):(e.__proto__=c,K(e,i,"GeneratorFunction")),e.prototype=Object.create(u),e}return l.prototype=c,K(u,"constructor",c),K(c,"constructor",l),l.displayName="GeneratorFunction",K(c,i,"GeneratorFunction"),K(u),K(u,i,"Generator"),K(u,n,function(){return this}),K(u,"toString",function(){return"[object Generator]"}),(B=function(){return{w:o,m:f}})()}function K(e,t,r,n){var i=Object.defineProperty;try{i({},"",{})}catch(e){i=0}K=function(e,t,r,n){function o(t,r){K(e,t,function(e){return this._invoke(t,r,e)})}t?i?i(e,t,{value:r,enumerable:!n,configurable:!n,writable:!n}):e[t]=r:(o("next",0),o("throw",1),o("return",2))},K(e,t,r,n)}function Z(e,t,r,n,i,o,a){try{var s=e[o](a),l=s.value}catch(e){return void r(e)}s.done?t(l):Promise.resolve(l).then(n,i)}function J(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,Q(n.key),n)}}function Q(e){var t=function(e,t){if("object"!=z(e)||!e)return e;var r=e[Symbol.toPrimitive];if(void 0!==r){var n=r.call(e,t||"default");if("object"!=z(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===t?String:Number)(e)}(e,"string");return"symbol"==z(t)?t:t+""}var H=function(){return e=function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e),this.MediaService=new b,this.UploadService=new D,this.FolderService=new S,this.DownloadService=new U,this.$body=$("body")},t=[{key:"init",value:function(){i.M.resetPagination(),this.setupLayout(),this.handleMediaList(),this.changeViewType(),this.changeFilter(),this.search(),this.handleActions(),this.UploadService.init(),this.handleModals(),this.scrollGetMore()}},{key:"setupLayout",value:function(){var e=$('.js-rv-media-change-filter[data-type="filter"][data-value="'+i.M.getRequestParams().filter+'"]');e.closest("li").addClass("active").closest(".dropdown").find(".js-rv-media-filter-current").html("("+e.html()+")");var t=$('.js-rv-media-change-filter[data-type="view_in"][data-value="'+i.M.getRequestParams().view_in+'"]');t.closest("li").addClass("active").closest(".dropdown").find(".js-rv-media-filter-current").html("("+t.html()+")"),i.M.isUseInModal()&&$(".rv-media-footer").removeClass("hidden"),$('.js-rv-media-change-filter[data-type="sort_by"][data-value="'+i.M.getRequestParams().sort_by+'"]').closest("li").addClass("active");var r=$("#media_details_collapse");r.prop("checked",n.T.hide_details_pane||!1),setTimeout(function(){$(".rv-media-details").removeClass("hidden")},300),r.on("change",function(e){e.preventDefault(),n.T.hide_details_pane=$(e.currentTarget).is(":checked"),i.M.storeConfig()}),$(document).on("click",".js-download-action",function(e){e.preventDefault(),$("#modal_download_url").modal("show")}),$(document).on("click",".js-create-folder-action",function(e){e.preventDefault(),$("#modal_add_folder").modal("show")})}},{key:"handleMediaList",value:function(){var e=this,t=!1,r=!1,n=!1;$(document).on("keyup keydown",function(e){t=e.ctrlKey,r=e.metaKey,n=e.shiftKey}),e.$body.off("click",".js-media-list-title").on("click",".js-media-list-title",function(o){o.preventDefault();var s=$(o.currentTarget);if(n){var l=_.first(i.M.getSelectedItems());if(l){var c=l.index_key,d=s.index();$(".rv-media-items li").each(function(e,t){e>c&&e<=d&&$(t).find("input[type=checkbox]").prop("checked",!0)})}}else t||r||s.closest(".rv-media-items").find("input[type=checkbox]").prop("checked",!1);s.find("input[type=checkbox]").prop("checked",!0),a.d.handleDropdown(),e.MediaService.getFileDetails(s.data())}).on("dblclick",".js-media-list-title",function(t){t.preventDefault();var r=$(t.currentTarget).data();if(!0===r.is_folder)i.M.resetPagination(),e.FolderService.changeFolder(r.id);else if(i.M.isUseInModal()){if("trash"!==i.M.getConfigs().request_params.view_in){var n=i.M.getSelectedFiles();_.size(n)>0&&L.x.editorSelectFile(n)}}else a.d.handlePreview()}).on("dblclick",".js-up-one-level",function(e){e.preventDefault();var t=$(".rv-media-breadcrumb .breadcrumb li").length;$(".rv-media-breadcrumb .breadcrumb li:nth-child("+(t-1)+") a").trigger("click")}).on("contextmenu",".js-context-menu",function(e){$(e.currentTarget).find("input[type=checkbox]").is(":checked")||$(e.currentTarget).trigger("click")}).on("click contextmenu",".rv-media-items",function(t){_.size(t.target.closest(".js-context-menu"))||($('.rv-media-items input[type="checkbox"]').prop("checked",!1),$(".rv-dropdown-actions").addClass("disabled"),e.MediaService.getFileDetails({icon:"far fa-image",nothing_selected:""}))})}},{key:"changeViewType",value:function(){var e=this;e.$body.off("click",".js-rv-media-change-view-type .btn").on("click",".js-rv-media-change-view-type .btn",function(t){t.preventDefault();var r=$(t.currentTarget);r.hasClass("active")||(r.closest(".js-rv-media-change-view-type").find(".btn").removeClass("active"),r.addClass("active"),n.T.request_params.view_type=r.data("type"),"trash"===r.data("type")?$(document).find(".js-insert-to-editor").prop("disabled",!0):$(document).find(".js-insert-to-editor").prop("disabled",!1),i.M.storeConfig(),void 0!==RV_MEDIA_CONFIG.pagination&&void 0!==RV_MEDIA_CONFIG.pagination.paged&&(RV_MEDIA_CONFIG.pagination.paged=1),e.MediaService.getMedia(!0,!1))}),$('.js-rv-media-change-view-type .btn[data-type="'+i.M.getRequestParams().view_type+'"]').trigger("click"),this.bindIntegrateModalEvents()}},{key:"changeFilter",value:function(){var e=this;e.$body.off("click",".js-rv-media-change-filter").on("click",".js-rv-media-change-filter",function(t){if(t.preventDefault(),!i.M.isOnAjaxLoading()){var r=$(t.currentTarget),o=r.closest("ul"),a=r.data();n.T.request_params[a.type]=a.value,window.rvMedia.options&&(window.rvMedia.options.view_in=a.value),"view_in"===a.type&&(n.T.request_params.folder_id=0,"trash"===a.value?$(document).find(".js-insert-to-editor").prop("disabled",!0):$(document).find(".js-insert-to-editor").prop("disabled",!1)),r.closest(".dropdown").find(".js-rv-media-filter-current").html("("+r.html()+")"),i.M.storeConfig(),b.refreshFilter(),i.M.resetPagination(),e.MediaService.getMedia(!0),o.find("> li").removeClass("active"),r.closest("li").addClass("active")}})}},{key:"search",value:function(){var e=this;$('.input-search-wrapper input[type="text"]').val(i.M.getRequestParams().search||""),e.$body.off("submit",".input-search-wrapper").on("submit",".input-search-wrapper",function(t){t.preventDefault(),n.T.request_params.search=$(t.currentTarget).find('input[type="text"]').val(),i.M.storeConfig(),i.M.resetPagination(),e.MediaService.getMedia(!0)})}},{key:"handleActions",value:function(){var e=this;e.$body.off("click",'.rv-media-actions .js-change-action[data-type="refresh"]').on("click",'.rv-media-actions .js-change-action[data-type="refresh"]',function(t){t.preventDefault(),i.M.resetPagination();var r=void 0!==window.rvMedia.$el?window.rvMedia.$el.data("rv-media"):void 0;void 0!==r&&r.length>0&&void 0!==r[0].selected_file_id?e.MediaService.getMedia(!0,!0):e.MediaService.getMedia(!0,!1)}).off("click",".rv-media-items li.no-items").on("click",".rv-media-items li.no-items",function(e){e.preventDefault(),$(".rv-media-header .rv-media-top-header .rv-media-actions .js-dropzone-upload").trigger("click")}).off("submit",".form-add-folder").on("submit",".form-add-folder",function(t){t.preventDefault();var r=$(t.currentTarget).find("input[type=text]"),n=r.val();return e.FolderService.create(n),r.val(""),!1}).off("click",".js-change-folder").on("click",".js-change-folder",function(t){t.preventDefault();var r=$(t.currentTarget).data("folder");i.M.resetPagination(),e.FolderService.changeFolder(r)}).off("click",".js-files-action").on("click",".js-files-action",function(t){t.preventDefault(),a.d.handleGlobalAction($(t.currentTarget).data("action"),function(){i.M.resetPagination(),e.MediaService.getMedia(!0)})}).off("submit",".form-download-url").on("submit",".form-download-url",function(){var t,r=(t=B().m(function t(r){var n,i,o,a,s,l,c,d;return B().w(function(t){for(;;)switch(t.n){case 0:return n=$("#modal_download_url"),i=n.find("#download-form-wrapper"),o=n.find("#modal-notice").empty(),r.preventDefault(),a=n.find(".modal-title"),s=n.find('textarea[name="urls"]').prop("disabled",!0),l=n.find('[type="submit"]').addClass("button-loading").prop("disabled",!0),c=s.val(),d=[],i.slideUp(),t.n=1,e.DownloadService.download(c,function(e,t,r){var n=$('\n                        <div class="p-2 text-primary">\n                            <i class="fa fa-info-circle"></i>\n                            <span>'.concat(t,"</span>\n                        </div>\n                    "));return o.append(n).scrollTop(o[0].scrollHeight),a.html('<i class="fas fa-cloud-download-alt"></i> '.concat(a.data("downloading")," (").concat(e,")")),function(e){var i=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"";e||d.push(r),n.find("span").text("".concat(t,": ").concat(i)),n.attr("class","p-2 text-".concat(e?"success":"danger")).find("i").attr("class",e?"fas fa-check-circle":"fas fa-times-circle")}});case 1:return i.slideDown(),s.val(d.join("\n")).prop("disabled",!1),a.html('<i class="fas fa-cloud-download-alt"></i> '.concat(a.data("text"))),l.removeClass("button-loading").prop("disabled",!1),t.a(2,!1)}},t)}),function(){var e=this,r=arguments;return new Promise(function(n,i){var o=t.apply(e,r);function a(e){Z(o,n,i,a,s,"next",e)}function s(e){Z(o,n,i,a,s,"throw",e)}a(void 0)})});return function(e){return r.apply(this,arguments)}}())}},{key:"handleModals",value:function(){var e=this;e.$body.on("show.bs.modal","#modal_rename_items",function(){a.d.renderRenameItems()}),e.$body.on("hidden.bs.modal","#modal_download_url",function(){var e=$("#modal_download_url");e.find("textarea").val(""),e.find("#modal-notice").empty()}),e.$body.off("submit","#modal_rename_items .form-rename").on("submit","#modal_rename_items .form-rename",function(t){t.preventDefault();var r=[],n=$(t.currentTarget);$("#modal_rename_items .form-control").each(function(e,t){var n=$(t),i=n.closest(".form-group").data();i.name=n.val(),r.push(i)}),a.d.processAction({action:n.data("action"),selected:r},function(t){t.error?$("#modal_rename_items .form-group").each(function(e,r){var n=$(r);_.includes(t.data,n.data("id"))?n.addClass("has-error"):n.removeClass("has-error")}):(n.closest(".modal").modal("hide"),e.MediaService.getMedia(!0))})}),e.$body.off("submit",".form-delete-items").on("submit",".form-delete-items",function(t){t.preventDefault();var r=[],n=$(t.currentTarget);_.each(i.M.getSelectedItems(),function(e){r.push({id:e.id,is_folder:e.is_folder})}),a.d.processAction({action:n.data("action"),selected:r},function(t){n.closest(".modal").modal("hide"),t.error||e.MediaService.getMedia(!0)})}),e.$body.off("submit","#modal_empty_trash .rv-form").on("submit","#modal_empty_trash .rv-form",function(t){t.preventDefault();var r=$(t.currentTarget);a.d.processAction({action:r.data("action")},function(){r.closest(".modal").modal("hide"),e.MediaService.getMedia(!0)})}),"trash"===n.T.request_params.view_in?$(document).find(".js-insert-to-editor").prop("disabled",!0):$(document).find(".js-insert-to-editor").prop("disabled",!1),this.bindIntegrateModalEvents()}},{key:"checkFileTypeSelect",value:function(e){if(void 0!==window.rvMedia.$el){var t=_.first(e),r=window.rvMedia.$el.data("rv-media");if(void 0!==r&&void 0!==r[0]&&void 0!==r[0].file_type&&"undefined"!==t&&"undefined"!==t.type){if(!r[0].file_type.match(t.type))return!1;if(void 0!==r[0].ext_allowed&&$.isArray(r[0].ext_allowed)&&-1===$.inArray(t.mime_type,r[0].ext_allowed))return!1}}return!0}},{key:"bindIntegrateModalEvents",value:function(){var e=$("#rv_media_modal"),t=this;e.off("click",".js-insert-to-editor").on("click",".js-insert-to-editor",function(r){r.preventDefault();var n=i.M.getSelectedFiles();_.size(n)>0&&(window.rvMedia.options.onSelectFiles(n,window.rvMedia.$el),t.checkFileTypeSelect(n)&&e.find(".btn-close").trigger("click"))}),e.off("dblclick",".js-media-list-title").on("dblclick",".js-media-list-title",function(r){if(r.preventDefault(),"trash"!==i.M.getConfigs().request_params.view_in){var n=i.M.getSelectedFiles();_.size(n)>0&&(window.rvMedia.options.onSelectFiles(n,window.rvMedia.$el),t.checkFileTypeSelect(n)&&e.find(".btn-close").trigger("click"))}else a.d.handlePreview()})}},{key:"scrollGetMore",value:function(){var e=this;$(".rv-media-main .rv-media-items").bind("DOMMouseScroll mousewheel",function(t){(t.originalEvent.detail>0||t.originalEvent.wheelDelta<0)&&($(t.currentTarget).closest(".media-modal").length>0?$(t.currentTarget).scrollTop()+$(t.currentTarget).innerHeight()/2>=$(t.currentTarget)[0].scrollHeight-450:$(t.currentTarget).scrollTop()+$(t.currentTarget).innerHeight()>=$(t.currentTarget)[0].scrollHeight-150)&&void 0!==RV_MEDIA_CONFIG.pagination&&RV_MEDIA_CONFIG.pagination.has_more&&e.MediaService.getMedia(!1,!1,!0)})}}],r=[{key:"setupSecurity",value:function(){$.ajaxSetup({headers:{"X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr("content")}})}}],t&&J(e.prototype,t),r&&J(e,r),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,t,r}();$(document).ready(function(){window.rvMedia=window.rvMedia||{},H.setupSecurity(),(new H).init()})})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./platform/core/media/resources/assets/js/App/Config/MediaConfig.js":
+/*!***************************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/App/Config/MediaConfig.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MediaConfig: () => (/* binding */ MediaConfig),
+/* harmony export */   RecentItems: () => (/* binding */ RecentItems)
+/* harmony export */ });
+var MediaConfig = $.parseJSON(localStorage.getItem('MediaConfig')) || {};
+var defaultConfig = {
+  app_key: RV_MEDIA_CONFIG.random_hash ? RV_MEDIA_CONFIG.random_hash : '21d06709fe1d3abcc0efddda89c4b279',
+  request_params: {
+    view_type: 'tiles',
+    filter: 'everything',
+    view_in: 'all_media',
+    sort_by: 'created_at-desc',
+    folder_id: 0
+  },
+  hide_details_pane: false,
+  icons: {
+    folder: 'fa fa-folder'
+  },
+  actions_list: {
+    basic: [{
+      icon: 'fa fa-eye',
+      name: 'Preview',
+      action: 'preview',
+      order: 0,
+      "class": 'rv-action-preview'
+    }],
+    file: [{
+      icon: 'fa fa-link',
+      name: 'Copy link',
+      action: 'copy_link',
+      order: 0,
+      "class": 'rv-action-copy-link'
+    }, {
+      icon: 'far fa-edit',
+      name: 'Rename',
+      action: 'rename',
+      order: 1,
+      "class": 'rv-action-rename'
+    }, {
+      icon: 'fa fa-copy',
+      name: 'Make a copy',
+      action: 'make_copy',
+      order: 2,
+      "class": 'rv-action-make-copy'
+    }],
+    user: [{
+      icon: 'fa fa-star',
+      name: 'Favorite',
+      action: 'favorite',
+      order: 2,
+      "class": 'rv-action-favorite'
+    }, {
+      icon: 'fa fa-star',
+      name: 'Remove favorite',
+      action: 'remove_favorite',
+      order: 3,
+      "class": 'rv-action-favorite'
+    }],
+    other: [{
+      icon: 'fa fa-download',
+      name: 'Download',
+      action: 'download',
+      order: 0,
+      "class": 'rv-action-download'
+    }, {
+      icon: 'fa fa-trash',
+      name: 'Move to trash',
+      action: 'trash',
+      order: 1,
+      "class": 'rv-action-trash'
+    }, {
+      icon: 'fa fa-eraser',
+      name: 'Delete permanently',
+      action: 'delete',
+      order: 2,
+      "class": 'rv-action-delete'
+    }, {
+      icon: 'fa fa-undo',
+      name: 'Restore',
+      action: 'restore',
+      order: 3,
+      "class": 'rv-action-restore'
+    }]
+  }
+};
+if (!MediaConfig.app_key || MediaConfig.app_key !== defaultConfig.app_key) {
+  MediaConfig = defaultConfig;
+}
+MediaConfig.request_params.search = '';
+var RecentItems = $.parseJSON(localStorage.getItem('RecentItems')) || [];
+
+
+/***/ }),
+
+/***/ "./platform/core/media/resources/assets/js/App/Helpers/Helpers.js":
+/*!************************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/App/Helpers/Helpers.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Helpers: () => (/* binding */ Helpers)
+/* harmony export */ });
+/* harmony import */ var _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Config/MediaConfig */ "./platform/core/media/resources/assets/js/App/Config/MediaConfig.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+var Helpers = /*#__PURE__*/function () {
+  function Helpers() {
+    _classCallCheck(this, Helpers);
+  }
+  return _createClass(Helpers, null, [{
+    key: "getUrlParam",
+    value: function getUrlParam(paramName) {
+      var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      if (!url) {
+        url = window.location.search;
+      }
+      var reParam = new RegExp('(?:[\?&]|&)' + paramName + '=([^&]+)', 'i');
+      var match = url.match(reParam);
+      return match && match.length > 1 ? match[1] : null;
+    }
+  }, {
+    key: "asset",
+    value: function asset(url) {
+      if (url.substring(0, 2) === '//' || url.substring(0, 7) === 'http://' || url.substring(0, 8) === 'https://') {
+        return url;
+      }
+      var baseUrl = RV_MEDIA_URL.base_url.substr(-1, 1) !== '/' ? RV_MEDIA_URL.base_url + '/' : RV_MEDIA_URL.base_url;
+      if (url.substring(0, 1) === '/') {
+        return baseUrl + url.substring(1);
+      }
+      return baseUrl + url;
+    }
+  }, {
+    key: "showAjaxLoading",
+    value: function showAjaxLoading() {
+      var $element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : $('.rv-media-main');
+      $element.addClass('on-loading').append($('#rv_media_loading').html());
+    }
+  }, {
+    key: "hideAjaxLoading",
+    value: function hideAjaxLoading() {
+      var $element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : $('.rv-media-main');
+      $element.removeClass('on-loading').find('.loading-wrapper').remove();
+    }
+  }, {
+    key: "isOnAjaxLoading",
+    value: function isOnAjaxLoading() {
+      var $element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : $('.rv-media-items');
+      return $element.hasClass('on-loading');
+    }
+  }, {
+    key: "jsonEncode",
+    value: function jsonEncode(object) {
+      if (typeof object === 'undefined') {
+        object = null;
+      }
+      return JSON.stringify(object);
+    }
+  }, {
+    key: "jsonDecode",
+    value: function jsonDecode(jsonString, defaultValue) {
+      if (!jsonString) {
+        return defaultValue;
+      }
+      if (typeof jsonString === 'string') {
+        var result;
+        try {
+          result = $.parseJSON(jsonString);
+        } catch (err) {
+          result = defaultValue;
+        }
+        return result;
+      }
+      return jsonString;
+    }
+  }, {
+    key: "getRequestParams",
+    value: function getRequestParams() {
+      if (window.rvMedia.options && window.rvMedia.options.open_in === 'modal') {
+        return $.extend(true, _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.MediaConfig.request_params, window.rvMedia.options || {});
+      }
+      return _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.MediaConfig.request_params;
+    }
+  }, {
+    key: "setSelectedFile",
+    value: function setSelectedFile(fileId) {
+      if (typeof window.rvMedia.options !== 'undefined') {
+        window.rvMedia.options.selected_file_id = fileId;
+      } else {
+        _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.MediaConfig.request_params.selected_file_id = fileId;
+      }
+    }
+  }, {
+    key: "getConfigs",
+    value: function getConfigs() {
+      return _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.MediaConfig;
+    }
+  }, {
+    key: "storeConfig",
+    value: function storeConfig() {
+      localStorage.setItem('MediaConfig', Helpers.jsonEncode(_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.MediaConfig));
+    }
+  }, {
+    key: "storeRecentItems",
+    value: function storeRecentItems() {
+      localStorage.setItem('RecentItems', Helpers.jsonEncode(_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.RecentItems));
+    }
+  }, {
+    key: "addToRecent",
+    value: function addToRecent(id) {
+      if (id instanceof Array) {
+        _.each(id, function (value) {
+          _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.RecentItems.push(value);
+        });
+      } else {
+        _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.RecentItems.push(id);
+        this.storeRecentItems();
+      }
+    }
+  }, {
+    key: "getItems",
+    value: function getItems() {
+      var items = [];
+      $('.js-media-list-title').each(function (index, el) {
+        var $box = $(el);
+        var data = $box.data() || {};
+        data.index_key = $box.index();
+        items.push(data);
+      });
+      return items;
+    }
+  }, {
+    key: "getSelectedItems",
+    value: function getSelectedItems() {
+      var selected = [];
+      $('.js-media-list-title input[type=checkbox]:checked').each(function (index, el) {
+        var $box = $(el).closest('.js-media-list-title');
+        var data = $box.data() || {};
+        data.index_key = $box.index();
+        selected.push(data);
+      });
+      return selected;
+    }
+  }, {
+    key: "getSelectedFiles",
+    value: function getSelectedFiles() {
+      var selected = [];
+      $('.js-media-list-title[data-context=file] input[type=checkbox]:checked').each(function (index, el) {
+        var $box = $(el).closest('.js-media-list-title');
+        var data = $box.data() || {};
+        data.index_key = $box.index();
+        selected.push(data);
+      });
+      return selected;
+    }
+  }, {
+    key: "getSelectedFolder",
+    value: function getSelectedFolder() {
+      var selected = [];
+      $('.js-media-list-title[data-context=folder] input[type=checkbox]:checked').each(function (index, el) {
+        var $box = $(el).closest('.js-media-list-title');
+        var data = $box.data() || {};
+        data.index_key = $box.index();
+        selected.push(data);
+      });
+      return selected;
+    }
+  }, {
+    key: "isUseInModal",
+    value: function isUseInModal() {
+      return window.rvMedia && window.rvMedia.options && window.rvMedia.options.open_in === 'modal';
+    }
+  }, {
+    key: "resetPagination",
+    value: function resetPagination() {
+      RV_MEDIA_CONFIG.pagination = {
+        paged: 1,
+        posts_per_page: 40,
+        in_process_get_media: false,
+        has_more: true
+      };
+    }
+  }]);
+}();
+
+/***/ }),
+
+/***/ "./platform/core/media/resources/assets/js/App/Services/ActionsService.js":
+/*!********************************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/App/Services/ActionsService.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ActionsService: () => (/* binding */ ActionsService)
+/* harmony export */ });
+/* harmony import */ var _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Config/MediaConfig */ "./platform/core/media/resources/assets/js/App/Config/MediaConfig.js");
+/* harmony import */ var _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Helpers/Helpers */ "./platform/core/media/resources/assets/js/App/Helpers/Helpers.js");
+/* harmony import */ var _MessageService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MessageService */ "./platform/core/media/resources/assets/js/App/Services/MessageService.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+var ActionsService = /*#__PURE__*/function () {
+  function ActionsService() {
+    _classCallCheck(this, ActionsService);
+  }
+  return _createClass(ActionsService, null, [{
+    key: "handleDropdown",
+    value: function handleDropdown() {
+      var selected = _.size(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getSelectedItems());
+      ActionsService.renderActions();
+      if (selected > 0) {
+        $('.rv-dropdown-actions').removeClass('disabled');
+      } else {
+        $('.rv-dropdown-actions').addClass('disabled');
+      }
+    }
+  }, {
+    key: "handlePreview",
+    value: function handlePreview() {
+      var selected = [];
+      _.each(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getSelectedFiles(), function (value) {
+        if (value.preview_url) {
+          selected.push({
+            src: value.preview_url,
+            type: value.preview_type
+          });
+          _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.RecentItems.push(value.id);
+        }
+      });
+      if (_.size(selected) > 0) {
+        $.fancybox.open(selected);
+        _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.storeRecentItems();
+      } else {
+        this.handleGlobalAction('download');
+      }
+    }
+  }, {
+    key: "handleCopyLink",
+    value: function handleCopyLink() {
+      var links = '';
+      _.each(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getSelectedFiles(), function (value) {
+        if (!_.isEmpty(links)) {
+          links += '\n';
+        }
+        links += value.full_url;
+      });
+      var $clipboardTemp = $('.js-rv-clipboard-temp');
+      $clipboardTemp.data('clipboard-text', links);
+      new Clipboard('.js-rv-clipboard-temp', {
+        text: function text() {
+          return links;
+        }
+      });
+      _MessageService__WEBPACK_IMPORTED_MODULE_2__.MessageService.showMessage('success', RV_MEDIA_CONFIG.translations.clipboard.success, RV_MEDIA_CONFIG.translations.message.success_header);
+      $clipboardTemp.trigger('click');
+    }
+  }, {
+    key: "handleGlobalAction",
+    value: function handleGlobalAction(type, callback) {
+      var selected = [];
+      _.each(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getSelectedItems(), function (value) {
+        selected.push({
+          is_folder: value.is_folder,
+          id: value.id,
+          full_url: value.full_url
+        });
+      });
+      switch (type) {
+        case 'rename':
+          $('#modal_rename_items').modal('show').find('form.rv-form').data('action', type);
+          break;
+        case 'copy_link':
+          ActionsService.handleCopyLink();
+          break;
+        case 'preview':
+          ActionsService.handlePreview();
+          break;
+        case 'trash':
+          $('#modal_trash_items').modal('show').find('form.rv-form').data('action', type);
+          break;
+        case 'delete':
+          $('#modal_delete_items').modal('show').find('form.rv-form').data('action', type);
+          break;
+        case 'empty_trash':
+          $('#modal_empty_trash').modal('show').find('form.rv-form').data('action', type);
+          break;
+        case 'download':
+          var downloadLink = RV_MEDIA_URL.download;
+          var count = 0;
+          _.each(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getSelectedItems(), function (value) {
+            if (!_.includes(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getConfigs().denied_download, value.mime_type)) {
+              downloadLink += (count === 0 ? '?' : '&') + 'selected[' + count + '][is_folder]=' + value.is_folder + '&selected[' + count + '][id]=' + value.id;
+              count++;
+            }
+          });
+          if (downloadLink !== RV_MEDIA_URL.download) {
+            window.open(downloadLink, '_blank');
+          } else {
+            _MessageService__WEBPACK_IMPORTED_MODULE_2__.MessageService.showMessage('error', RV_MEDIA_CONFIG.translations.download.error, RV_MEDIA_CONFIG.translations.message.error_header);
+          }
+          break;
+        default:
+          ActionsService.processAction({
+            selected: selected,
+            action: type
+          }, callback);
+          break;
+      }
+    }
+  }, {
+    key: "processAction",
+    value: function processAction(data) {
+      var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      $.ajax({
+        url: RV_MEDIA_URL.global_actions,
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        beforeSend: function beforeSend() {
+          _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.showAjaxLoading();
+        },
+        success: function success(res) {
+          _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.resetPagination();
+          if (!res.error) {
+            _MessageService__WEBPACK_IMPORTED_MODULE_2__.MessageService.showMessage('success', res.message, RV_MEDIA_CONFIG.translations.message.success_header);
+          } else {
+            _MessageService__WEBPACK_IMPORTED_MODULE_2__.MessageService.showMessage('error', res.message, RV_MEDIA_CONFIG.translations.message.error_header);
+          }
+          if (callback) {
+            callback(res);
+          }
+        },
+        complete: function complete() {
+          _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.hideAjaxLoading();
+        },
+        error: function error(data) {
+          _MessageService__WEBPACK_IMPORTED_MODULE_2__.MessageService.handleError(data);
+        }
+      });
+    }
+  }, {
+    key: "renderRenameItems",
+    value: function renderRenameItems() {
+      var VIEW = $('#rv_media_rename_item').html();
+      var $itemsWrapper = $('#modal_rename_items .rename-items').empty();
+      _.each(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getSelectedItems(), function (value) {
+        var item = VIEW.replace(/__icon__/gi, value.icon || 'fa fa-file').replace(/__placeholder__/gi, 'Input file name').replace(/__value__/gi, value.name);
+        var $item = $(item);
+        $item.data('id', value.id);
+        $item.data('is_folder', value.is_folder);
+        $item.data('name', value.name);
+        $itemsWrapper.append($item);
+      });
+    }
+  }, {
+    key: "renderActions",
+    value: function renderActions() {
+      var hasFolderSelected = _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getSelectedFolder().length > 0;
+      var ACTION_TEMPLATE = $('#rv_action_item').html();
+      var initializedItem = 0;
+      var $dropdownActions = $('.rv-dropdown-actions .dropdown-menu');
+      $dropdownActions.empty();
+      var actionsList = $.extend({}, true, _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getConfigs().actions_list);
+      if (hasFolderSelected) {
+        actionsList.basic = _.reject(actionsList.basic, function (item) {
+          return item.action === 'preview';
+        });
+        actionsList.file = _.reject(actionsList.file, function (item) {
+          return item.action === 'copy_link';
+        });
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.create')) {
+          actionsList.file = _.reject(actionsList.file, function (item) {
+            return item.action === 'make_copy';
+          });
+        }
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.edit')) {
+          actionsList.file = _.reject(actionsList.file, function (item) {
+            return _.includes(['rename'], item.action);
+          });
+          actionsList.user = _.reject(actionsList.user, function (item) {
+            return _.includes(['rename'], item.action);
+          });
+        }
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.trash')) {
+          actionsList.other = _.reject(actionsList.other, function (item) {
+            return _.includes(['trash', 'restore'], item.action);
+          });
+        }
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.destroy')) {
+          actionsList.other = _.reject(actionsList.other, function (item) {
+            return _.includes(['delete'], item.action);
+          });
+        }
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.favorite')) {
+          actionsList.other = _.reject(actionsList.other, function (item) {
+            return _.includes(['favorite', 'remove_favorite'], item.action);
+          });
+        }
+      }
+      var selectedFiles = _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getSelectedFiles();
+      var canPreview = _.filter(selectedFiles, function (value) {
+        return value.preview_url;
+      }).length;
+      if (!canPreview) {
+        actionsList.basic = _.reject(actionsList.basic, function (item) {
+          return item.action === 'preview';
+        });
+      }
+      if (selectedFiles.length > 0) {
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.create')) {
+          actionsList.file = _.reject(actionsList.file, function (item) {
+            return item.action === 'make_copy';
+          });
+        }
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.edit')) {
+          actionsList.file = _.reject(actionsList.file, function (item) {
+            return _.includes(['rename'], item.action);
+          });
+        }
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.trash')) {
+          actionsList.other = _.reject(actionsList.other, function (item) {
+            return _.includes(['trash', 'restore'], item.action);
+          });
+        }
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.destroy')) {
+          actionsList.other = _.reject(actionsList.other, function (item) {
+            return _.includes(['delete'], item.action);
+          });
+        }
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.favorite')) {
+          actionsList.other = _.reject(actionsList.other, function (item) {
+            return _.includes(['favorite', 'remove_favorite'], item.action);
+          });
+        }
+      }
+      _.each(actionsList, function (action, key) {
+        _.each(action, function (item, index) {
+          var is_break = false;
+          switch (_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getRequestParams().view_in) {
+            case 'all_media':
+              if (_.includes(['remove_favorite', 'delete', 'restore'], item.action)) {
+                is_break = true;
+              }
+              break;
+            case 'recent':
+              if (_.includes(['remove_favorite', 'delete', 'restore', 'make_copy'], item.action)) {
+                is_break = true;
+              }
+              break;
+            case 'favorites':
+              if (_.includes(['favorite', 'delete', 'restore', 'make_copy'], item.action)) {
+                is_break = true;
+              }
+              break;
+            case 'trash':
+              if (!_.includes(['preview', 'delete', 'restore', 'rename', 'download'], item.action)) {
+                is_break = true;
+              }
+              break;
+          }
+          if (!is_break) {
+            var template = ACTION_TEMPLATE.replace(/__action__/gi, item.action || '').replace(/__icon__/gi, item.icon || '').replace(/__name__/gi, RV_MEDIA_CONFIG.translations.actions_list[key][item.action] || item.name);
+            if (!index && initializedItem) {
+              template = '<li role="separator" class="divider"></li>' + template;
+            }
+            $dropdownActions.append(template);
+          }
+        });
+        if (action.length > 0) {
+          initializedItem++;
+        }
+      });
+    }
+  }]);
+}();
+
+/***/ }),
+
+/***/ "./platform/core/media/resources/assets/js/App/Services/ContextMenuService.js":
+/*!************************************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/App/Services/ContextMenuService.js ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ContextMenuService: () => (/* binding */ ContextMenuService)
+/* harmony export */ });
+/* harmony import */ var _ActionsService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActionsService */ "./platform/core/media/resources/assets/js/App/Services/ActionsService.js");
+/* harmony import */ var _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Helpers/Helpers */ "./platform/core/media/resources/assets/js/App/Helpers/Helpers.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+var ContextMenuService = /*#__PURE__*/function () {
+  function ContextMenuService() {
+    _classCallCheck(this, ContextMenuService);
+  }
+  return _createClass(ContextMenuService, null, [{
+    key: "initContext",
+    value: function initContext() {
+      if (jQuery().contextMenu) {
+        $.contextMenu({
+          selector: '.js-context-menu[data-context="file"]',
+          build: function build() {
+            return {
+              items: ContextMenuService._fileContextMenu()
+            };
+          }
+        });
+        $.contextMenu({
+          selector: '.js-context-menu[data-context="folder"]',
+          build: function build() {
+            return {
+              items: ContextMenuService._folderContextMenu()
+            };
+          }
+        });
+      }
+    }
+  }, {
+    key: "_fileContextMenu",
+    value: function _fileContextMenu() {
+      var items = {
+        preview: {
+          name: 'Preview',
+          icon: function icon(opt, $itemElement, itemKey, item) {
+            $itemElement.html('<i class="fa fa-eye" aria-hidden="true"></i> ' + item.name);
+            return 'context-menu-icon-updated';
+          },
+          callback: function callback() {
+            _ActionsService__WEBPACK_IMPORTED_MODULE_0__.ActionsService.handlePreview();
+          }
+        }
+      };
+      _.each(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getConfigs().actions_list, function (actionGroup, key) {
+        _.each(actionGroup, function (value) {
+          items[value.action] = {
+            name: value.name,
+            icon: function icon(opt, $itemElement, itemKey, item) {
+              $itemElement.html('<i class="' + value.icon + '" aria-hidden="true"></i> ' + (RV_MEDIA_CONFIG.translations.actions_list[key][value.action] || item.name));
+              return 'context-menu-icon-updated';
+            },
+            callback: function callback() {
+              $('.js-files-action[data-action="' + value.action + '"]').trigger('click');
+            }
+          };
+        });
+      });
+      var except = [];
+      switch (_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getRequestParams().view_in) {
+        case 'all_media':
+          except = ['remove_favorite', 'delete', 'restore'];
+          break;
+        case 'recent':
+          except = ['remove_favorite', 'delete', 'restore', 'make_copy'];
+          break;
+        case 'favorites':
+          except = ['favorite', 'delete', 'restore', 'make_copy'];
+          break;
+        case 'trash':
+          items = {
+            preview: items.preview,
+            rename: items.rename,
+            download: items.download,
+            "delete": items["delete"],
+            restore: items.restore
+          };
+          break;
+      }
+      _.each(except, function (value) {
+        items[value] = undefined;
+      });
+      var hasFolderSelected = _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getSelectedFolder().length > 0;
+      if (hasFolderSelected) {
+        items.preview = undefined;
+        items.copy_link = undefined;
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.create')) {
+          items.make_copy = undefined;
+        }
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.edit')) {
+          items.rename = undefined;
+        }
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.trash')) {
+          items.trash = undefined;
+          items.restore = undefined;
+        }
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.destroy')) {
+          items["delete"] = undefined;
+        }
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.favorite')) {
+          items.favorite = undefined;
+          items.remove_favorite = undefined;
+        }
+      }
+      var selectedFiles = _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getSelectedFiles();
+      if (selectedFiles.length > 0) {
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.create')) {
+          items.make_copy = undefined;
+        }
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.edit')) {
+          items.rename = undefined;
+        }
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.trash')) {
+          items.trash = undefined;
+          items.restore = undefined;
+        }
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.destroy')) {
+          items["delete"] = undefined;
+        }
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.favorite')) {
+          items.favorite = undefined;
+          items.remove_favorite = undefined;
+        }
+      }
+      var canPreview = _.filter(selectedFiles, function (value) {
+        return value.preview_url;
+      }).length;
+      if (!canPreview) {
+        items.preview = undefined;
+      }
+      return items;
+    }
+  }, {
+    key: "_folderContextMenu",
+    value: function _folderContextMenu() {
+      var items = ContextMenuService._fileContextMenu();
+      items.preview = undefined;
+      items.copy_link = undefined;
+      return items;
+    }
+  }, {
+    key: "destroyContext",
+    value: function destroyContext() {
+      if (jQuery().contextMenu) {
+        $.contextMenu('destroy');
+      }
+    }
+  }]);
+}();
+
+/***/ }),
+
+/***/ "./platform/core/media/resources/assets/js/App/Services/DownloadService.js":
+/*!*********************************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/App/Services/DownloadService.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DownloadService: () => (/* binding */ DownloadService)
+/* harmony export */ });
+/* harmony import */ var _MediaService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MediaService */ "./platform/core/media/resources/assets/js/App/Services/MediaService.js");
+/* harmony import */ var _MessageService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MessageService */ "./platform/core/media/resources/assets/js/App/Services/MessageService.js");
+/* harmony import */ var _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Helpers/Helpers */ "./platform/core/media/resources/assets/js/App/Helpers/Helpers.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(_typeof(e) + " is not iterable"); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+var DownloadService = /*#__PURE__*/function () {
+  function DownloadService() {
+    _classCallCheck(this, DownloadService);
+    this.MediaService = new _MediaService__WEBPACK_IMPORTED_MODULE_0__.MediaService();
+    $(document).on('shown.bs.modal', '#modal_download_url', function (event) {
+      $(event.currentTarget).find('.form-download-url input[type=text]').focus();
+    });
+  }
+  return _createClass(DownloadService, [{
+    key: "download",
+    value: function () {
+      var _download = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(urls, onProgress) {
+        var _self, index, hasError, _iterator, _step, _loop, _t;
+        return _regenerator().w(function (_context2) {
+          while (1) switch (_context2.p = _context2.n) {
+            case 0:
+              _self = this;
+              urls = $.trim(urls).split(/\r?\n/);
+              index = 0;
+              hasError = false;
+              _iterator = _createForOfIteratorHelper(urls);
+              _context2.p = 1;
+              _loop = /*#__PURE__*/_regenerator().m(function _loop() {
+                var url, filename, ok;
+                return _regenerator().w(function (_context) {
+                  while (1) switch (_context.n) {
+                    case 0:
+                      url = _step.value;
+                      filename = '';
+                      try {
+                        filename = new URL(url).pathname.split('/').pop();
+                      } catch (e) {
+                        filename = url;
+                      }
+                      ok = onProgress("".concat(index, " / ").concat(urls.length), filename, url);
+                      _context.n = 1;
+                      return new Promise(function (resolve) {
+                        $.ajax({
+                          url: RV_MEDIA_URL.download_url,
+                          type: 'POST',
+                          data: {
+                            folderId: _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_2__.Helpers.getRequestParams().folder_id,
+                            url: url
+                          },
+                          dataType: 'json',
+                          success: function success(res) {
+                            if (res.error) {
+                              var _res$message, _res$data;
+                              hasError = true;
+                              ok(false, (_res$message = res.message) !== null && _res$message !== void 0 ? _res$message : (_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.message);
+                            } else {
+                              var _res$message2, _res$data2;
+                              ok(true, (_res$message2 = res.message) !== null && _res$message2 !== void 0 ? _res$message2 : (_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.message);
+                            }
+                            resolve();
+                          },
+                          error: function error(data) {
+                            _MessageService__WEBPACK_IMPORTED_MODULE_1__.MessageService.handleError(data);
+                          }
+                        });
+                      });
+                    case 1:
+                      index += 1;
+                    case 2:
+                      return _context.a(2);
+                  }
+                }, _loop);
+              });
+              _iterator.s();
+            case 2:
+              if ((_step = _iterator.n()).done) {
+                _context2.n = 4;
+                break;
+              }
+              return _context2.d(_regeneratorValues(_loop()), 3);
+            case 3:
+              _context2.n = 2;
+              break;
+            case 4:
+              _context2.n = 6;
+              break;
+            case 5:
+              _context2.p = 5;
+              _t = _context2.v;
+              _iterator.e(_t);
+            case 6:
+              _context2.p = 6;
+              _iterator.f();
+              return _context2.f(6);
+            case 7:
+              _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_2__.Helpers.resetPagination();
+              _self.MediaService.getMedia(true);
+              if (!hasError) {
+                DownloadService.closeModal();
+                _MessageService__WEBPACK_IMPORTED_MODULE_1__.MessageService.showMessage('success', RV_MEDIA_CONFIG.translations.message.success_header);
+              }
+            case 8:
+              return _context2.a(2);
+          }
+        }, _callee, this, [[1, 5, 6, 7]]);
+      }));
+      function download(_x, _x2) {
+        return _download.apply(this, arguments);
+      }
+      return download;
+    }()
+  }], [{
+    key: "closeModal",
+    value: function closeModal() {
+      $(document).find('#modal_download_url').modal('hide');
+    }
+  }]);
+}();
+
+/***/ }),
+
+/***/ "./platform/core/media/resources/assets/js/App/Services/FolderService.js":
+/*!*******************************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/App/Services/FolderService.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FolderService: () => (/* binding */ FolderService)
+/* harmony export */ });
+/* harmony import */ var _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Config/MediaConfig */ "./platform/core/media/resources/assets/js/App/Config/MediaConfig.js");
+/* harmony import */ var _MediaService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MediaService */ "./platform/core/media/resources/assets/js/App/Services/MediaService.js");
+/* harmony import */ var _MessageService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MessageService */ "./platform/core/media/resources/assets/js/App/Services/MessageService.js");
+/* harmony import */ var _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Helpers/Helpers */ "./platform/core/media/resources/assets/js/App/Helpers/Helpers.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+
+var FolderService = /*#__PURE__*/function () {
+  function FolderService() {
+    _classCallCheck(this, FolderService);
+    this.MediaService = new _MediaService__WEBPACK_IMPORTED_MODULE_1__.MediaService();
+    $(document).on('shown.bs.modal', '#modal_add_folder', function (event) {
+      $(event.currentTarget).find('.form-add-folder input[type=text]').focus();
+    });
+  }
+  return _createClass(FolderService, [{
+    key: "create",
+    value: function create(folderName) {
+      var _self = this;
+      $.ajax({
+        url: RV_MEDIA_URL.create_folder,
+        type: 'POST',
+        data: {
+          parent_id: _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_3__.Helpers.getRequestParams().folder_id,
+          name: folderName
+        },
+        dataType: 'json',
+        beforeSend: function beforeSend() {
+          _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_3__.Helpers.showAjaxLoading();
+        },
+        success: function success(res) {
+          if (res.error) {
+            _MessageService__WEBPACK_IMPORTED_MODULE_2__.MessageService.showMessage('error', res.message, RV_MEDIA_CONFIG.translations.message.error_header);
+          } else {
+            _MessageService__WEBPACK_IMPORTED_MODULE_2__.MessageService.showMessage('success', res.message, RV_MEDIA_CONFIG.translations.message.success_header);
+            _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_3__.Helpers.resetPagination();
+            _self.MediaService.getMedia(true);
+            FolderService.closeModal();
+          }
+        },
+        complete: function complete() {
+          _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_3__.Helpers.hideAjaxLoading();
+        },
+        error: function error(data) {
+          _MessageService__WEBPACK_IMPORTED_MODULE_2__.MessageService.handleError(data);
+        }
+      });
+    }
+  }, {
+    key: "changeFolder",
+    value: function changeFolder(folderId) {
+      _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.MediaConfig.request_params.folder_id = folderId;
+      _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_3__.Helpers.storeConfig();
+      this.MediaService.getMedia(true);
+    }
+  }], [{
+    key: "closeModal",
+    value: function closeModal() {
+      $(document).find('#modal_add_folder').modal('hide');
+    }
+  }]);
+}();
+
+/***/ }),
+
+/***/ "./platform/core/media/resources/assets/js/App/Services/MediaService.js":
+/*!******************************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/App/Services/MediaService.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MediaService: () => (/* binding */ MediaService)
+/* harmony export */ });
+/* harmony import */ var _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Config/MediaConfig */ "./platform/core/media/resources/assets/js/App/Config/MediaConfig.js");
+/* harmony import */ var _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Helpers/Helpers */ "./platform/core/media/resources/assets/js/App/Helpers/Helpers.js");
+/* harmony import */ var _MessageService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MessageService */ "./platform/core/media/resources/assets/js/App/Services/MessageService.js");
+/* harmony import */ var _ActionsService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ActionsService */ "./platform/core/media/resources/assets/js/App/Services/ActionsService.js");
+/* harmony import */ var _ContextMenuService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ContextMenuService */ "./platform/core/media/resources/assets/js/App/Services/ContextMenuService.js");
+/* harmony import */ var _Views_MediaList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Views/MediaList */ "./platform/core/media/resources/assets/js/App/Views/MediaList.js");
+/* harmony import */ var _Views_MediaDetails__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Views/MediaDetails */ "./platform/core/media/resources/assets/js/App/Views/MediaDetails.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+
+
+
+
+var MediaService = /*#__PURE__*/function () {
+  function MediaService() {
+    _classCallCheck(this, MediaService);
+    this.MediaList = new _Views_MediaList__WEBPACK_IMPORTED_MODULE_5__.MediaList();
+    this.MediaDetails = new _Views_MediaDetails__WEBPACK_IMPORTED_MODULE_6__.MediaDetails();
+    this.breadcrumbTemplate = $('#rv_media_breadcrumb_item').html();
+  }
+  return _createClass(MediaService, [{
+    key: "getMedia",
+    value: function getMedia() {
+      var reload = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      var is_popup = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var load_more_file = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      if (typeof RV_MEDIA_CONFIG.pagination != 'undefined') {
+        if (RV_MEDIA_CONFIG.pagination.in_process_get_media) {
+          return;
+        }
+        RV_MEDIA_CONFIG.pagination.in_process_get_media = true;
+      }
+      var _self = this;
+      _self.getFileDetails({
+        icon: 'far fa-image',
+        nothing_selected: ''
+      });
+      var params = _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getRequestParams();
+      if (params.view_in === 'recent') {
+        params.recent_items = _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.RecentItems;
+      }
+      if (is_popup === true) {
+        params.is_popup = true;
+      } else {
+        params.is_popup = undefined;
+      }
+      params.onSelectFiles = undefined;
+      if (typeof params.search != 'undefined' && params.search != '' && typeof params.selected_file_id != 'undefined') {
+        params.selected_file_id = undefined;
+      }
+      params.load_more_file = load_more_file;
+      if (typeof RV_MEDIA_CONFIG.pagination != 'undefined') {
+        params.paged = RV_MEDIA_CONFIG.pagination.paged;
+        params.posts_per_page = RV_MEDIA_CONFIG.pagination.posts_per_page;
+      }
+      $.ajax({
+        url: RV_MEDIA_URL.get_media,
+        type: 'GET',
+        data: params,
+        dataType: 'json',
+        beforeSend: function beforeSend() {
+          _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.showAjaxLoading();
+        },
+        success: function success(res) {
+          _self.MediaList.renderData(res.data, reload, load_more_file);
+          _self.renderBreadcrumbs(res.data.breadcrumbs);
+          MediaService.refreshFilter();
+          _ActionsService__WEBPACK_IMPORTED_MODULE_3__.ActionsService.renderActions();
+          if (typeof RV_MEDIA_CONFIG.pagination != 'undefined') {
+            if (typeof RV_MEDIA_CONFIG.pagination.paged != 'undefined') {
+              RV_MEDIA_CONFIG.pagination.paged += 1;
+            }
+            if (typeof RV_MEDIA_CONFIG.pagination.in_process_get_media != 'undefined') {
+              RV_MEDIA_CONFIG.pagination.in_process_get_media = false;
+            }
+            if (typeof RV_MEDIA_CONFIG.pagination.posts_per_page != 'undefined' && res.data.files.length + res.data.folders.length < RV_MEDIA_CONFIG.pagination.posts_per_page && typeof RV_MEDIA_CONFIG.pagination.has_more != 'undefined') {
+              RV_MEDIA_CONFIG.pagination.has_more = false;
+            }
+          }
+        },
+        complete: function complete() {
+          _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.hideAjaxLoading();
+        },
+        error: function error(data) {
+          _MessageService__WEBPACK_IMPORTED_MODULE_2__.MessageService.handleError(data);
+        }
+      });
+    }
+  }, {
+    key: "getFileDetails",
+    value: function getFileDetails(data) {
+      this.MediaDetails.renderData(data);
+    }
+  }, {
+    key: "renderBreadcrumbs",
+    value: function renderBreadcrumbs(breadcrumbItems) {
+      var _self = this;
+      var $breadcrumbContainer = $('.rv-media-breadcrumb .breadcrumb');
+      $breadcrumbContainer.find('li').remove();
+      _.each(breadcrumbItems, function (value) {
+        var template = _self.breadcrumbTemplate;
+        template = template.replace(/__name__/gi, value.name || '').replace(/__icon__/gi, value.icon ? '<i class="' + value.icon + '"></i>' : '').replace(/__folderId__/gi, value.id || 0);
+        $breadcrumbContainer.append($(template));
+      });
+      $('.rv-media-container').attr('data-breadcrumb-count', _.size(breadcrumbItems));
+    }
+  }], [{
+    key: "refreshFilter",
+    value: function refreshFilter() {
+      var $rvMediaContainer = $('.rv-media-container');
+      var viewIn = _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getRequestParams().view_in;
+      if (viewIn !== 'all_media' && !_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getRequestParams().folder_id) {
+        $('.rv-media-actions .btn:not([data-type="refresh"]):not(label)').addClass('disabled');
+        $rvMediaContainer.attr('data-allow-upload', 'false');
+      } else {
+        $('.rv-media-actions .btn:not([data-type="refresh"]):not(label)').removeClass('disabled');
+        $rvMediaContainer.attr('data-allow-upload', 'true');
+      }
+      $('.rv-media-actions .btn.js-rv-media-change-filter-group').removeClass('disabled');
+      var $empty_trash_btn = $('.rv-media-actions .btn[data-action="empty_trash"]');
+      if (viewIn === 'trash') {
+        $empty_trash_btn.removeClass('hidden').removeClass('disabled');
+        if (!_.size(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getItems())) {
+          $empty_trash_btn.addClass('hidden').addClass('disabled');
+        }
+      } else {
+        $empty_trash_btn.addClass('hidden');
+      }
+      _ContextMenuService__WEBPACK_IMPORTED_MODULE_4__.ContextMenuService.destroyContext();
+      _ContextMenuService__WEBPACK_IMPORTED_MODULE_4__.ContextMenuService.initContext();
+      $rvMediaContainer.attr('data-view-in', viewIn);
+    }
+  }]);
+}();
+
+/***/ }),
+
+/***/ "./platform/core/media/resources/assets/js/App/Services/MessageService.js":
+/*!********************************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/App/Services/MessageService.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MessageService: () => (/* binding */ MessageService)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var MessageService = /*#__PURE__*/function () {
+  function MessageService() {
+    _classCallCheck(this, MessageService);
+  }
+  return _createClass(MessageService, null, [{
+    key: "showMessage",
+    value: function showMessage(type, message) {
+      toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        positionClass: 'toast-bottom-right',
+        onclick: null,
+        showDuration: 1000,
+        hideDuration: 1000,
+        timeOut: 10000,
+        extendedTimeOut: 1000,
+        showEasing: 'swing',
+        hideEasing: 'linear',
+        showMethod: 'fadeIn',
+        hideMethod: 'fadeOut'
+      };
+      var messageHeader = '';
+      switch (type) {
+        case 'error':
+          messageHeader = RV_MEDIA_CONFIG.translations.message.error_header;
+          break;
+        case 'success':
+          messageHeader = RV_MEDIA_CONFIG.translations.message.success_header;
+          break;
+      }
+      toastr[type](message, messageHeader);
+    }
+  }, {
+    key: "handleError",
+    value: function handleError(data) {
+      if (typeof data.responseJSON !== 'undefined' && !_.isArray(data.errors)) {
+        MessageService.handleValidationError(data.responseJSON.errors);
+      } else {
+        if (typeof data.responseJSON !== 'undefined') {
+          if (typeof data.responseJSON.errors !== 'undefined') {
+            if (data.status === 422) {
+              MessageService.handleValidationError(data.responseJSON.errors);
+            }
+          } else if (typeof data.responseJSON.message !== 'undefined') {
+            MessageService.showMessage('error', data.responseJSON.message);
+          } else {
+            $.each(data.responseJSON, function (index, el) {
+              $.each(el, function (key, item) {
+                MessageService.showMessage('error', item);
+              });
+            });
+          }
+        } else {
+          MessageService.showMessage('error', data.statusText);
+        }
+      }
+    }
+  }, {
+    key: "handleValidationError",
+    value: function handleValidationError(errors) {
+      var message = '';
+      $.each(errors, function (index, item) {
+        message += item + '<br />';
+        var $input = $('*[name="' + index + '"]');
+        $input.addClass('field-has-error');
+        var $input_array = $('*[name$="[' + index + ']"]');
+        $input_array.addClass('field-has-error');
+      });
+      MessageService.showMessage('error', message);
+    }
+  }]);
+}();
+
+/***/ }),
+
+/***/ "./platform/core/media/resources/assets/js/App/Services/UploadService.js":
+/*!*******************************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/App/Services/UploadService.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   UploadService: () => (/* binding */ UploadService)
+/* harmony export */ });
+/* harmony import */ var _MediaService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MediaService */ "./platform/core/media/resources/assets/js/App/Services/MediaService.js");
+/* harmony import */ var _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Helpers/Helpers */ "./platform/core/media/resources/assets/js/App/Helpers/Helpers.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+var UploadService = /*#__PURE__*/function () {
+  function UploadService() {
+    _classCallCheck(this, UploadService);
+    this.$body = $('body');
+    this.dropZone = null;
+    this.uploadUrl = RV_MEDIA_URL.upload_file;
+    this.uploadProgressBox = $('.rv-upload-progress');
+    this.uploadProgressContainer = $('.rv-upload-progress .rv-upload-progress-table');
+    this.uploadProgressTemplate = $('#rv_media_upload_progress_item').html();
+    this.totalQueued = 1;
+    this.MediaService = new _MediaService__WEBPACK_IMPORTED_MODULE_0__.MediaService();
+    this.totalError = 0;
+  }
+  return _createClass(UploadService, [{
+    key: "init",
+    value: function init() {
+      if (_.includes(RV_MEDIA_CONFIG.permissions, 'files.create') && $('.rv-media-items').length > 0) {
+        this.setupDropZone();
+      }
+      this.handleEvents();
+    }
+  }, {
+    key: "setupDropZone",
+    value: function setupDropZone() {
+      var _self = this;
+      var _dropZoneConfig = this.getDropZoneConfig();
+      _self.filesUpload = 0;
+      if (_self.dropZone) {
+        _self.dropZone.destroy();
+      }
+      _self.dropZone = new Dropzone(document.querySelector('.rv-media-items'), _objectSpread(_objectSpread({}, _dropZoneConfig), {}, {
+        thumbnailWidth: false,
+        thumbnailHeight: false,
+        parallelUploads: 1,
+        autoQueue: true,
+        clickable: '.js-dropzone-upload',
+        previewTemplate: false,
+        previewsContainer: false,
+        sending: function sending(file, xhr, formData) {
+          formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+          formData.append('folder_id', _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getRequestParams().folder_id);
+          formData.append('view_in', _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getRequestParams().view_in);
+          formData.append('path', file.fullPath);
+        },
+        chunksUploaded: function chunksUploaded(file, done) {
+          _self.uploadProgressContainer.find('.progress-percent').html('100%');
+          done();
+        },
+        accept: function accept(file, done) {
+          _self.filesUpload++;
+          _self.totalError = 0;
+          done();
+        },
+        uploadprogress: function uploadprogress(file, progress, bytesSent) {
+          var percent = bytesSent / file.size * 100;
+          if (file.upload.chunked && percent > 99) {
+            percent = percent - 1;
+          }
+          var percentShow = (percent > 100 ? '100' : parseInt(percent)) + '%';
+          var el = _self.uploadProgressContainer.find('li').eq(file.index - 1);
+          el.find('.progress-percent').html(percentShow);
+        }
+      }));
+      _self.dropZone.on('addedfile', function (file) {
+        file.index = _self.totalQueued;
+        _self.totalQueued++;
+      });
+      _self.dropZone.on('sending', function (file) {
+        _self.initProgress(file.name, file.size);
+      });
+      _self.dropZone.on('complete', function (file) {
+        if (file.accepted) {
+          _self.changeProgressStatus(file);
+        }
+        _self.filesUpload = 0;
+      });
+      _self.dropZone.on('queuecomplete', function () {
+        _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.resetPagination();
+        _self.MediaService.getMedia(true);
+        if (_self.totalError === 0) {
+          setTimeout(function () {
+            $('.rv-upload-progress .close-pane').trigger('click');
+          }, 5000);
+        }
+      });
+    }
+  }, {
+    key: "handleEvents",
+    value: function handleEvents() {
+      var _self = this;
+      /**
+       * Close upload progress pane
+       */
+      _self.$body.off('click', '.rv-upload-progress .close-pane').on('click', '.rv-upload-progress .close-pane', function (event) {
+        event.preventDefault();
+        $('.rv-upload-progress').addClass('hide-the-pane');
+        _self.totalError = 0;
+        setTimeout(function () {
+          $('.rv-upload-progress li').remove();
+          _self.totalQueued = 1;
+        }, 300);
+      });
+    }
+  }, {
+    key: "initProgress",
+    value: function initProgress($fileName, $fileSize) {
+      var template = this.uploadProgressTemplate.replace(/__fileName__/gi, $fileName).replace(/__fileSize__/gi, UploadService.formatFileSize($fileSize)).replace(/__status__/gi, 'warning').replace(/__message__/gi, 'Uploading');
+      if (this.checkUploadTotalProgress() && this.uploadProgressContainer.find('li').length >= 1) {
+        return;
+      }
+      this.uploadProgressContainer.append(template);
+      this.uploadProgressBox.removeClass('hide-the-pane');
+      this.uploadProgressBox.find('.panel-body').animate({
+        scrollTop: this.uploadProgressContainer.height()
+      }, 150);
+    }
+  }, {
+    key: "changeProgressStatus",
+    value: function changeProgressStatus(file) {
+      var _self = this;
+      var $progressLine = _self.uploadProgressContainer.find('li:nth-child(' + file.index + ')');
+      if (this.checkUploadTotalProgress()) {
+        $progressLine = _self.uploadProgressContainer.find('li:first');
+      }
+      var $label = $progressLine.find('.label');
+      $label.removeClass('label-success label-danger label-warning');
+      var response = _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.jsonDecode(file.xhr.responseText || '', {});
+      _self.totalError = _self.totalError + (response.error === true || file.status === 'error' ? 1 : 0);
+      $label.addClass(response.error === true || file.status === 'error' ? 'label-danger' : 'label-success');
+      $label.html(response.error === true || file.status === 'error' ? 'Error' : 'Uploaded');
+      if (file.status === 'error') {
+        if (file.xhr.status === 422) {
+          var errorHtml = '';
+          $.each(response.errors, function (key, item) {
+            errorHtml += '<span class="text-danger">' + item + '</span><br>';
+          });
+          $progressLine.find('.file-error').html(errorHtml);
+        } else if (file.xhr.status === 500) {
+          $progressLine.find('.file-error').html('<span class="text-danger">' + file.xhr.statusText + '</span>');
+        }
+      } else if (response.error) {
+        $progressLine.find('.file-error').html('<span class="text-danger">' + response.message + '</span>');
+      } else {
+        _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.addToRecent(response.data.id);
+        _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.setSelectedFile(response.data.id);
+      }
+    }
+  }, {
+    key: "getDropZoneConfig",
+    value: function getDropZoneConfig() {
+      return {
+        url: this.uploadUrl,
+        uploadMultiple: !RV_MEDIA_CONFIG.chunk.enabled,
+        chunking: RV_MEDIA_CONFIG.chunk.enabled,
+        forceChunking: true,
+        // forces chunking when file.size < chunkSize
+        parallelChunkUploads: false,
+        // allows chunks to be uploaded in parallel (this is independent of the parallelUploads option)
+        chunkSize: RV_MEDIA_CONFIG.chunk.chunk_size,
+        // chunk size 1,000,000 bytes (~1MB)
+        retryChunks: true,
+        // retry chunks on failure
+        retryChunksLimit: 3,
+        // retry maximum of 3 times (default is 3)
+        timeout: 0,
+        // MB,
+        maxFilesize: RV_MEDIA_CONFIG.chunk.max_file_size,
+        // MB
+        maxFiles: null // max files upload,
+      };
+    }
+  }, {
+    key: "checkUploadTotalProgress",
+    value: function checkUploadTotalProgress() {
+      return this.filesUpload === 1;
+    }
+  }], [{
+    key: "formatFileSize",
+    value: function formatFileSize(bytes) {
+      var si = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var thresh = si ? 1000 : 1024;
+      if (Math.abs(bytes) < thresh) {
+        return bytes + ' B';
+      }
+      var units = ['KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+      var u = -1;
+      do {
+        bytes /= thresh;
+        ++u;
+      } while (Math.abs(bytes) >= thresh && u < units.length - 1);
+      return bytes.toFixed(1) + ' ' + units[u];
+    }
+  }]);
+}();
+
+/***/ }),
+
+/***/ "./platform/core/media/resources/assets/js/App/Views/MediaDetails.js":
+/*!***************************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/App/Views/MediaDetails.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MediaDetails: () => (/* binding */ MediaDetails)
+/* harmony export */ });
+/* harmony import */ var _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Helpers/Helpers */ "./platform/core/media/resources/assets/js/App/Helpers/Helpers.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+var MediaDetails = /*#__PURE__*/function () {
+  function MediaDetails() {
+    _classCallCheck(this, MediaDetails);
+    this.$detailsWrapper = $('.rv-media-main .rv-media-details');
+    this.descriptionItemTemplate = '<div class="rv-media-name"><p>__title__</p>__url__</div>';
+    this.onlyFields = ['name', 'full_url', 'size', 'mime_type', 'created_at', 'updated_at', 'nothing_selected'];
+  }
+  return _createClass(MediaDetails, [{
+    key: "renderData",
+    value: function renderData(data) {
+      var _this = this;
+      var _self = this;
+      var thumb = data.type === 'image' ? '<img src="' + data.full_url + '" alt="' + data.name + '">' : '<i class="' + data.icon + '"></i>';
+      var description = '';
+      var useClipboard = false;
+      _.forEach(data, function (val, index) {
+        if (_.includes(_self.onlyFields, index)) {
+          if (!_.includes(['size', 'mime_type'], index)) {
+            description += _self.descriptionItemTemplate.replace(/__title__/gi, RV_MEDIA_CONFIG.translations[index]).replace(/__url__/gi, val ? index === 'full_url' ? '<div class="input-group"><input id="file_details_url" type="text" value="' + val + '" class="form-control"><span class="input-group-text"><button class="btn btn-default js-btn-copy-to-clipboard" type="button" data-clipboard-target="#file_details_url" title="Copied"><img class="clippy" src="' + _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__.Helpers.asset('/vendor/core/core/media/images/clippy.svg') + '" width="13" alt="Copy to clipboard"></button></span></div>' : '<span title="' + val + '">' + val + '</span>' : '');
+            if (index === 'full_url') {
+              useClipboard = true;
+            }
+          }
+        }
+      });
+      _self.$detailsWrapper.find('.rv-media-thumbnail').html(thumb);
+      _self.$detailsWrapper.find('.rv-media-description').html(description);
+      if (useClipboard) {
+        new Clipboard('.js-btn-copy-to-clipboard');
+        $('.js-btn-copy-to-clipboard').tooltip().on('mouseenter', function () {
+          $(_this).tooltip('hide');
+        }).on('mouseleave', function () {
+          $(_this).tooltip('hide');
+        });
+      }
+    }
+  }]);
+}();
+
+/***/ }),
+
+/***/ "./platform/core/media/resources/assets/js/App/Views/MediaList.js":
+/*!************************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/App/Views/MediaList.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MediaList: () => (/* binding */ MediaList)
+/* harmony export */ });
+/* harmony import */ var _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Helpers/Helpers */ "./platform/core/media/resources/assets/js/App/Helpers/Helpers.js");
+/* harmony import */ var _Services_ActionsService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Services/ActionsService */ "./platform/core/media/resources/assets/js/App/Services/ActionsService.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+var MediaList = /*#__PURE__*/function () {
+  function MediaList() {
+    _classCallCheck(this, MediaList);
+    this.group = {};
+    this.group.list = $('#rv_media_items_list').html();
+    this.group.tiles = $('#rv_media_items_tiles').html();
+    this.item = {};
+    this.item.list = $('#rv_media_items_list_element').html();
+    this.item.tiles = $('#rv_media_items_tiles_element').html();
+    this.$groupContainer = $('.rv-media-items');
+  }
+  return _createClass(MediaList, [{
+    key: "renderData",
+    value: function renderData(data) {
+      var reload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var load_more_file = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      var _self = this;
+      var MediaConfig = _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__.Helpers.getConfigs();
+      var template = _self.group[_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__.Helpers.getRequestParams().view_type];
+      var view_in = _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__.Helpers.getRequestParams().view_in;
+      if (!_.includes(['all_media', 'public', 'trash', 'favorites', 'recent'], view_in)) {
+        view_in = 'all_media';
+      }
+      template = template.replace(/__noItemIcon__/gi, RV_MEDIA_CONFIG.translations.no_item[view_in].icon || '').replace(/__noItemTitle__/gi, RV_MEDIA_CONFIG.translations.no_item[view_in].title || '').replace(/__noItemMessage__/gi, RV_MEDIA_CONFIG.translations.no_item[view_in].message || '');
+      var $result = $(template);
+      var $itemsWrapper = $result.find('ul');
+      if (load_more_file && this.$groupContainer.find('.rv-media-grid ul').length > 0) {
+        $itemsWrapper = this.$groupContainer.find('.rv-media-grid ul');
+      }
+      if (_.size(data.folders) > 0 || _.size(data.files) > 0 || load_more_file) {
+        $('.rv-media-items').addClass('has-items');
+      } else {
+        $('.rv-media-items').removeClass('has-items');
+      }
+      _.forEach(data.folders, function (value) {
+        var item = _self.item[_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__.Helpers.getRequestParams().view_type];
+        item = item.replace(/__type__/gi, 'folder').replace(/__id__/gi, value.id).replace(/__name__/gi, value.name || '').replace(/__size__/gi, '').replace(/__date__/gi, value.created_at || '').replace(/__thumb__/gi, '<i class="fa fa-folder"></i>');
+        var $item = $(item);
+        _.forEach(value, function (val, index) {
+          $item.data(index, val);
+        });
+        $item.data('is_folder', true);
+        $item.data('icon', MediaConfig.icons.folder);
+        $itemsWrapper.append($item);
+      });
+      _.forEach(data.files, function (value) {
+        var item = _self.item[_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__.Helpers.getRequestParams().view_type];
+        item = item.replace(/__type__/gi, 'file').replace(/__id__/gi, value.id).replace(/__name__/gi, value.name || '').replace(/__size__/gi, value.size || '').replace(/__date__/gi, value.created_at || '');
+        if (_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__.Helpers.getRequestParams().view_type === 'list') {
+          item = item.replace(/__thumb__/gi, '<i class="' + value.icon + '"></i>');
+        } else {
+          item = item.replace(/__thumb__/gi, value.type === 'image' ? '<img src="' + (value.thumb ? value.thumb : value.full_url) + '" alt="' + value.name + '">' : '<i class="' + value.icon + '"></i>');
+        }
+        var $item = $(item);
+        $item.data('is_folder', false);
+        _.forEach(value, function (val, index) {
+          $item.data(index, val);
+        });
+        $itemsWrapper.append($item);
+      });
+      if (reload !== false) {
+        _self.$groupContainer.empty();
+      }
+      if (!(load_more_file && this.$groupContainer.find('.rv-media-grid ul').length > 0)) {
+        _self.$groupContainer.append($result);
+      }
+      _self.$groupContainer.find('.loading-wrapper').remove();
+      _Services_ActionsService__WEBPACK_IMPORTED_MODULE_1__.ActionsService.handleDropdown();
+
+      // Trigger event click for file selected
+      $('.js-media-list-title[data-id=' + data.selected_file_id + ']').trigger('click');
+    }
+  }]);
+}();
+
+/***/ }),
+
+/***/ "./platform/core/media/resources/assets/js/integrate.js":
+/*!**************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/integrate.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EditorService: () => (/* binding */ EditorService)
+/* harmony export */ });
+/* harmony import */ var _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App/Helpers/Helpers */ "./platform/core/media/resources/assets/js/App/Helpers/Helpers.js");
+/* harmony import */ var _App_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App/Config/MediaConfig */ "./platform/core/media/resources/assets/js/App/Config/MediaConfig.js");
+/* harmony import */ var _App_Services_ContextMenuService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App/Services/ContextMenuService */ "./platform/core/media/resources/assets/js/App/Services/ContextMenuService.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+var EditorService = /*#__PURE__*/function () {
+  function EditorService() {
+    _classCallCheck(this, EditorService);
+  }
+  return _createClass(EditorService, null, [{
+    key: "editorSelectFile",
+    value: function editorSelectFile(selectedFiles) {
+      var is_ckeditor = _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__.Helpers.getUrlParam('CKEditor') || _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__.Helpers.getUrlParam('CKEditorFuncNum');
+      if (window.opener && is_ckeditor) {
+        var firstItem = _.first(selectedFiles);
+        window.opener.CKEDITOR.tools.callFunction(_App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__.Helpers.getUrlParam('CKEditorFuncNum'), firstItem.full_url);
+        if (window.opener) {
+          window.close();
+        }
+      } else {
+        // No WYSIWYG editor found, use custom method.
+      }
+    }
+  }]);
+}();
+var rvMedia = /*#__PURE__*/_createClass(function rvMedia(selector, options) {
+  _classCallCheck(this, rvMedia);
+  window.rvMedia = window.rvMedia || {};
+  var $body = $('body');
+  var defaultOptions = {
+    multiple: true,
+    type: '*',
+    onSelectFiles: function onSelectFiles(files, $el) {}
+  };
+  options = $.extend(true, defaultOptions, options);
+  var clickCallback = function clickCallback(event) {
+    event.preventDefault();
+    var $current = $(event.currentTarget);
+    $('#rv_media_modal').modal('show');
+    window.rvMedia.options = options;
+    window.rvMedia.options.open_in = 'modal';
+    window.rvMedia.$el = $current;
+    _App_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_1__.MediaConfig.request_params.filter = 'everything';
+    _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__.Helpers.storeConfig();
+    var elementOptions = window.rvMedia.$el.data('rv-media');
+    if (typeof elementOptions !== 'undefined' && elementOptions.length > 0) {
+      elementOptions = elementOptions[0];
+      window.rvMedia.options = $.extend(true, window.rvMedia.options, elementOptions || {});
+      if (typeof elementOptions.selected_file_id !== 'undefined') {
+        window.rvMedia.options.is_popup = true;
+      } else if (typeof window.rvMedia.options.is_popup !== 'undefined') {
+        window.rvMedia.options.is_popup = undefined;
+      }
+    }
+    if ($('#rv_media_body .rv-media-container').length === 0) {
+      $('#rv_media_body').load(RV_MEDIA_URL.popup, function (data) {
+        if (data.error) {
+          alert(data.message);
+        }
+        $('#rv_media_body').removeClass('media-modal-loading').closest('.modal-content').removeClass('bb-loading');
+        $(document).find('.rv-media-container .js-change-action[data-type=refresh]').trigger('click');
+        if (_App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__.Helpers.getRequestParams().filter !== 'everything') {
+          $('.rv-media-actions .btn.js-rv-media-change-filter-group.js-filter-by-type').hide();
+        }
+        _App_Services_ContextMenuService__WEBPACK_IMPORTED_MODULE_2__.ContextMenuService.destroyContext();
+        _App_Services_ContextMenuService__WEBPACK_IMPORTED_MODULE_2__.ContextMenuService.initContext();
+      });
+    } else {
+      $(document).find('.rv-media-container .js-change-action[data-type=refresh]').trigger('click');
+    }
+  };
+  if (typeof selector === 'string') {
+    $body.off('click', selector).on('click', selector, clickCallback);
+  } else {
+    selector.off('click').on('click', clickCallback);
+  }
+});
+window.RvMediaStandAlone = rvMedia;
+$('.js-insert-to-editor').off('click').on('click', function (event) {
+  event.preventDefault();
+  var selectedFiles = _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__.Helpers.getSelectedFiles();
+  if (_.size(selectedFiles) > 0) {
+    EditorService.editorSelectFile(selectedFiles);
+  }
+});
+$.fn.rvMedia = function (options) {
+  var $selector = $(this);
+  _App_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_1__.MediaConfig.request_params.filter = 'everything';
+  $(document).find('.js-insert-to-editor').prop('disabled', _App_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_1__.MediaConfig.request_params.view_in === 'trash');
+  _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__.Helpers.storeConfig();
+  new rvMedia($selector, options);
+};
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
+(() => {
+/*!**********************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/media.js ***!
+  \**********************************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _App_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App/Config/MediaConfig */ "./platform/core/media/resources/assets/js/App/Config/MediaConfig.js");
+/* harmony import */ var _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App/Helpers/Helpers */ "./platform/core/media/resources/assets/js/App/Helpers/Helpers.js");
+/* harmony import */ var _App_Services_MediaService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App/Services/MediaService */ "./platform/core/media/resources/assets/js/App/Services/MediaService.js");
+/* harmony import */ var _App_Services_FolderService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App/Services/FolderService */ "./platform/core/media/resources/assets/js/App/Services/FolderService.js");
+/* harmony import */ var _App_Services_UploadService__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./App/Services/UploadService */ "./platform/core/media/resources/assets/js/App/Services/UploadService.js");
+/* harmony import */ var _App_Services_ActionsService__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./App/Services/ActionsService */ "./platform/core/media/resources/assets/js/App/Services/ActionsService.js");
+/* harmony import */ var _App_Services_DownloadService__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./App/Services/DownloadService */ "./platform/core/media/resources/assets/js/App/Services/DownloadService.js");
+/* harmony import */ var _integrate__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./integrate */ "./platform/core/media/resources/assets/js/integrate.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+
+
+
+
+
+var MediaManagement = /*#__PURE__*/function () {
+  function MediaManagement() {
+    _classCallCheck(this, MediaManagement);
+    this.MediaService = new _App_Services_MediaService__WEBPACK_IMPORTED_MODULE_2__.MediaService();
+    this.UploadService = new _App_Services_UploadService__WEBPACK_IMPORTED_MODULE_4__.UploadService();
+    this.FolderService = new _App_Services_FolderService__WEBPACK_IMPORTED_MODULE_3__.FolderService();
+    this.DownloadService = new _App_Services_DownloadService__WEBPACK_IMPORTED_MODULE_6__.DownloadService();
+    this.$body = $('body');
+  }
+  return _createClass(MediaManagement, [{
+    key: "init",
+    value: function init() {
+      _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.resetPagination();
+      this.setupLayout();
+      this.handleMediaList();
+      this.changeViewType();
+      this.changeFilter();
+      this.search();
+      this.handleActions();
+      this.UploadService.init();
+      this.handleModals();
+      this.scrollGetMore();
+    }
+  }, {
+    key: "setupLayout",
+    value: function setupLayout() {
+      /**
+       * Sidebar
+       */
+      var $current_filter = $('.js-rv-media-change-filter[data-type="filter"][data-value="' + _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getRequestParams().filter + '"]');
+      $current_filter.closest('li').addClass('active').closest('.dropdown').find('.js-rv-media-filter-current').html('(' + $current_filter.html() + ')');
+      var $current_view_in = $('.js-rv-media-change-filter[data-type="view_in"][data-value="' + _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getRequestParams().view_in + '"]');
+      $current_view_in.closest('li').addClass('active').closest('.dropdown').find('.js-rv-media-filter-current').html('(' + $current_view_in.html() + ')');
+      if (_App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.isUseInModal()) {
+        $('.rv-media-footer').removeClass('hidden');
+      }
+
+      /**
+       * Sort
+       */
+      $('.js-rv-media-change-filter[data-type="sort_by"][data-value="' + _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getRequestParams().sort_by + '"]').closest('li').addClass('active');
+
+      /**
+       * Details pane
+       */
+      var $mediaDetailsCheckbox = $('#media_details_collapse');
+      $mediaDetailsCheckbox.prop('checked', _App_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.MediaConfig.hide_details_pane || false);
+      setTimeout(function () {
+        $('.rv-media-details').removeClass('hidden');
+      }, 300);
+      $mediaDetailsCheckbox.on('change', function (event) {
+        event.preventDefault();
+        _App_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.MediaConfig.hide_details_pane = $(event.currentTarget).is(':checked');
+        _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.storeConfig();
+      });
+      $(document).on('click', '.js-download-action', function (event) {
+        event.preventDefault();
+        $('#modal_download_url').modal('show');
+      });
+      $(document).on('click', '.js-create-folder-action', function (event) {
+        event.preventDefault();
+        $('#modal_add_folder').modal('show');
+      });
+    }
+  }, {
+    key: "handleMediaList",
+    value: function handleMediaList() {
+      var _self = this;
+
+      /*Ctrl key in Windows*/
+      var ctrl_key = false;
+
+      /*Command key in MAC*/
+      var meta_key = false;
+
+      /*Shift key*/
+      var shift_key = false;
+      $(document).on('keyup keydown', function (e) {
+        /*User hold ctrl key*/
+        ctrl_key = e.ctrlKey;
+        /*User hold command key*/
+        meta_key = e.metaKey;
+        /*User hold shift key*/
+        shift_key = e.shiftKey;
+      });
+      _self.$body.off('click', '.js-media-list-title').on('click', '.js-media-list-title', function (event) {
+        event.preventDefault();
+        var $current = $(event.currentTarget);
+        if (shift_key) {
+          var firstItem = _.first(_App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getSelectedItems());
+          if (firstItem) {
+            var firstIndex = firstItem.index_key;
+            var currentIndex = $current.index();
+            $('.rv-media-items li').each(function (index, el) {
+              if (index > firstIndex && index <= currentIndex) {
+                $(el).find('input[type=checkbox]').prop('checked', true);
+              }
+            });
+          }
+        } else if (!ctrl_key && !meta_key) {
+          $current.closest('.rv-media-items').find('input[type=checkbox]').prop('checked', false);
+        }
+        var $lineCheckBox = $current.find('input[type=checkbox]');
+        $lineCheckBox.prop('checked', true);
+        _App_Services_ActionsService__WEBPACK_IMPORTED_MODULE_5__.ActionsService.handleDropdown();
+        _self.MediaService.getFileDetails($current.data());
+      }).on('dblclick', '.js-media-list-title', function (event) {
+        event.preventDefault();
+        var data = $(event.currentTarget).data();
+        if (data.is_folder === true) {
+          _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.resetPagination();
+          _self.FolderService.changeFolder(data.id);
+        } else {
+          if (!_App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.isUseInModal()) {
+            _App_Services_ActionsService__WEBPACK_IMPORTED_MODULE_5__.ActionsService.handlePreview();
+          } else if (_App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getConfigs().request_params.view_in !== 'trash') {
+            var selectedFiles = _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getSelectedFiles();
+            if (_.size(selectedFiles) > 0) {
+              _integrate__WEBPACK_IMPORTED_MODULE_7__.EditorService.editorSelectFile(selectedFiles);
+            }
+          }
+        }
+      }).on('dblclick', '.js-up-one-level', function (event) {
+        event.preventDefault();
+        var count = $('.rv-media-breadcrumb .breadcrumb li').length;
+        $('.rv-media-breadcrumb .breadcrumb li:nth-child(' + (count - 1) + ') a').trigger('click');
+      }).on('contextmenu', '.js-context-menu', function (event) {
+        if (!$(event.currentTarget).find('input[type=checkbox]').is(':checked')) {
+          $(event.currentTarget).trigger('click');
+        }
+      }).on('click contextmenu', '.rv-media-items', function (e) {
+        if (!_.size(e.target.closest('.js-context-menu'))) {
+          $('.rv-media-items input[type="checkbox"]').prop('checked', false);
+          $('.rv-dropdown-actions').addClass('disabled');
+          _self.MediaService.getFileDetails({
+            icon: 'far fa-image',
+            nothing_selected: ''
+          });
+        }
+      });
+    }
+  }, {
+    key: "changeViewType",
+    value: function changeViewType() {
+      var _self = this;
+      _self.$body.off('click', '.js-rv-media-change-view-type .btn').on('click', '.js-rv-media-change-view-type .btn', function (event) {
+        event.preventDefault();
+        var $current = $(event.currentTarget);
+        if ($current.hasClass('active')) {
+          return;
+        }
+        $current.closest('.js-rv-media-change-view-type').find('.btn').removeClass('active');
+        $current.addClass('active');
+        _App_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.MediaConfig.request_params.view_type = $current.data('type');
+        if ($current.data('type') === 'trash') {
+          $(document).find('.js-insert-to-editor').prop('disabled', true);
+        } else {
+          $(document).find('.js-insert-to-editor').prop('disabled', false);
+        }
+        _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.storeConfig();
+        if (typeof RV_MEDIA_CONFIG.pagination != 'undefined') {
+          if (typeof RV_MEDIA_CONFIG.pagination.paged != 'undefined') {
+            RV_MEDIA_CONFIG.pagination.paged = 1;
+          }
+        }
+        _self.MediaService.getMedia(true, false);
+      });
+      $('.js-rv-media-change-view-type .btn[data-type="' + _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getRequestParams().view_type + '"]').trigger('click');
+      this.bindIntegrateModalEvents();
+    }
+  }, {
+    key: "changeFilter",
+    value: function changeFilter() {
+      var _self = this;
+      _self.$body.off('click', '.js-rv-media-change-filter').on('click', '.js-rv-media-change-filter', function (event) {
+        event.preventDefault();
+        if (!_App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.isOnAjaxLoading()) {
+          var $current = $(event.currentTarget);
+          var $parent = $current.closest('ul');
+          var data = $current.data();
+          _App_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.MediaConfig.request_params[data.type] = data.value;
+          if (window.rvMedia.options) {
+            window.rvMedia.options.view_in = data.value;
+          }
+          if (data.type === 'view_in') {
+            _App_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.MediaConfig.request_params.folder_id = 0;
+            if (data.value === 'trash') {
+              $(document).find('.js-insert-to-editor').prop('disabled', true);
+            } else {
+              $(document).find('.js-insert-to-editor').prop('disabled', false);
+            }
+          }
+          $current.closest('.dropdown').find('.js-rv-media-filter-current').html('(' + $current.html() + ')');
+          _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.storeConfig();
+          _App_Services_MediaService__WEBPACK_IMPORTED_MODULE_2__.MediaService.refreshFilter();
+          _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.resetPagination();
+          _self.MediaService.getMedia(true);
+          $parent.find('> li').removeClass('active');
+          $current.closest('li').addClass('active');
+        }
+      });
+    }
+  }, {
+    key: "search",
+    value: function search() {
+      var _self = this;
+      $('.input-search-wrapper input[type="text"]').val(_App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getRequestParams().search || '');
+      _self.$body.off('submit', '.input-search-wrapper').on('submit', '.input-search-wrapper', function (event) {
+        event.preventDefault();
+        _App_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.MediaConfig.request_params.search = $(event.currentTarget).find('input[type="text"]').val();
+        _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.storeConfig();
+        _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.resetPagination();
+        _self.MediaService.getMedia(true);
+      });
+    }
+  }, {
+    key: "handleActions",
+    value: function handleActions() {
+      var _self = this;
+      _self.$body.off('click', '.rv-media-actions .js-change-action[data-type="refresh"]').on('click', '.rv-media-actions .js-change-action[data-type="refresh"]', function (event) {
+        event.preventDefault();
+        _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.resetPagination();
+        var ele_options = typeof window.rvMedia.$el !== 'undefined' ? window.rvMedia.$el.data('rv-media') : undefined;
+        if (typeof ele_options !== 'undefined' && ele_options.length > 0 && typeof ele_options[0].selected_file_id !== 'undefined') {
+          _self.MediaService.getMedia(true, true);
+        } else {
+          _self.MediaService.getMedia(true, false);
+        }
+      }).off('click', '.rv-media-items li.no-items').on('click', '.rv-media-items li.no-items', function (event) {
+        event.preventDefault();
+        $('.rv-media-header .rv-media-top-header .rv-media-actions .js-dropzone-upload').trigger('click');
+      }).off('submit', '.form-add-folder').on('submit', '.form-add-folder', function (event) {
+        event.preventDefault();
+        var $input = $(event.currentTarget).find('input[type=text]');
+        var folderName = $input.val();
+        _self.FolderService.create(folderName);
+        $input.val('');
+        return false;
+      }).off('click', '.js-change-folder').on('click', '.js-change-folder', function (event) {
+        event.preventDefault();
+        var folderId = $(event.currentTarget).data('folder');
+        _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.resetPagination();
+        _self.FolderService.changeFolder(folderId);
+      }).off('click', '.js-files-action').on('click', '.js-files-action', function (event) {
+        event.preventDefault();
+        _App_Services_ActionsService__WEBPACK_IMPORTED_MODULE_5__.ActionsService.handleGlobalAction($(event.currentTarget).data('action'), function () {
+          _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.resetPagination();
+          _self.MediaService.getMedia(true);
+        });
+      }).off('submit', '.form-download-url').on('submit', '.form-download-url', /*#__PURE__*/function () {
+        var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(event) {
+          var $el, $wrapper, $notice, $header, $input, $button, url, remainUrls;
+          return _regenerator().w(function (_context) {
+            while (1) switch (_context.n) {
+              case 0:
+                $el = $('#modal_download_url'), $wrapper = $el.find('#download-form-wrapper'), $notice = $el.find('#modal-notice').empty();
+                event.preventDefault();
+                $header = $el.find('.modal-title');
+                $input = $el.find('textarea[name="urls"]').prop('disabled', true);
+                $button = $el.find('[type="submit"]').addClass('button-loading').prop('disabled', true);
+                url = $input.val();
+                remainUrls = [];
+                $wrapper.slideUp();
+
+                // start to download
+                _context.n = 1;
+                return _self.DownloadService.download(url, function (progress, item, url) {
+                  var $noticeItem = $("\n                        <div class=\"p-2 text-primary\">\n                            <i class=\"fa fa-info-circle\"></i>\n                            <span>".concat(item, "</span>\n                        </div>\n                    "));
+                  $notice.append($noticeItem).scrollTop($notice[0].scrollHeight);
+                  $header.html("<i class=\"fas fa-cloud-download-alt\"></i> ".concat($header.data('downloading'), " (").concat(progress, ")"));
+                  return function (success) {
+                    var message = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+                    if (!success) {
+                      remainUrls.push(url);
+                    }
+                    $noticeItem.find('span').text("".concat(item, ": ").concat(message));
+                    $noticeItem.attr('class', "p-2 text-".concat(success ? 'success' : 'danger')).find('i').attr('class', success ? 'fas fa-check-circle' : 'fas fa-times-circle');
+                  };
+                });
+              case 1:
+                $wrapper.slideDown();
+                $input.val(remainUrls.join('\n')).prop('disabled', false);
+                $header.html("<i class=\"fas fa-cloud-download-alt\"></i> ".concat($header.data('text')));
+                $button.removeClass('button-loading').prop('disabled', false);
+                return _context.a(2, false);
+            }
+          }, _callee);
+        }));
+        return function (_x) {
+          return _ref.apply(this, arguments);
+        };
+      }());
+    }
+  }, {
+    key: "handleModals",
+    value: function handleModals() {
+      var _self = this;
+      /*Rename files*/
+      _self.$body.on('show.bs.modal', '#modal_rename_items', function () {
+        _App_Services_ActionsService__WEBPACK_IMPORTED_MODULE_5__.ActionsService.renderRenameItems();
+      });
+      _self.$body.on('hidden.bs.modal', '#modal_download_url', function () {
+        var $el = $('#modal_download_url');
+        $el.find('textarea').val('');
+        $el.find('#modal-notice').empty();
+      });
+      _self.$body.off('submit', '#modal_rename_items .form-rename').on('submit', '#modal_rename_items .form-rename', function (event) {
+        event.preventDefault();
+        var items = [];
+        var $form = $(event.currentTarget);
+        $('#modal_rename_items .form-control').each(function (index, el) {
+          var $current = $(el);
+          var data = $current.closest('.form-group').data();
+          data.name = $current.val();
+          items.push(data);
+        });
+        _App_Services_ActionsService__WEBPACK_IMPORTED_MODULE_5__.ActionsService.processAction({
+          action: $form.data('action'),
+          selected: items
+        }, function (res) {
+          if (!res.error) {
+            $form.closest('.modal').modal('hide');
+            _self.MediaService.getMedia(true);
+          } else {
+            $('#modal_rename_items .form-group').each(function (index, el) {
+              var $current = $(el);
+              if (_.includes(res.data, $current.data('id'))) {
+                $current.addClass('has-error');
+              } else {
+                $current.removeClass('has-error');
+              }
+            });
+          }
+        });
+      });
+
+      /*Delete files*/
+      _self.$body.off('submit', '.form-delete-items').on('submit', '.form-delete-items', function (event) {
+        event.preventDefault();
+        var items = [];
+        var $form = $(event.currentTarget);
+        _.each(_App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getSelectedItems(), function (value) {
+          items.push({
+            id: value.id,
+            is_folder: value.is_folder
+          });
+        });
+        _App_Services_ActionsService__WEBPACK_IMPORTED_MODULE_5__.ActionsService.processAction({
+          action: $form.data('action'),
+          selected: items
+        }, function (res) {
+          $form.closest('.modal').modal('hide');
+          if (!res.error) {
+            _self.MediaService.getMedia(true);
+          }
+        });
+      });
+
+      /*Empty trash*/
+      _self.$body.off('submit', '#modal_empty_trash .rv-form').on('submit', '#modal_empty_trash .rv-form', function (event) {
+        event.preventDefault();
+        var $form = $(event.currentTarget);
+        _App_Services_ActionsService__WEBPACK_IMPORTED_MODULE_5__.ActionsService.processAction({
+          action: $form.data('action')
+        }, function () {
+          $form.closest('.modal').modal('hide');
+          _self.MediaService.getMedia(true);
+        });
+      });
+      if (_App_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__.MediaConfig.request_params.view_in === 'trash') {
+        $(document).find('.js-insert-to-editor').prop('disabled', true);
+      } else {
+        $(document).find('.js-insert-to-editor').prop('disabled', false);
+      }
+      this.bindIntegrateModalEvents();
+    }
+  }, {
+    key: "checkFileTypeSelect",
+    value: function checkFileTypeSelect(selectedFiles) {
+      if (typeof window.rvMedia.$el !== 'undefined') {
+        var firstItem = _.first(selectedFiles);
+        var ele_options = window.rvMedia.$el.data('rv-media');
+        if (typeof ele_options !== 'undefined' && typeof ele_options[0] !== 'undefined' && typeof ele_options[0].file_type !== 'undefined' && firstItem !== 'undefined' && firstItem.type !== 'undefined') {
+          if (!ele_options[0].file_type.match(firstItem.type)) {
+            return false;
+          } else {
+            if (typeof ele_options[0].ext_allowed !== 'undefined' && $.isArray(ele_options[0].ext_allowed)) {
+              if ($.inArray(firstItem.mime_type, ele_options[0].ext_allowed) === -1) {
+                return false;
+              }
+            }
+          }
+        }
+      }
+      return true;
+    }
+  }, {
+    key: "bindIntegrateModalEvents",
+    value: function bindIntegrateModalEvents() {
+      var $mainModal = $('#rv_media_modal');
+      var _self = this;
+      $mainModal.off('click', '.js-insert-to-editor').on('click', '.js-insert-to-editor', function (event) {
+        event.preventDefault();
+        var selectedFiles = _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getSelectedFiles();
+        if (_.size(selectedFiles) > 0) {
+          window.rvMedia.options.onSelectFiles(selectedFiles, window.rvMedia.$el);
+          if (_self.checkFileTypeSelect(selectedFiles)) {
+            $mainModal.find('.btn-close').trigger('click');
+          }
+        }
+      });
+      $mainModal.off('dblclick', '.js-media-list-title').on('dblclick', '.js-media-list-title', function (event) {
+        event.preventDefault();
+        if (_App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getConfigs().request_params.view_in !== 'trash') {
+          var selectedFiles = _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__.Helpers.getSelectedFiles();
+          if (_.size(selectedFiles) > 0) {
+            window.rvMedia.options.onSelectFiles(selectedFiles, window.rvMedia.$el);
+            if (_self.checkFileTypeSelect(selectedFiles)) {
+              $mainModal.find('.btn-close').trigger('click');
+            }
+          }
+        } else {
+          _App_Services_ActionsService__WEBPACK_IMPORTED_MODULE_5__.ActionsService.handlePreview();
+        }
+      });
+    }
+  }, {
+    key: "scrollGetMore",
+    value:
+    // Scroll get more media
+    function scrollGetMore() {
+      var _self = this;
+      $('.rv-media-main .rv-media-items').bind('DOMMouseScroll mousewheel', function (e) {
+        if (e.originalEvent.detail > 0 || e.originalEvent.wheelDelta < 0) {
+          var loadMore;
+          if ($(e.currentTarget).closest('.media-modal').length > 0) {
+            loadMore = $(e.currentTarget).scrollTop() + $(e.currentTarget).innerHeight() / 2 >= $(e.currentTarget)[0].scrollHeight - 450;
+          } else {
+            loadMore = $(e.currentTarget).scrollTop() + $(e.currentTarget).innerHeight() >= $(e.currentTarget)[0].scrollHeight - 150;
+          }
+          if (loadMore) {
+            if (typeof RV_MEDIA_CONFIG.pagination != 'undefined' && RV_MEDIA_CONFIG.pagination.has_more) {
+              _self.MediaService.getMedia(false, false, true);
+            }
+          }
+        }
+      });
+    }
+  }], [{
+    key: "setupSecurity",
+    value: function setupSecurity() {
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+    }
+  }]);
+}();
+$(document).ready(function () {
+  window.rvMedia = window.rvMedia || {};
+  MediaManagement.setupSecurity();
+  new MediaManagement().init();
+});
+})();
+
+/******/ })()
+;
