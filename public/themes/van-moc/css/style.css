@@ -870,14 +870,20 @@ header nav ul .sub-menu .sub-menu {
     grid-area: philosophy;
     position: relative;
     color: white;
-    padding: 0;
+    padding: 50px;
     border-radius: 12px;
     overflow: hidden;
     min-height: 400px;
+    background: linear-gradient(rgba(45, 85, 56, 0.7), rgba(45, 85, 56, 0.7)), url('/themes/van-moc/images/VMM_image/VMM_image/hinh_trietly/hinhtrietly.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .philosophy-bg {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -892,6 +898,12 @@ header nav ul .sub-menu .sub-menu {
     display: block;
 }
 
+.philosophy-content {
+    position: relative;
+    z-index: 10;
+    text-align: left;
+}
+
 .philosophy-logo {
     width: 100px;
     height: 100px;
@@ -900,15 +912,9 @@ header nav ul .sub-menu .sub-menu {
 }
 
 .philosophy-content {
+    text-align: left;
     position: relative;
     z-index: 2;
-    padding: 50px;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    background: linear-gradient(rgba(45, 85, 56, 0.7), rgba(45, 85, 56, 0.7));
 }
 
 .philosophy-content h3 {
@@ -946,15 +952,31 @@ header nav ul .sub-menu .sub-menu {
 
 .vision-content, .mission-content {
     color: white;
-    padding: 0;
+    padding: 40px;
     border-radius: 12px;
+    text-align: left;
     position: relative;
     overflow: hidden;
     min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.vision-content {
+    background: linear-gradient(rgba(45, 85, 56, 0.7), rgba(45, 85, 56, 0.7)), url('/themes/van-moc/images/VMM_image/VMM_image/hinh_trietly/hinhtrietly2.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.mission-content {
+    background: linear-gradient(rgba(45, 85, 56, 0.7), rgba(45, 85, 56, 0.7)), url('/themes/van-moc/images/VMM_image/VMM_image/hinh_trietly/hinhtrietly3.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .vision-bg, .mission-bg {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -971,14 +993,7 @@ header nav ul .sub-menu .sub-menu {
 
 .vision-text, .mission-text {
     position: relative;
-    z-index: 2;
-    padding: 40px;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-    background: linear-gradient(rgba(45, 85, 56, 0.7), rgba(45, 85, 56, 0.7));
+    z-index: 10;
 }
 
 .vision-content h4, .mission-content h4 {

@@ -42,14 +42,14 @@
                             <label class="payment-option">
                                 <input type="radio" name="paymentMethod" value="cod" checked>
                                 <span class="payment-label">
-                                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/cod-icon.svg') }}" alt="COD">
+                                
                                     Thanh toán khi nhận hàng (COD)
                                 </span>
                             </label>
                             <label class="payment-option">
                                 <input type="radio" name="paymentMethod" value="bank">
                                 <span class="payment-label">
-                                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/bank-icon.svg') }}" alt="Bank">
+                                  
                                     Chuyển khoản ngân hàng
                                 </span>
                             </label>
