@@ -65,5 +65,44 @@
     
     {!! Theme::footer() !!}
     <script src="{{ asset('themes/van-moc/js/script.js') }}"></script>
+    
+    <script>
+    // Mobile menu toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mainNav = document.querySelector('.main-nav');
+        
+        if (menuToggle && mainNav) {
+            menuToggle.addEventListener('click', function() {
+                mainNav.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!menuToggle.contains(e.target) && !mainNav.contains(e.target)) {
+                    mainNav.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
+            });
+            
+            // Handle submenu toggles
+            const menuItemsWithChildren = document.querySelectorAll('.menu-item-has-children');
+            menuItemsWithChildren.forEach(item => {
+                const link = item.querySelector('a');
+                const submenu = item.querySelector('.sub-menu');
+                
+                if (link && submenu) {
+                    link.addEventListener('click', function(e) {
+                        if (window.innerWidth <= 992) {
+                            e.preventDefault();
+                            item.classList.toggle('active');
+                        }
+                    });
+                }
+            });
+        }
+    });
+    </script>
     </body>
 </html> 

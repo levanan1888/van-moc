@@ -21,7 +21,7 @@ class CookieConsentServiceProvider extends ServiceProvider
             ->loadAndPublishViews()
             ->publishAssets();
 
-        if (defined('THEME_FRONT_FOOTER') && theme_option('cookie_consent_enable', 'yes') == 'yes') {
+        if (defined('THEME_FRONT_FOOTER') && theme_option('cookie_consent_enable', 'no') == 'yes') {
             $this->app->resolving(EncryptCookies::class, function (EncryptCookies $encryptCookies) {
                 $encryptCookies->disableFor(config('plugins.cookie-consent.general.cookie_name'));
             });
