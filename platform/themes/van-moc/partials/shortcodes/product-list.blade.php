@@ -142,9 +142,9 @@
         <h3><a href="{{ $product->url }}">{{ $product->name }}</a></h3>
 
         @if (!empty($product->description))
-            <p class="product-brand">{!! $product->description !!}</p>
+            <p class="product-brand">{{ Str::limit(strip_tags($product->description), 100) }}</p>
         @elseif (!empty($product->short_description))
-            <p class="product-brand">{!! $product->short_description !!}</p>
+            <p class="product-brand">{{ Str::limit(strip_tags($product->short_description), 100) }}</p>
         @endif
 
         <div class="price-wrapper">

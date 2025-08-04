@@ -83,8 +83,8 @@
 }
 
 .sustainability-item .icon-wrapper {
-    width: 100px;
-    height: 100px;
+    width: 170px;
+    height: 170px;
     border-radius: 50%;
     background-color: #244317;
     display: flex;
@@ -94,8 +94,8 @@
 }
 
 .sustainability-item img {
-    height: 50px;
-    width: 50px;
+    height: 120px;
+    width: 120px;
 }
 
 .sustainability-item h3 {

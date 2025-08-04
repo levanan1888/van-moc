@@ -7,17 +7,21 @@
         <div class="container">
             <div class="footer-col">
                 <h4>VỀ CHÚNG TÔI</h4>
-                {!! Menu::renderMenuLocation('footer-menu-1', [
-                    'options' => ['class' => 'footer-menu'],
-                    'view' => 'footer-menu',
-                ]) !!}
+                <ul class="footer-menu">
+                    <li><a href="#">Điều khoản</a></li>
+                    <li><a href="#">Sản phẩm</a></li>
+                    <li><a href="#">Download Catalogue</a></li>
+                </ul>
             </div>
             <div class="footer-col">
                 <h4>BẠN NÊN BIẾT</h4>
-                {!! Menu::renderMenuLocation('footer-menu-2', [
-                    'options' => ['class' => 'footer-menu'],
-                    'view' => 'footer-menu',
-                ]) !!}
+                <ul class="footer-menu">
+                    <li><a href="#">Hướng dẫn mua hàng</a></li>
+                    <li><a href="#">Thanh toán giao nhận</a></li>
+                    <li><a href="#">Chính sách đổi trả</a></li>
+                    <li><a href="#">Bảo mật thông tin</a></li>
+                    <li><a href="#">Câu hỏi thường gặp</a></li>
+                </ul>
             </div>
             <div class="footer-col">
                 @if (theme_option('logo'))
@@ -26,18 +30,10 @@
                     <img src="{{ asset('themes/van-moc/images/c88b292dea22637c3a33.jpg') }}" alt="Vạn Mộc Logo" class="footer-logo">
                 @endif
                 <div class="social-icons">
-                    @if (theme_option('social_facebook'))
-                        <a href="{{ theme_option('social_facebook') }}" target="_blank"><img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/socialicon1.svg') }}" alt="Facebook"></a>
-                    @endif
-                    @if (theme_option('social_linkedin'))
-                        <a href="{{ theme_option('social_linkedin') }}" target="_blank"><img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/socialicon2.svg') }}" alt="LinkedIn"></a>
-                    @endif
-                    @if (theme_option('social_twitter'))
-                        <a href="{{ theme_option('social_twitter') }}" target="_blank"><img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/socialicon3.svg') }}" alt="Twitter"></a>
-                    @endif
-                    @if (theme_option('social_pinterest'))
-                        <a href="{{ theme_option('social_pinterest') }}" target="_blank"><img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/socialicon4.svg') }}" alt="Pinterest"></a>
-                    @endif
+                    <a href="#" target="_blank"><img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/socialicon1.svg') }}" alt="Facebook"></a>
+                    <a href="#" target="_blank"><img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/socialicon2.svg') }}" alt="Instagram"></a>
+                    <a href="#" target="_blank"><img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/socialicon3.svg') }}" alt="Twitter"></a>
+                    <a href="#" target="_blank"><img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/socialicon4.svg') }}" alt="YouTube"></a>
                 </div>
             </div>
             <div class="footer-col">

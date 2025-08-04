@@ -130,7 +130,7 @@
                         <div class="product-info">
                             <div class="product-text">
                                 <h3><a href="{{ $product->url }}">{{ $product->name }}</a></h3>
-                                <p class="product-brand">{{ $product->description ?? $product->short_description ?? '' }}</p>
+                                <p class="product-brand">{{ Str::limit(strip_tags($product->description ?? $product->short_description ?? ''), 100) }}</p>
                                 <div class="price-wrapper">
                                     @if (isset($product->original_price) && $product->original_price && $product->original_price > $product->price)
                                         <span class="original-price">
