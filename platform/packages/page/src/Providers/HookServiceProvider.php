@@ -38,7 +38,7 @@ class HookServiceProvider extends ServiceProvider
         if (defined('THEME_FRONT_HEADER')) {
             add_action(BASE_ACTION_PUBLIC_RENDER_SINGLE, function ($screen, $page) {
                 add_filter(THEME_FRONT_HEADER, function ($html) use ($page) {
-                    if (get_class($page) != Page::class) {
+                    if (!$page || get_class($page) != Page::class) {
                         return $html;
                     }
 
@@ -51,10 +51,14 @@ class HookServiceProvider extends ServiceProvider
 
                     $social = @json_decode(theme_option('social_links'));
                     $socialLinks = [];
+                    if ($social && is_array($social)) {
                     foreach ($social as $item) {
-                        $link = $item[3]->value ?? '';
+                            if (isset($item[3]) && isset($item[3]->value)) {
+                                $link = $item[3]->value;
                         if ($link) {
                             $socialLinks[] = $link;
+                                }
+                            }
                         }
                     }
 
@@ -64,7 +68,7 @@ class HookServiceProvider extends ServiceProvider
                         '@id' => 'kg:/g/11hbjp_pnd',
                         '@name' => theme_option('seo_title'),
                         '@legalName' => 'CÔNG TY MAY ĐỒNG PHỤC PHÚ QUÝ',
-                        'url' => custom_url($page->url),
+                        'url' => custom_url($page->url ?? '/'),
                         'description' => theme_option('seo_description'),
                         'additionalType' => [
                             'https://vi.wiktionary.org/wiki/uniform',
@@ -124,7 +128,7 @@ class HookServiceProvider extends ServiceProvider
                 }, 2);
 
                 add_filter(THEME_FRONT_HEADER, function ($html) use ($page) {
-                    if (get_class($page) != Page::class) {
+                    if (!$page || get_class($page) != Page::class) {
                         return $html;
                     }
 
@@ -138,7 +142,7 @@ class HookServiceProvider extends ServiceProvider
                     }
 
                     list ($widthLogo, $heightLogo) = get_image_dimensions(RvMedia::getImageUrl(theme_option('logo')));
-                    $image = $page->image ? RvMedia::getImageUrl($page->image) : RvMedia::getImageUrl(theme_option('seo_og_image'));
+                    $image = ($page && $page->image) ? RvMedia::getImageUrl($page->image) : RvMedia::getImageUrl(theme_option('seo_og_image'));
                     list ($widthImage, $heightImage) = get_image_dimensions($image);
 
                     $schema = [
@@ -147,14 +151,14 @@ class HookServiceProvider extends ServiceProvider
                         '@id' => custom_url('/') . '#richSnippet',
                         'headline' => theme_option('site_title'),
                         'description' => theme_option('seo_description'),
-                        'datePublished' => $homepage->created_at->toDateString() ?? '',
-                        'dateModified' => $homepage->updated_at->toDateString() ?? '',
+                        'datePublished' => $homepage ? $homepage->created_at->toDateString() : '',
+                        'dateModified' => $homepage ? $homepage->updated_at->toDateString() : '',
                         'inLanguage' => 'vi-VN',
                         'publisher' => [
                             '@type' => 'Organization',
                             '@id' => custom_url('/') . '#organization',
                             'name' => theme_option('seo_title'),
-                            'url' => custom_url($page->url),
+                            'url' => custom_url($page->url ?? '/'),
                             'logo' => [
                                 '@type' => 'ImageObject',
                                 '@id' => custom_url('/') . '#logo',
@@ -170,7 +174,7 @@ class HookServiceProvider extends ServiceProvider
                             'height' => $heightImage,
                             'width' => $widthImage
                         ],
-                        'mainEntityOfPage' => custom_url($page->url)
+                        'mainEntityOfPage' => custom_url($page->url ?? '/')
                     ];
 
                     return $html . Html::tag('script', json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), ['type' => 'application/ld+json'])

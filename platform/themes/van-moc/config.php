@@ -46,6 +46,9 @@ return [
 
             $version = get_cms_version();
 
+            // Load helper functions
+            require_once __DIR__ . '/helpers/functions.php';
+
             // Add jQuery and Bootstrap
             $theme->asset()->container('footer')->usePath()->add('jquery', 'plugins/jquery/jquery.min.js');
             $theme->asset()->container('footer')->usePath()
@@ -64,12 +67,20 @@ return [
 
             // Add custom CSS
             $theme->asset()->usePath()->add('van-moc-style', 'css/style.css', [], [], $version);
+            $theme->asset()->usePath()->add('van-moc-blog', 'css/blog.css', [], [], $version);
 
             // Add shortcode support
             if (function_exists('shortcode')) {
                 $theme->composer(['page', 'post', 'product'], function (\Botble\Shortcode\View\View $view) {
                     $view->withShortcodes();
                 });
+                
+                // Register custom shortcodes
+                if (function_exists('add_shortcode')) {
+                    add_shortcode('blog-section', 'Blog Section', 'Blog Section', function ($shortcode) {
+                        return Theme::partial('shortcodes.blog-section', compact('shortcode'));
+                    });
+                }
             }
         },
 

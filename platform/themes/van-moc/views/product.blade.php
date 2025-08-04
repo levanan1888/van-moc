@@ -1,5 +1,293 @@
 @php Theme::layout('default'); Theme::set('section-name', $product->name); if ($product->categories->count()) { Theme::set('breadcrumb_category', $product->categories->first()->name); Theme::set('breadcrumb_category_url', $product->categories->first()->url); } @endphp
 
+<script>
+// Tab switching functionality - Define first
+function switchTab(tabName) {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+    
+    // Remove active class from all buttons and panes
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    tabPanes.forEach(pane => pane.classList.remove('active'));
+    
+    // Add active class to clicked button and corresponding pane
+    const activeButton = document.querySelector(`[data-tab="${tabName}"]`);
+    const activePane = document.getElementById(tabName);
+    
+    if (activeButton && activePane) {
+        activeButton.classList.add('active');
+        activePane.classList.add('active');
+        console.log('Switched to tab:', tabName);
+    } else {
+        console.error('Tab not found:', tabName);
+    }
+}
+
+// Change main image when clicking thumbnails
+function changeMainImage(src) {
+    document.getElementById('mainProductImage').src = src;
+    
+    // Update active thumbnail
+    document.querySelectorAll('.thumbnail-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    event.target.closest('.thumbnail-item').classList.add('active');
+}
+
+// Quantity selector
+function changeQuantity(delta) {
+    const quantityInput = document.getElementById('quantity');
+    let currentValue = parseInt(quantityInput.value);
+    let newValue = currentValue + delta;
+    
+    if (newValue >= 1 && newValue <= 99) {
+        quantityInput.value = newValue;
+    }
+}
+
+// Add to cart functionality with animation
+function addToCart() {
+    const quantity = document.getElementById('quantity').value;
+    const productName = document.querySelector('.product-title').textContent;
+    const productPrice = document.querySelector('.price-current').textContent;
+    const productImage = document.getElementById('mainProductImage').src;
+    
+    // Create cart item object
+    const cartItem = {
+        id: '{{ $product->id }}',
+        name: productName,
+        price: productPrice,
+        image: productImage,
+        quantity: parseInt(quantity)
+    };
+    
+    // Add to cart with animation
+    addToCartWithAnimation(cartItem);
+    
+    // Update cart counter
+    updateCartCounter();
+    
+    // Show subtle success message
+    showNotification(`Đã thêm ${quantity} sản phẩm vào giỏ hàng!`, 'success');
+}
+
+// Buy now functionality
+function buyNow() {
+    const quantity = document.getElementById('quantity').value;
+    const productName = document.querySelector('.product-title').textContent;
+    const productPrice = document.querySelector('.price-current').textContent;
+    const productImage = document.getElementById('mainProductImage').src;
+    
+    // Create cart item object
+    const cartItem = {
+        id: '{{ $product->id }}',
+        name: productName,
+        price: productPrice,
+        image: productImage,
+        quantity: parseInt(quantity)
+    };
+    
+    // Add to cart first
+    addToCartWithAnimation(cartItem);
+    
+    // Show loading state
+    const buyBtn = document.querySelector('.btn-buy-now');
+    const originalText = buyBtn.textContent;
+    buyBtn.textContent = 'ĐANG XỬ LÝ...';
+    buyBtn.disabled = true;
+    
+    // Redirect to checkout after animation
+    setTimeout(() => {
+        window.location.href = '{{ route("public.checkout") }}';
+    }, 1000);
+}
+
+// Cart animation and notification functions
+function addToCartWithAnimation(cartItem) {
+    // Get the product image for animation
+    const productImg = document.getElementById('mainProductImage');
+    const cartIcon = document.querySelector('.cart-link') || document.querySelector('.header-icons a:last-child');
+    
+    if (productImg && cartIcon) {
+        // Create flying image animation
+        const flyingImg = productImg.cloneNode(true);
+        flyingImg.style.position = 'fixed';
+        flyingImg.style.width = '100px';
+        flyingImg.style.height = '100px';
+        flyingImg.style.zIndex = '99999';
+        flyingImg.style.transition = 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        flyingImg.style.borderRadius = '12px';
+        flyingImg.style.boxShadow = '0 8px 30px rgba(40, 167, 69, 0.4)';
+        flyingImg.style.border = '3px solid #28a745';
+        flyingImg.style.pointerEvents = 'none';
+        
+        // Get positions
+        const imgRect = productImg.getBoundingClientRect();
+        const cartRect = cartIcon.getBoundingClientRect();
+        
+        // Set initial position
+        flyingImg.style.left = (imgRect.left + imgRect.width/2 - 50) + 'px';
+        flyingImg.style.top = (imgRect.top + imgRect.height/2 - 50) + 'px';
+        
+        document.body.appendChild(flyingImg);
+        
+        // Animate to cart with parabolic path
+        setTimeout(() => {
+            flyingImg.style.left = (cartRect.left + cartRect.width/2 - 15) + 'px';
+            flyingImg.style.top = (cartRect.top + cartRect.height/2 - 15) + 'px';
+            flyingImg.style.width = '30px';
+            flyingImg.style.height = '30px';
+            flyingImg.style.opacity = '0.8';
+            flyingImg.style.transform = 'rotate(360deg) scale(0.3)';
+        }, 100);
+        
+        // Final fade out
+        setTimeout(() => {
+            flyingImg.style.opacity = '0';
+            flyingImg.style.transform = 'rotate(720deg) scale(0.1)';
+        }, 800);
+        
+        // Remove after animation
+        setTimeout(() => {
+            if (document.body.contains(flyingImg)) {
+                document.body.removeChild(flyingImg);
+            }
+        }, 1300);
+        
+        // Cart bounce animation with green glow
+        cartIcon.style.transition = 'all 0.3s ease';
+        cartIcon.style.transform = 'scale(1.3)';
+        cartIcon.style.filter = 'drop-shadow(0 0 10px #28a745)';
+        
+        setTimeout(() => {
+            cartIcon.style.transform = 'scale(1.1)';
+        }, 150);
+        
+        setTimeout(() => {
+            cartIcon.style.transform = 'scale(1)';
+            cartIcon.style.filter = 'none';
+        }, 300);
+    }
+    
+    // Save to localStorage
+    saveToCart(cartItem);
+}
+
+function saveToCart(cartItem) {
+    let cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
+    
+    // Check if item already exists
+    const existingItemIndex = cart.findIndex(item => item.id === cartItem.id);
+    
+    if (existingItemIndex > -1) {
+        // Update quantity
+        cart[existingItemIndex].quantity += cartItem.quantity;
+    } else {
+        // Add new item
+        cart.push(cartItem);
+    }
+    
+    localStorage.setItem('vanmoc_cart', JSON.stringify(cart));
+}
+
+function updateCartCounter() {
+    const cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    
+    // Update cart counter if exists
+    let cartCounter = document.querySelector('.cart-counter');
+    if (!cartCounter && totalItems > 0) {
+        // Create cart counter
+        const cartIcon = document.querySelector('.cart-link') || document.querySelector('.header-icons a:last-child');
+        if (cartIcon) {
+            cartCounter = document.createElement('span');
+            cartCounter.className = 'cart-counter';
+            cartCounter.style.cssText = `
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                background: #dc3545;
+                color: white;
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+                font-size: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                z-index: 10;
+            `;
+            cartIcon.style.position = 'relative';
+            cartIcon.appendChild(cartCounter);
+        }
+    }
+    
+    if (cartCounter) {
+        cartCounter.textContent = totalItems;
+        cartCounter.style.display = totalItems > 0 ? 'flex' : 'none';
+        
+        // Add bounce animation when counter updates
+        if (totalItems > 0) {
+            cartCounter.style.transform = 'scale(1.3)';
+            setTimeout(() => {
+                cartCounter.style.transform = 'scale(1)';
+            }, 200);
+        }
+    }
+}
+
+function showNotification(message, type = 'success') {
+    // Remove existing notification
+    const existingNotification = document.querySelector('.notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create notification
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.style.cssText = `
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        background: ${type === 'success' ? 'rgba(40, 167, 69, 0.95)' : 'rgba(220, 53, 69, 0.95)'};
+        color: white;
+        padding: 12px 18px;
+        border-radius: 25px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        z-index: 9999;
+        font-family: 'Be Vietnam Pro', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        max-width: 250px;
+        transform: translateX(100%) scale(0.8);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        opacity: 0;
+        backdrop-filter: blur(10px);
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0) scale(1)';
+        notification.style.opacity = '1';
+    }, 100);
+    
+    // Auto remove after 2 seconds
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%) scale(0.8)';
+        notification.style.opacity = '0';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 400);
+    }, 2000);
+}
+</script>
 
     <div class="container">
         <!-- 🖼️ 2. Bố cục hiển thị - Layout 2 cột -->
@@ -128,9 +416,9 @@
         <!-- 📋 4. Tab hiển thị: Mô tả, Thành phần, Cách dùng -->
         <div class="product-tabs-section">
             <div class="tab-buttons">
-                <button class="tab-btn active" data-tab="description">Mô tả</button>
-                <button class="tab-btn" data-tab="ingredients">Thành phần</button>
-                <button class="tab-btn" data-tab="usage">Cách dùng</button>
+                <button class="tab-btn active" data-tab="description" onclick="switchTab('description')">Mô tả</button>
+                <button class="tab-btn" data-tab="ingredients" onclick="switchTab('ingredients')">Thành phần</button>
+                <button class="tab-btn" data-tab="usage" onclick="switchTab('usage')">Cách dùng</button>
             </div>
             
             <div class="tab-content">
@@ -409,15 +697,15 @@
         <div class="feedback-section">
             <div class="commitments-grid">
                 <div class="commitment-item full-width">
-                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_camket.svg') }}" alt="Genuine Commitment">
+                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_noidung.svg') }}" alt="Genuine Commitment">
                     <span>Cam kết chính hãng</span>
                 </div>
                 <div class="commitment-item">
-                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_giaohang.svg') }}" alt="Nationwide Delivery">
+                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_noidung.svg') }}" alt="Nationwide Delivery">
                     <span>Giao hàng toàn quốc</span>
                 </div>
                 <div class="commitment-item">
-                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_hotro.svg') }}" alt="24/7 Support">
+                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_noidung.svg') }}" alt="24/7 Support">
                     <span>Hỗ trợ khách hàng 24/7</span>
                 </div>
             </div>
@@ -1584,44 +1872,16 @@
 </style>
 
 <script>
-// Change main image when clicking thumbnails
-function changeMainImage(src) {
-    document.getElementById('mainProductImage').src = src;
-    
-    // Update active thumbnail
-    document.querySelectorAll('.thumbnail-item').forEach(item => {
-        item.classList.remove('active');
-    });
-    event.target.closest('.thumbnail-item').classList.add('active');
-}
 
-// Quantity selector
-function changeQuantity(delta) {
-    const quantityInput = document.getElementById('quantity');
-    let currentValue = parseInt(quantityInput.value);
-    let newValue = currentValue + delta;
-    
-    if (newValue >= 1 && newValue <= 99) {
-        quantityInput.value = newValue;
-    }
-}
 
-// Tab functionality - Removed old showTab function to prevent conflicts
-
-// Add to cart functionality with animation
-function addToCart() {
-    const quantity = document.getElementById('quantity').value;
-    const productName = document.querySelector('.product-title').textContent;
-    const productPrice = document.querySelector('.price-current').textContent;
-    const productImage = document.getElementById('mainProductImage').src;
-    
-    // Create cart item object
+// Add to cart for related products
+function addRelatedProductToCart(productName, productPrice, productImage) {
     const cartItem = {
-        id: '{{ $product->id }}',
+        id: 'related_' + Date.now(), // Generate unique ID
         name: productName,
         price: productPrice,
         image: productImage,
-        quantity: parseInt(quantity)
+        quantity: 1
     };
     
     // Add to cart with animation
@@ -1630,228 +1890,9 @@ function addToCart() {
     // Update cart counter
     updateCartCounter();
     
-    // Show subtle success message
-    showNotification(`Đã thêm ${quantity} sản phẩm vào giỏ hàng!`, 'success');
+    // Show success message
+    showNotification(`Đã thêm "${productName}" vào giỏ hàng!`, 'success');
 }
-
-// Buy now functionality
-function buyNow() {
-    const quantity = document.getElementById('quantity').value;
-    const productName = document.querySelector('.product-title').textContent;
-    const productPrice = document.querySelector('.price-current').textContent;
-    const productImage = document.getElementById('mainProductImage').src;
-    
-    // Create cart item object
-    const cartItem = {
-        id: '{{ $product->id }}',
-        name: productName,
-        price: productPrice,
-        image: productImage,
-        quantity: parseInt(quantity)
-    };
-    
-    // Add to cart first
-    addToCartWithAnimation(cartItem);
-    
-    // Show loading state
-    const buyBtn = document.querySelector('.btn-buy-now');
-    const originalText = buyBtn.textContent;
-    buyBtn.textContent = 'ĐANG XỬ LÝ...';
-    buyBtn.disabled = true;
-    
-    // Redirect to checkout after animation
-    setTimeout(() => {
-        window.location.href = '{{ route("public.checkout") }}';
-    }, 1000);
-}
-
-// Cart animation and notification functions
-function addToCartWithAnimation(cartItem) {
-    // Get the product image for animation
-    const productImg = document.getElementById('mainProductImage');
-    const cartIcon = document.querySelector('.cart-link') || document.querySelector('.header-icons a:last-child');
-    
-    if (productImg && cartIcon) {
-        // Create flying image animation
-        const flyingImg = productImg.cloneNode(true);
-        flyingImg.style.position = 'fixed';
-        flyingImg.style.width = '100px';
-        flyingImg.style.height = '100px';
-        flyingImg.style.zIndex = '99999';
-        flyingImg.style.transition = 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        flyingImg.style.borderRadius = '12px';
-        flyingImg.style.boxShadow = '0 8px 30px rgba(40, 167, 69, 0.4)';
-        flyingImg.style.border = '3px solid #28a745';
-        flyingImg.style.pointerEvents = 'none';
-        
-        // Get positions
-        const imgRect = productImg.getBoundingClientRect();
-        const cartRect = cartIcon.getBoundingClientRect();
-        
-        // Set initial position
-        flyingImg.style.left = (imgRect.left + imgRect.width/2 - 50) + 'px';
-        flyingImg.style.top = (imgRect.top + imgRect.height/2 - 50) + 'px';
-        
-        document.body.appendChild(flyingImg);
-        
-        // Animate to cart with parabolic path
-        setTimeout(() => {
-            flyingImg.style.left = (cartRect.left + cartRect.width/2 - 15) + 'px';
-            flyingImg.style.top = (cartRect.top + cartRect.height/2 - 15) + 'px';
-            flyingImg.style.width = '30px';
-            flyingImg.style.height = '30px';
-            flyingImg.style.opacity = '0.8';
-            flyingImg.style.transform = 'rotate(360deg) scale(0.3)';
-        }, 100);
-        
-        // Final fade out
-        setTimeout(() => {
-            flyingImg.style.opacity = '0';
-            flyingImg.style.transform = 'rotate(720deg) scale(0.1)';
-        }, 800);
-        
-        // Remove after animation
-        setTimeout(() => {
-            if (document.body.contains(flyingImg)) {
-                document.body.removeChild(flyingImg);
-            }
-        }, 1300);
-        
-        // Cart bounce animation with green glow
-        cartIcon.style.transition = 'all 0.3s ease';
-        cartIcon.style.transform = 'scale(1.3)';
-        cartIcon.style.filter = 'drop-shadow(0 0 10px #28a745)';
-        
-        setTimeout(() => {
-            cartIcon.style.transform = 'scale(1.1)';
-        }, 150);
-        
-        setTimeout(() => {
-            cartIcon.style.transform = 'scale(1)';
-            cartIcon.style.filter = 'none';
-        }, 300);
-    }
-    
-    // Save to localStorage
-    saveToCart(cartItem);
-}
-
-function saveToCart(cartItem) {
-    let cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
-    
-    // Check if item already exists
-    const existingItemIndex = cart.findIndex(item => item.id === cartItem.id);
-    
-    if (existingItemIndex > -1) {
-        // Update quantity
-        cart[existingItemIndex].quantity += cartItem.quantity;
-    } else {
-        // Add new item
-        cart.push(cartItem);
-    }
-    
-    localStorage.setItem('vanmoc_cart', JSON.stringify(cart));
-}
-
-function updateCartCounter() {
-    const cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    
-    // Update cart counter if exists
-    let cartCounter = document.querySelector('.cart-counter');
-    if (!cartCounter && totalItems > 0) {
-        // Create cart counter
-        const cartIcon = document.querySelector('.cart-link') || document.querySelector('.header-icons a:last-child');
-        if (cartIcon) {
-            cartCounter = document.createElement('span');
-            cartCounter.className = 'cart-counter';
-            cartCounter.style.cssText = `
-                position: absolute;
-                top: -8px;
-                right: -8px;
-                background: #dc3545;
-                color: white;
-                border-radius: 50%;
-                width: 20px;
-                height: 20px;
-                font-size: 12px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: bold;
-                z-index: 10;
-            `;
-            cartIcon.style.position = 'relative';
-            cartIcon.appendChild(cartCounter);
-        }
-    }
-    
-    if (cartCounter) {
-        cartCounter.textContent = totalItems;
-        cartCounter.style.display = totalItems > 0 ? 'flex' : 'none';
-        
-        // Add bounce animation when counter updates
-        if (totalItems > 0) {
-            cartCounter.style.transform = 'scale(1.3)';
-            setTimeout(() => {
-                cartCounter.style.transform = 'scale(1)';
-            }, 200);
-        }
-    }
-}
-
-function showNotification(message, type = 'success') {
-    // Remove existing notification
-    const existingNotification = document.querySelector('.notification');
-    if (existingNotification) {
-        existingNotification.remove();
-    }
-    
-    // Create notification
-    const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.style.cssText = `
-        position: fixed;
-        top: 80px;
-        right: 20px;
-        background: ${type === 'success' ? 'rgba(40, 167, 69, 0.95)' : 'rgba(220, 53, 69, 0.95)'};
-        color: white;
-        padding: 12px 18px;
-        border-radius: 25px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        z-index: 9999;
-        font-family: 'Be Vietnam Pro', sans-serif;
-        font-size: 13px;
-        font-weight: 500;
-        max-width: 250px;
-        transform: translateX(100%) scale(0.8);
-        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        opacity: 0;
-        backdrop-filter: blur(10px);
-    `;
-    notification.textContent = message;
-    
-    document.body.appendChild(notification);
-    
-    // Animate in
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0) scale(1)';
-        notification.style.opacity = '1';
-    }, 100);
-    
-    // Auto remove after 2 seconds
-    setTimeout(() => {
-        notification.style.transform = 'translateX(100%) scale(0.8)';
-        notification.style.opacity = '0';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 400);
-    }, 2000);
-}
-
-
 
 // Initialize page - Prevent multiple executions
 if (window.productPageInitialized) {
@@ -1877,12 +1918,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const productItem = this.closest('.product-item');
             const productName = productItem.querySelector('h3 a').textContent;
+            const productPrice = productItem.querySelector('.price').textContent;
+            const productImage = productItem.querySelector('.product-image img').src;
             
-            showNotification(`Đã thêm "${productName}" vào giỏ hàng!`, 'success');
+            addRelatedProductToCart(productName, productPrice, productImage);
         });
     });
     
-    // Initialize tab functionality
+    // Initialize tab functionality with event listeners
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabPanes = document.querySelectorAll('.tab-pane');
     
@@ -1892,21 +1935,7 @@ document.addEventListener('DOMContentLoaded', function() {
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
             const targetTab = this.getAttribute('data-tab');
-            console.log('Clicked tab:', targetTab);
-            
-            // Remove active class from all buttons and panes
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabPanes.forEach(pane => pane.classList.remove('active'));
-            
-            // Add active class to clicked button and corresponding pane
-            this.classList.add('active');
-            const targetPane = document.getElementById(targetTab);
-            if (targetPane) {
-                targetPane.classList.add('active');
-                console.log('Activated tab pane:', targetTab);
-            } else {
-                console.error('Tab pane not found:', targetTab);
-            }
+            switchTab(targetTab);
         });
     });
 });
