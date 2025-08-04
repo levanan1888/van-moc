@@ -28,7 +28,7 @@
                     <h2 class="blog-main-title">Blog</h2>
                     
                     <div class="blog-posts-grid">
-                        @forelse ($posts as $post)
+                        @foreach ($posts as $post)
                             <article class="blog-post-card">
                                 <div class="blog-post-card__image">
                                     <a href="{{ $post->url }}">
@@ -38,10 +38,10 @@
                                     @if ($post->categories->count() > 0)
                                         <div class="blog-post-card__category">
                                             <span>{{ $post->categories->first()->name }}</span>
-                        </div>
-                    @endif
+                                        </div>
+                                    @endif
                                 </div>
-                    
+                                
                                 <div class="blog-post-card__content">
                                     <h3 class="blog-post-card__title">
                                         <a href="{{ $post->url }}">{{ $post->name }}</a>
@@ -49,12 +49,12 @@
                                     
                                     <div class="blog-post-card__excerpt">
                                         <p>{{ Str::limit(clean($post->description), 120) }}</p>
-                                </div>
-                                
+                                    </div>
+                                    
                                     <div class="blog-post-card__meta">
                                         <span class="blog-post-card__date">{{ $post->created_at->format('d/m/Y') }}</span>
                                         <span class="blog-post-card__read-time">2 phút đọc</span>
-                                        <span class="blog-post-card__views">{{ number_format(rand(1000, 5000)) }} lượt xem</span>
+                                        <span class="blog-post-card__views">{{ number_format($post->views ?? rand(1000, 5000)) }} lượt xem</span>
                                     </div>
                                     
                                     <div class="blog-post-card__action">
@@ -64,16 +64,12 @@
                                     </div>
                                 </div>
                             </article>
-                        @empty
-                            <div class="blog-empty">
-                                <p>{{ __('There is no data to display!') }}</p>
-                            </div>
-                        @endforelse
+                        @endforeach
                     </div>
                     
                     <!-- Pagination -->
                     <div class="blog-pagination">
-                    {!! $posts->links() !!}
+                        {!! $posts->links() !!}
                     </div>
                 </div>
             </div>
@@ -136,7 +132,7 @@
                                         </h5>
                                         <div class="popular-post-item__meta">
                                             <span class="popular-post-item__date">{{ $popularPost->created_at->format('d/m/Y') }}</span>
-                                            <span class="popular-post-item__views">{{ number_format(rand(1000, 5000)) }} lượt xem</span>
+                                            <span class="popular-post-item__views">{{ number_format($popularPost->views ?? rand(1000, 5000)) }} lượt xem</span>
                                         </div>
                                     </div>
                                 </div>
