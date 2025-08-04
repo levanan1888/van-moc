@@ -453,23 +453,53 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Cart Counter Update --- //
     function updateCartCounter() {
-        try {
-            const cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        
+        // Update cart counter if exists
+        let cartCounter = document.querySelector('.cart-counter');
+        if (!cartCounter && totalItems > 0) {
+            // Create cart counter
+            const cartIcon = document.querySelector('.cart-link') || document.querySelector('.header-icons a:last-child');
+            if (cartIcon) {
+                cartCounter = document.createElement('span');
+                cartCounter.className = 'cart-counter';
+                cartCounter.style.cssText = `
+                    position: absolute;
+                    top: -8px;
+                    right: -8px;
+                    background: #dc3545;
+                    color: white;
+                    border-radius: 50%;
+                    width: 20px;
+                    height: 20px;
+                    font-size: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                    z-index: 10;
+                `;
+                cartIcon.style.position = 'relative';
+                cartIcon.appendChild(cartCounter);
+            }
+        }
+        
+        if (cartCounter) {
+            cartCounter.textContent = totalItems;
+            cartCounter.style.display = totalItems > 0 ? 'flex' : 'none';
             
-            const cartCounters = document.querySelectorAll('.cart-counter'); 
-            cartCounters.forEach(counter => {
-                if (counter) {
-                    counter.textContent = totalItems;
-                    counter.style.display = totalItems > 0 ? 'flex' : 'none';
-                }
-            });
-        } catch (e) {
-            console.error('Error updating cart counter:', e);
+            // Add bounce animation when counter updates
+            if (totalItems > 0) {
+                cartCounter.style.transform = 'scale(1.3)';
+                setTimeout(() => {
+                    cartCounter.style.transform = 'scale(1)';
+                }, 200);
+            }
         }
     }
 
-    // --- Add to Cart Functionality --- //
+    // --- Add to Cart Functionality with Animation --- //
     document.querySelectorAll('.btn-add-to-cart-featured').forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
@@ -478,7 +508,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const productItem = this.closest('.product-item');
             const productId = productItem.dataset.id;
             const productName = productItem.dataset.name;
-            const productPrice = parseInt(productItem.dataset.price);
+            const productPrice = productItem.dataset.price;
             const productImage = productItem.dataset.image;
             const quantity = 1; // Mặc định thêm 1 sản phẩm từ danh sách
 
@@ -487,31 +517,164 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            try {
-                let cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
-                let existingProduct = cart.find(item => item.id === productId);
+            // Create cart item object
+            const cartItem = {
+                id: productId,
+                name: productName,
+                price: productPrice,
+                image: productImage,
+                quantity: quantity
+            };
 
-                if (existingProduct) {
-                    existingProduct.quantity += quantity;
-                } else {
-                    cart.push({
-                        id: productId,
-                        name: productName,
-                        price: productPrice,
-                        image: productImage,
-                        quantity: quantity
-                    });
-                }
-
-                localStorage.setItem('vanmoc_cart', JSON.stringify(cart));
-                showToast(`Đã thêm "${productName}" vào giỏ hàng!`);
-                updateCartCounter();
-            } catch (error) {
-                console.error('Failed to add to cart:', error);
-                showToast('Có lỗi xảy ra, không thể thêm vào giỏ hàng.');
-            }
+            // Add to cart with animation
+            addToCartWithAnimation(cartItem, productItem);
+            
+            // Update cart counter
+            updateCartCounter();
+            
+            // Show success message
+            showNotification(`Đã thêm ${quantity} sản phẩm vào giỏ hàng!`, 'success');
         });
     });
+
+    // Cart animation function
+    function addToCartWithAnimation(cartItem, productItem) {
+        // Get the product image for animation
+        const productImg = productItem.querySelector('.product-image img');
+        const cartIcon = document.querySelector('.cart-link') || document.querySelector('.header-icons a:last-child');
+        
+        if (productImg && cartIcon) {
+            // Create flying image animation
+            const flyingImg = productImg.cloneNode(true);
+            flyingImg.style.position = 'fixed';
+            flyingImg.style.width = '100px';
+            flyingImg.style.height = '100px';
+            flyingImg.style.zIndex = '99999';
+            flyingImg.style.transition = 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            flyingImg.style.borderRadius = '12px';
+            flyingImg.style.boxShadow = '0 8px 30px rgba(40, 167, 69, 0.4)';
+            flyingImg.style.border = '3px solid #28a745';
+            flyingImg.style.pointerEvents = 'none';
+            
+            // Get positions
+            const imgRect = productImg.getBoundingClientRect();
+            const cartRect = cartIcon.getBoundingClientRect();
+            
+            // Set initial position
+            flyingImg.style.left = (imgRect.left + imgRect.width/2 - 50) + 'px';
+            flyingImg.style.top = (imgRect.top + imgRect.height/2 - 50) + 'px';
+            
+            document.body.appendChild(flyingImg);
+            
+            // Animate to cart with parabolic path
+            setTimeout(() => {
+                flyingImg.style.left = (cartRect.left + cartRect.width/2 - 15) + 'px';
+                flyingImg.style.top = (cartRect.top + cartRect.height/2 - 15) + 'px';
+                flyingImg.style.width = '30px';
+                flyingImg.style.height = '30px';
+                flyingImg.style.opacity = '0.8';
+                flyingImg.style.transform = 'rotate(360deg) scale(0.3)';
+            }, 100);
+            
+            // Final fade out
+            setTimeout(() => {
+                flyingImg.style.opacity = '0';
+                flyingImg.style.transform = 'rotate(720deg) scale(0.1)';
+            }, 800);
+            
+            // Remove after animation
+            setTimeout(() => {
+                if (document.body.contains(flyingImg)) {
+                    document.body.removeChild(flyingImg);
+                }
+            }, 1300);
+            
+            // Cart bounce animation with green glow
+            cartIcon.style.transition = 'all 0.3s ease';
+            cartIcon.style.transform = 'scale(1.3)';
+            cartIcon.style.filter = 'drop-shadow(0 0 10px #28a745)';
+            
+            setTimeout(() => {
+                cartIcon.style.transform = 'scale(1.1)';
+            }, 150);
+            
+            setTimeout(() => {
+                cartIcon.style.transform = 'scale(1)';
+                cartIcon.style.filter = 'none';
+            }, 300);
+        }
+        
+        // Save to localStorage
+        saveToCart(cartItem);
+    }
+
+    function saveToCart(cartItem) {
+        let cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
+        
+        // Check if item already exists
+        const existingItemIndex = cart.findIndex(item => item.id === cartItem.id);
+        
+        if (existingItemIndex > -1) {
+            // Update quantity
+            cart[existingItemIndex].quantity += cartItem.quantity;
+        } else {
+            // Add new item
+            cart.push(cartItem);
+        }
+        
+        localStorage.setItem('vanmoc_cart', JSON.stringify(cart));
+    }
+
+    function showNotification(message, type = 'success') {
+        // Remove existing notification
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+        
+        // Create notification
+        const notification = document.createElement('div');
+        notification.className = 'notification';
+        notification.style.cssText = `
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: ${type === 'success' ? 'rgba(40, 167, 69, 0.95)' : 'rgba(220, 53, 69, 0.95)'};
+            color: white;
+            padding: 12px 18px;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            z-index: 9999;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            max-width: 250px;
+            transform: translateX(100%) scale(0.8);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+            backdrop-filter: blur(10px);
+        `;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0) scale(1)';
+            notification.style.opacity = '1';
+        }, 100);
+        
+        // Auto remove after 2 seconds
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%) scale(0.8)';
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 400);
+        }, 2000);
+    }
 
     // --- Product Item Click to Detail Page --- //
     document.querySelectorAll('.product-item').forEach(item => {

@@ -1,25 +1,20 @@
-<div class="social-links">
-    @if (theme_option('facebook'))
-        <a href="{{ theme_option('facebook') }}" target="_blank" title="Facebook">
-            <i class="fab fa-facebook-f"></i>
+@php
+    $social_messenger = get_social_link('social_messenger');
+    $social_zalo = get_social_link('social_zalo');
+@endphp
+
+<div class="sticky-icon">
+    <a href="tel:{{ theme_option('hotline_phone') }}" target="_blank" class="Phone">
+        <i class="fas fa-phone"></i>
+        </a>
+    @if (!empty($social_messenger))
+    <a href="{{ @$social_messenger['link'] }}" target="_blank" class="Messenger">
+        <i class="fab fa-facebook-messenger"></i>
         </a>
     @endif
-    
-    @if (theme_option('twitter'))
-        <a href="{{ theme_option('twitter') }}" target="_blank" title="Twitter">
-            <i class="fab fa-twitter"></i>
-        </a>
-    @endif
-    
-    @if (theme_option('youtube'))
-        <a href="{{ theme_option('youtube') }}" target="_blank" title="YouTube">
-            <i class="fab fa-youtube"></i>
-        </a>
-    @endif
-    
-    @if (theme_option('instagram'))
-        <a href="{{ theme_option('instagram') }}" target="_blank" title="Instagram">
-            <i class="fab fa-instagram"></i>
+    @if (!empty($social_zalo))
+    <a href="{{ @$social_zalo['link'] }}" target="_blank" class="Zalo">
+        <i class="fas fa-comments"></i>
         </a>
     @endif
 </div> 

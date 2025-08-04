@@ -5,6 +5,10 @@ add_shortcode('hero-section', 'Hero Section', 'Hero Section', function ($shortco
     return Theme::partial('shortcodes.hero-section', compact('shortcode'));
 });
 
+add_shortcode('hero-banner', 'Hero Banner', 'Hero Banner with Banner Plugin', function ($shortcode) {
+    return Theme::partial('shortcodes.hero-banner', compact('shortcode'));
+});
+
 add_shortcode('featured-products', 'Featured Products', 'Featured Products', function ($shortcode) {
     return Theme::partial('shortcodes.featured-products', compact('shortcode'));
 });

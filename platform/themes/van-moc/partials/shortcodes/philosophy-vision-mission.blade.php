@@ -12,6 +12,9 @@
 <section class="philosophy-vision-mission">
     <div class="container">
         <div class="philosophy-box">
+            <div class="philosophy-bg">
+                <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh_trietly/hinhtrietly.png') }}" alt="Philosophy Background">
+            </div>
             <div class="philosophy-content">
                 <h3>{{ $philosophy_title }}</h3>
                 <p>{{ $philosophy_content }}</p>
@@ -20,12 +23,22 @@
         </div>
         <div class="vision-mission-box">
             <div class="vision-content">
-                <h4>{{ $vision_title }}</h4>
-                <p>{{ $vision_content }}</p>
+                <div class="vision-bg">
+                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh_trietly/hinhtrietly2.png') }}" alt="Vision Background">
+                </div>
+                <div class="vision-text">
+                    <h4>{{ $vision_title }}</h4>
+                    <p>{{ $vision_content }}</p>
+                </div>
             </div>
             <div class="mission-content">
-                <h4>{{ $mission_title }}</h4>
-                <p>{{ $mission_content }}</p>
+                <div class="mission-bg">
+                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh_trietly/hinhtrietly3.png') }}" alt="Mission Background">
+                </div>
+                <div class="mission-text">
+                    <h4>{{ $mission_title }}</h4>
+                    <p>{{ $mission_content }}</p>
+                </div>
             </div>
         </div>
     </div>

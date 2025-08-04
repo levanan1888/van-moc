@@ -19561,8 +19561,53 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
   }
   // Check for `exports` after `define` in case a build optimizer adds it.
-  else {}
+  else // removed by dead control flow
+{}
 }.call(this));
+
+
+/***/ }),
+
+/***/ "./node_modules/nanoid/non-secure/index.cjs":
+/*!**************************************************!*\
+  !*** ./node_modules/nanoid/non-secure/index.cjs ***!
+  \**************************************************/
+/***/ ((module) => {
+
+// This alphabet uses `A-Za-z0-9_-` symbols.
+// The order of characters is optimized for better gzip and brotli compression.
+// References to the same file (works both for gzip and brotli):
+// `'use`, `andom`, and `rict'`
+// References to the brotli default dictionary:
+// `-26T`, `1983`, `40px`, `75px`, `bush`, `jack`, `mind`, `very`, and `wolf`
+let urlAlphabet =
+  'useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict'
+
+let customAlphabet = (alphabet, defaultSize = 21) => {
+  return (size = defaultSize) => {
+    let id = ''
+    // A compact alternative for `for (var i = 0; i < step; i++)`.
+    let i = size | 0
+    while (i--) {
+      // `| 0` is more compact and faster than `Math.floor()`.
+      id += alphabet[(Math.random() * alphabet.length) | 0]
+    }
+    return id
+  }
+}
+
+let nanoid = (size = 21) => {
+  let id = ''
+  // A compact alternative for `for (var i = 0; i < step; i++)`.
+  let i = size | 0
+  while (i--) {
+    // `| 0` is more compact and faster than `Math.floor()`.
+    id += urlAlphabet[(Math.random() * 64) | 0]
+  }
+  return id
+}
+
+module.exports = { nanoid, customAlphabet }
 
 
 /***/ }),
@@ -19596,7 +19641,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	} else {}
+	} else // removed by dead control flow
+{}
 }(this, function () {
 
 	// 1. Let input be the value passed to this algorithm.
@@ -19909,7 +19955,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /***/ ((module) => {
 
 var x=String;
-var create=function() {return {isColorSupported:false,reset:x,bold:x,dim:x,italic:x,underline:x,inverse:x,hidden:x,strikethrough:x,black:x,red:x,green:x,yellow:x,blue:x,magenta:x,cyan:x,white:x,gray:x,bgBlack:x,bgRed:x,bgGreen:x,bgYellow:x,bgBlue:x,bgMagenta:x,bgCyan:x,bgWhite:x}};
+var create=function() {return {isColorSupported:false,reset:x,bold:x,dim:x,italic:x,underline:x,inverse:x,hidden:x,strikethrough:x,black:x,red:x,green:x,yellow:x,blue:x,magenta:x,cyan:x,white:x,gray:x,bgBlack:x,bgRed:x,bgGreen:x,bgYellow:x,bgBlue:x,bgMagenta:x,bgCyan:x,bgWhite:x,blackBright:x,redBright:x,greenBright:x,yellowBright:x,blueBright:x,magentaBright:x,cyanBright:x,whiteBright:x,bgBlackBright:x,bgRedBright:x,bgGreenBright:x,bgYellowBright:x,bgBlueBright:x,bgMagentaBright:x,bgCyanBright:x,bgWhiteBright:x}};
 module.exports=create();
 module.exports.createColors = create;
 
@@ -19985,12 +20031,12 @@ Comment.default = Comment
 "use strict";
 
 
-let { isClean, my } = __webpack_require__(/*! ./symbols */ "./node_modules/postcss/lib/symbols.js")
-let Declaration = __webpack_require__(/*! ./declaration */ "./node_modules/postcss/lib/declaration.js")
 let Comment = __webpack_require__(/*! ./comment */ "./node_modules/postcss/lib/comment.js")
+let Declaration = __webpack_require__(/*! ./declaration */ "./node_modules/postcss/lib/declaration.js")
 let Node = __webpack_require__(/*! ./node */ "./node_modules/postcss/lib/node.js")
+let { isClean, my } = __webpack_require__(/*! ./symbols */ "./node_modules/postcss/lib/symbols.js")
 
-let parse, Rule, AtRule, Root
+let AtRule, parse, Root, Rule
 
 function cleanSource(nodes) {
   return nodes.map(i => {
@@ -20000,16 +20046,26 @@ function cleanSource(nodes) {
   })
 }
 
-function markDirtyUp(node) {
+function markTreeDirty(node) {
   node[isClean] = false
   if (node.proxyOf.nodes) {
     for (let i of node.proxyOf.nodes) {
-      markDirtyUp(i)
+      markTreeDirty(i)
     }
   }
 }
 
 class Container extends Node {
+  get first() {
+    if (!this.proxyOf.nodes) return undefined
+    return this.proxyOf.nodes[0]
+  }
+
+  get last() {
+    if (!this.proxyOf.nodes) return undefined
+    return this.proxyOf.nodes[this.proxyOf.nodes.length - 1]
+  }
+
   append(...children) {
     for (let child of children) {
       let nodes = this.normalize(child, this.last)
@@ -20138,7 +20194,11 @@ class Container extends Node {
   insertBefore(exist, add) {
     let existIndex = this.index(exist)
     let type = existIndex === 0 ? 'prepend' : false
-    let nodes = this.normalize(add, this.proxyOf.nodes[existIndex], type).reverse()
+    let nodes = this.normalize(
+      add,
+      this.proxyOf.nodes[existIndex],
+      type
+    ).reverse()
     existIndex = this.index(exist)
     for (let node of nodes) this.proxyOf.nodes.splice(existIndex, 0, node)
 
@@ -20179,7 +20239,7 @@ class Container extends Node {
         nodes.value = String(nodes.value)
       }
       nodes = [new Declaration(nodes)]
-    } else if (nodes.selector) {
+    } else if (nodes.selector || nodes.selectors) {
       nodes = [new Rule(nodes)]
     } else if (nodes.name) {
       nodes = [new AtRule(nodes)]
@@ -20194,7 +20254,9 @@ class Container extends Node {
       if (!i[my]) Container.rebuild(i)
       i = i.proxyOf
       if (i.parent) i.parent.removeChild(i)
-      if (i[isClean]) markDirtyUp(i)
+      if (i[isClean]) markTreeDirty(i)
+
+      if (!i.raws) i.raws = {}
       if (typeof i.raws.before === 'undefined') {
         if (sample && typeof sample.raws.before !== 'undefined') {
           i.raws.before = sample.raws.before.replace(/\S/g, '')
@@ -20370,16 +20432,6 @@ class Container extends Node {
       }
     })
   }
-
-  get first() {
-    if (!this.proxyOf.nodes) return undefined
-    return this.proxyOf.nodes[0]
-  }
-
-  get last() {
-    if (!this.proxyOf.nodes) return undefined
-    return this.proxyOf.nodes[this.proxyOf.nodes.length - 1]
-  }
 }
 
 Container.registerParse = dependant => {
@@ -20489,24 +20541,23 @@ class CssSyntaxError extends Error {
 
     let css = this.source
     if (color == null) color = pico.isColorSupported
-    if (terminalHighlight) {
-      if (color) css = terminalHighlight(css)
+
+    let aside = text => text
+    let mark = text => text
+    let highlight = text => text
+    if (color) {
+      let { bold, gray, red } = pico.createColors(true)
+      mark = text => bold(red(text))
+      aside = text => gray(text)
+      if (terminalHighlight) {
+        highlight = text => terminalHighlight(text)
+      }
     }
 
     let lines = css.split(/\r?\n/)
     let start = Math.max(this.line - 3, 0)
     let end = Math.min(this.line + 2, lines.length)
-
     let maxWidth = String(end).length
-
-    let mark, aside
-    if (color) {
-      let { bold, gray, red } = pico.createColors(true)
-      mark = text => bold(red(text))
-      aside = text => gray(text)
-    } else {
-      mark = aside = str => str
-    }
 
     return lines
       .slice(start, end)
@@ -20514,12 +20565,46 @@ class CssSyntaxError extends Error {
         let number = start + 1 + index
         let gutter = ' ' + (' ' + number).slice(-maxWidth) + ' | '
         if (number === this.line) {
+          if (line.length > 160) {
+            let padding = 20
+            let subLineStart = Math.max(0, this.column - padding)
+            let subLineEnd = Math.max(
+              this.column + padding,
+              this.endColumn + padding
+            )
+            let subLine = line.slice(subLineStart, subLineEnd)
+
+            let spacing =
+              aside(gutter.replace(/\d/g, ' ')) +
+              line
+                .slice(0, Math.min(this.column - 1, padding - 1))
+                .replace(/[^\t]/g, ' ')
+
+            return (
+              mark('>') +
+              aside(gutter) +
+              highlight(subLine) +
+              '\n ' +
+              spacing +
+              mark('^')
+            )
+          }
+
           let spacing =
             aside(gutter.replace(/\d/g, ' ')) +
             line.slice(0, this.column - 1).replace(/[^\t]/g, ' ')
-          return mark('>') + aside(gutter) + line + '\n ' + spacing + mark('^')
+
+          return (
+            mark('>') +
+            aside(gutter) +
+            highlight(line) +
+            '\n ' +
+            spacing +
+            mark('^')
+          )
         }
-        return ' ' + aside(gutter) + line
+
+        return ' ' + aside(gutter) + highlight(line)
       })
       .join('\n')
   }
@@ -20551,6 +20636,10 @@ CssSyntaxError.default = CssSyntaxError
 let Node = __webpack_require__(/*! ./node */ "./node_modules/postcss/lib/node.js")
 
 class Declaration extends Node {
+  get variable() {
+    return this.prop.startsWith('--') || this.prop[0] === '$'
+  }
+
   constructor(defaults) {
     if (
       defaults &&
@@ -20561,10 +20650,6 @@ class Declaration extends Node {
     }
     super(defaults)
     this.type = 'decl'
-  }
-
-  get variable() {
-    return this.prop.startsWith('--') || this.prop[0] === '$'
   }
 }
 
@@ -20627,11 +20712,11 @@ Document.default = Document
 "use strict";
 
 
-let Declaration = __webpack_require__(/*! ./declaration */ "./node_modules/postcss/lib/declaration.js")
-let PreviousMap = __webpack_require__(/*! ./previous-map */ "./node_modules/postcss/lib/previous-map.js")
-let Comment = __webpack_require__(/*! ./comment */ "./node_modules/postcss/lib/comment.js")
 let AtRule = __webpack_require__(/*! ./at-rule */ "./node_modules/postcss/lib/at-rule.js")
+let Comment = __webpack_require__(/*! ./comment */ "./node_modules/postcss/lib/comment.js")
+let Declaration = __webpack_require__(/*! ./declaration */ "./node_modules/postcss/lib/declaration.js")
 let Input = __webpack_require__(/*! ./input */ "./node_modules/postcss/lib/input.js")
+let PreviousMap = __webpack_require__(/*! ./previous-map */ "./node_modules/postcss/lib/previous-map.js")
 let Root = __webpack_require__(/*! ./root */ "./node_modules/postcss/lib/root.js")
 let Rule = __webpack_require__(/*! ./rule */ "./node_modules/postcss/lib/rule.js")
 
@@ -20692,21 +20777,40 @@ fromJSON.default = fromJSON
 "use strict";
 
 
+let { nanoid } = __webpack_require__(/*! nanoid/non-secure */ "./node_modules/nanoid/non-secure/index.cjs")
+let { isAbsolute, resolve } = __webpack_require__(/*! path */ "?25fb")
 let { SourceMapConsumer, SourceMapGenerator } = __webpack_require__(/*! source-map-js */ "?6f78")
 let { fileURLToPath, pathToFileURL } = __webpack_require__(/*! url */ "?9214")
-let { isAbsolute, resolve } = __webpack_require__(/*! path */ "?25fb")
-let { nanoid } = __webpack_require__(/*! nanoid/non-secure */ "./node_modules/nanoid/non-secure/index.cjs")
 
-let terminalHighlight = __webpack_require__(/*! ./terminal-highlight */ "?fe98")
 let CssSyntaxError = __webpack_require__(/*! ./css-syntax-error */ "./node_modules/postcss/lib/css-syntax-error.js")
 let PreviousMap = __webpack_require__(/*! ./previous-map */ "./node_modules/postcss/lib/previous-map.js")
+let terminalHighlight = __webpack_require__(/*! ./terminal-highlight */ "?fe98")
 
-let fromOffsetCache = Symbol('fromOffsetCache')
+let lineToIndexCache = Symbol('lineToIndexCache')
 
 let sourceMapAvailable = Boolean(SourceMapConsumer && SourceMapGenerator)
 let pathAvailable = Boolean(resolve && isAbsolute)
 
+function getLineToIndex(input) {
+  if (input[lineToIndexCache]) return input[lineToIndexCache]
+  let lines = input.css.split('\n')
+  let lineToIndex = new Array(lines.length)
+  let prevIndex = 0
+
+  for (let i = 0, l = lines.length; i < l; i++) {
+    lineToIndex[i] = prevIndex
+    prevIndex += lines[i].length + 1
+  }
+
+  input[lineToIndexCache] = lineToIndex
+  return lineToIndex
+}
+
 class Input {
+  get from() {
+    return this.file || this.id
+  }
+
   constructor(css, opts = {}) {
     if (
       css === null ||
@@ -20724,6 +20828,9 @@ class Input {
     } else {
       this.hasBOM = false
     }
+
+    this.document = this.css
+    if (opts.document) this.document = opts.document.toString()
 
     if (opts.from) {
       if (
@@ -20753,31 +20860,38 @@ class Input {
   }
 
   error(message, line, column, opts = {}) {
-    let result, endLine, endColumn
+    let endColumn, endLine, endOffset, offset, result
 
     if (line && typeof line === 'object') {
       let start = line
       let end = column
       if (typeof start.offset === 'number') {
-        let pos = this.fromOffset(start.offset)
+        offset = start.offset
+        let pos = this.fromOffset(offset)
         line = pos.line
         column = pos.col
       } else {
         line = start.line
         column = start.column
+        offset = this.fromLineAndColumn(line, column)
       }
       if (typeof end.offset === 'number') {
-        let pos = this.fromOffset(end.offset)
+        endOffset = end.offset
+        let pos = this.fromOffset(endOffset)
         endLine = pos.line
         endColumn = pos.col
       } else {
         endLine = end.line
         endColumn = end.column
+        endOffset = this.fromLineAndColumn(end.line, end.column)
       }
     } else if (!column) {
-      let pos = this.fromOffset(line)
+      offset = line
+      let pos = this.fromOffset(offset)
       line = pos.line
       column = pos.col
+    } else {
+      offset = this.fromLineAndColumn(line, column)
     }
 
     let origin = this.origin(line, column, endLine, endColumn)
@@ -20805,7 +20919,7 @@ class Input {
       )
     }
 
-    result.input = { column, endColumn, endLine, line, source: this.css }
+    result.input = { column, endColumn, endLine, endOffset, line, offset, source: this.css }
     if (this.file) {
       if (pathToFileURL) {
         result.input.url = pathToFileURL(this.file).toString()
@@ -20816,23 +20930,15 @@ class Input {
     return result
   }
 
+  fromLineAndColumn(line, column) {
+    let lineToIndex = getLineToIndex(this)
+    let index = lineToIndex[line - 1]
+    return index + column - 1
+  }
+
   fromOffset(offset) {
-    let lastLine, lineToIndex
-    if (!this[fromOffsetCache]) {
-      let lines = this.css.split('\n')
-      lineToIndex = new Array(lines.length)
-      let prevIndex = 0
-
-      for (let i = 0, l = lines.length; i < l; i++) {
-        lineToIndex[i] = prevIndex
-        prevIndex += lines[i].length + 1
-      }
-
-      this[fromOffsetCache] = lineToIndex
-    } else {
-      lineToIndex = this[fromOffsetCache]
-    }
-    lastLine = lineToIndex[lineToIndex.length - 1]
+    let lineToIndex = getLineToIndex(this)
+    let lastLine = lineToIndex[lineToIndex.length - 1]
 
     let min = 0
     if (offset >= lastLine) {
@@ -20926,10 +21032,6 @@ class Input {
     }
     return json
   }
-
-  get from() {
-    return this.file || this.id
-  }
 }
 
 module.exports = Input
@@ -20951,15 +21053,15 @@ if (terminalHighlight && terminalHighlight.registerInput) {
 "use strict";
 
 
-let { isClean, my } = __webpack_require__(/*! ./symbols */ "./node_modules/postcss/lib/symbols.js")
-let MapGenerator = __webpack_require__(/*! ./map-generator */ "./node_modules/postcss/lib/map-generator.js")
-let stringify = __webpack_require__(/*! ./stringify */ "./node_modules/postcss/lib/stringify.js")
 let Container = __webpack_require__(/*! ./container */ "./node_modules/postcss/lib/container.js")
 let Document = __webpack_require__(/*! ./document */ "./node_modules/postcss/lib/document.js")
-let warnOnce = __webpack_require__(/*! ./warn-once */ "./node_modules/postcss/lib/warn-once.js")
-let Result = __webpack_require__(/*! ./result */ "./node_modules/postcss/lib/result.js")
+let MapGenerator = __webpack_require__(/*! ./map-generator */ "./node_modules/postcss/lib/map-generator.js")
 let parse = __webpack_require__(/*! ./parse */ "./node_modules/postcss/lib/parse.js")
+let Result = __webpack_require__(/*! ./result */ "./node_modules/postcss/lib/result.js")
 let Root = __webpack_require__(/*! ./root */ "./node_modules/postcss/lib/root.js")
+let stringify = __webpack_require__(/*! ./stringify */ "./node_modules/postcss/lib/stringify.js")
+let { isClean, my } = __webpack_require__(/*! ./symbols */ "./node_modules/postcss/lib/symbols.js")
+let warnOnce = __webpack_require__(/*! ./warn-once */ "./node_modules/postcss/lib/warn-once.js")
 
 const TYPE_TO_CLASS_NAME = {
   atrule: 'AtRule',
@@ -21056,6 +21158,38 @@ function cleanMarks(node) {
 let postcss = {}
 
 class LazyResult {
+  get content() {
+    return this.stringify().content
+  }
+
+  get css() {
+    return this.stringify().css
+  }
+
+  get map() {
+    return this.stringify().map
+  }
+
+  get messages() {
+    return this.sync().messages
+  }
+
+  get opts() {
+    return this.result.opts
+  }
+
+  get processor() {
+    return this.result.processor
+  }
+
+  get root() {
+    return this.sync().root
+  }
+
+  get [Symbol.toStringTag]() {
+    return 'LazyResult'
+  }
+
   constructor(processor, css, opts) {
     this.stringified = false
     this.processed = false
@@ -21456,38 +21590,6 @@ class LazyResult {
   warnings() {
     return this.sync().warnings()
   }
-
-  get content() {
-    return this.stringify().content
-  }
-
-  get css() {
-    return this.stringify().css
-  }
-
-  get map() {
-    return this.stringify().map
-  }
-
-  get messages() {
-    return this.sync().messages
-  }
-
-  get opts() {
-    return this.result.opts
-  }
-
-  get processor() {
-    return this.result.processor
-  }
-
-  get root() {
-    return this.sync().root
-  }
-
-  get [Symbol.toStringTag]() {
-    return 'LazyResult'
-  }
 }
 
 LazyResult.registerPostcss = dependant => {
@@ -21582,8 +21684,8 @@ list.default = list
 /* provided dependency */ var Buffer = __webpack_require__(/*! buffer */ "./node_modules/buffer/index.js")["Buffer"];
 
 
-let { SourceMapConsumer, SourceMapGenerator } = __webpack_require__(/*! source-map-js */ "?6f78")
 let { dirname, relative, resolve, sep } = __webpack_require__(/*! path */ "?25fb")
+let { SourceMapConsumer, SourceMapGenerator } = __webpack_require__(/*! source-map-js */ "?6f78")
 let { pathToFileURL } = __webpack_require__(/*! url */ "?9214")
 
 let Input = __webpack_require__(/*! ./input */ "./node_modules/postcss/lib/input.js")
@@ -21652,12 +21754,12 @@ class MapGenerator {
       for (let i = this.root.nodes.length - 1; i >= 0; i--) {
         node = this.root.nodes[i]
         if (node.type !== 'comment') continue
-        if (node.text.indexOf('# sourceMappingURL=') === 0) {
+        if (node.text.startsWith('# sourceMappingURL=')) {
           this.root.removeChild(i)
         }
       }
     } else if (this.css) {
-      this.css = this.css.replace(/\n*?\/\*#[\S\s]*?\*\/$/gm, '')
+      this.css = this.css.replace(/\n*\/\*#[\S\s]*?\*\/$/gm, '')
     }
   }
 
@@ -21725,7 +21827,7 @@ class MapGenerator {
       source: ''
     }
 
-    let lines, last
+    let last, lines
     this.stringify(this.root, (str, node, type) => {
       this.css += str
 
@@ -21962,12 +22064,62 @@ module.exports = MapGenerator
 
 
 let MapGenerator = __webpack_require__(/*! ./map-generator */ "./node_modules/postcss/lib/map-generator.js")
-let stringify = __webpack_require__(/*! ./stringify */ "./node_modules/postcss/lib/stringify.js")
-let warnOnce = __webpack_require__(/*! ./warn-once */ "./node_modules/postcss/lib/warn-once.js")
 let parse = __webpack_require__(/*! ./parse */ "./node_modules/postcss/lib/parse.js")
 const Result = __webpack_require__(/*! ./result */ "./node_modules/postcss/lib/result.js")
+let stringify = __webpack_require__(/*! ./stringify */ "./node_modules/postcss/lib/stringify.js")
+let warnOnce = __webpack_require__(/*! ./warn-once */ "./node_modules/postcss/lib/warn-once.js")
 
 class NoWorkResult {
+  get content() {
+    return this.result.css
+  }
+
+  get css() {
+    return this.result.css
+  }
+
+  get map() {
+    return this.result.map
+  }
+
+  get messages() {
+    return []
+  }
+
+  get opts() {
+    return this.result.opts
+  }
+
+  get processor() {
+    return this.result.processor
+  }
+
+  get root() {
+    if (this._root) {
+      return this._root
+    }
+
+    let root
+    let parser = parse
+
+    try {
+      root = parser(this._css, this._opts)
+    } catch (error) {
+      this.error = error
+    }
+
+    if (this.error) {
+      throw this.error
+    } else {
+      this._root = root
+      return root
+    }
+  }
+
+  get [Symbol.toStringTag]() {
+    return 'NoWorkResult'
+  }
+
   constructor(processor, css, opts) {
     css = css.toString()
     this.stringified = false
@@ -22043,56 +22195,6 @@ class NoWorkResult {
   warnings() {
     return []
   }
-
-  get content() {
-    return this.result.css
-  }
-
-  get css() {
-    return this.result.css
-  }
-
-  get map() {
-    return this.result.map
-  }
-
-  get messages() {
-    return []
-  }
-
-  get opts() {
-    return this.result.opts
-  }
-
-  get processor() {
-    return this.result.processor
-  }
-
-  get root() {
-    if (this._root) {
-      return this._root
-    }
-
-    let root
-    let parser = parse
-
-    try {
-      root = parser(this._css, this._opts)
-    } catch (error) {
-      this.error = error
-    }
-
-    if (this.error) {
-      throw this.error
-    } else {
-      this._root = root
-      return root
-    }
-  }
-
-  get [Symbol.toStringTag]() {
-    return 'NoWorkResult'
-  }
 }
 
 module.exports = NoWorkResult
@@ -22110,10 +22212,10 @@ NoWorkResult.default = NoWorkResult
 "use strict";
 
 
-let { isClean, my } = __webpack_require__(/*! ./symbols */ "./node_modules/postcss/lib/symbols.js")
 let CssSyntaxError = __webpack_require__(/*! ./css-syntax-error */ "./node_modules/postcss/lib/css-syntax-error.js")
 let Stringifier = __webpack_require__(/*! ./stringifier */ "./node_modules/postcss/lib/stringifier.js")
 let stringify = __webpack_require__(/*! ./stringify */ "./node_modules/postcss/lib/stringify.js")
+let { isClean, my } = __webpack_require__(/*! ./symbols */ "./node_modules/postcss/lib/symbols.js")
 
 function cloneNode(obj, parent) {
   let cloned = new obj.constructor()
@@ -22142,7 +22244,38 @@ function cloneNode(obj, parent) {
   return cloned
 }
 
+function sourceOffset(inputCSS, position) {
+  // Not all custom syntaxes support `offset` in `source.start` and `source.end`
+  if (position && typeof position.offset !== 'undefined') {
+    return position.offset
+  }
+
+  let column = 1
+  let line = 1
+  let offset = 0
+
+  for (let i = 0; i < inputCSS.length; i++) {
+    if (line === position.line && column === position.column) {
+      offset = i
+      break
+    }
+
+    if (inputCSS[i] === '\n') {
+      column = 1
+      line += 1
+    } else {
+      column += 1
+    }
+  }
+
+  return offset
+}
+
 class Node {
+  get proxyOf() {
+    return this
+  }
+
   constructor(defaults = {}) {
     this.raws = {}
     this[isClean] = false
@@ -22263,6 +22396,11 @@ class Node {
     }
   }
 
+  /* c8 ignore next 3 */
+  markClean() {
+    this[isClean] = true
+  }
+
   markDirty() {
     if (this[isClean]) {
       this[isClean] = false
@@ -22279,25 +22417,37 @@ class Node {
     return this.parent.nodes[index + 1]
   }
 
-  positionBy(opts, stringRepresentation) {
+  positionBy(opts = {}) {
     let pos = this.source.start
     if (opts.index) {
-      pos = this.positionInside(opts.index, stringRepresentation)
+      pos = this.positionInside(opts.index)
     } else if (opts.word) {
-      stringRepresentation = this.toString()
+      let inputString =
+        'document' in this.source.input
+          ? this.source.input.document
+          : this.source.input.css
+      let stringRepresentation = inputString.slice(
+        sourceOffset(inputString, this.source.start),
+        sourceOffset(inputString, this.source.end)
+      )
       let index = stringRepresentation.indexOf(opts.word)
-      if (index !== -1) pos = this.positionInside(index, stringRepresentation)
+      if (index !== -1) pos = this.positionInside(index)
     }
     return pos
   }
 
-  positionInside(index, stringRepresentation) {
-    let string = stringRepresentation || this.toString()
+  positionInside(index) {
     let column = this.source.start.column
     let line = this.source.start.line
+    let inputString =
+      'document' in this.source.input
+        ? this.source.input.document
+        : this.source.input.css
+    let offset = sourceOffset(inputString, this.source.start)
+    let end = offset + index
 
-    for (let i = 0; i < index; i++) {
-      if (string[i] === '\n') {
+    for (let i = offset; i < end; i++) {
+      if (inputString[i] === '\n') {
         column = 1
         line += 1
       } else {
@@ -22305,7 +22455,7 @@ class Node {
       }
     }
 
-    return { column, line }
+    return { column, line, offset: end }
   }
 
   prev() {
@@ -22314,33 +22464,51 @@ class Node {
     return this.parent.nodes[index - 1]
   }
 
-  rangeBy(opts) {
+  rangeBy(opts = {}) {
+    let inputString =
+      'document' in this.source.input
+        ? this.source.input.document
+        : this.source.input.css
     let start = {
       column: this.source.start.column,
-      line: this.source.start.line
+      line: this.source.start.line,
+      offset: sourceOffset(inputString, this.source.start)
     }
     let end = this.source.end
       ? {
-        column: this.source.end.column + 1,
-        line: this.source.end.line
-      }
+          column: this.source.end.column + 1,
+          line: this.source.end.line,
+          offset:
+            typeof this.source.end.offset === 'number'
+              ? // `source.end.offset` is exclusive, so we don't need to add 1
+                this.source.end.offset
+              : // Since line/column in this.source.end is inclusive,
+                // the `sourceOffset(... , this.source.end)` returns an inclusive offset.
+                // So, we add 1 to convert it to exclusive.
+                sourceOffset(inputString, this.source.end) + 1
+        }
       : {
-        column: start.column + 1,
-        line: start.line
-      }
+          column: start.column + 1,
+          line: start.line,
+          offset: start.offset + 1
+        }
 
     if (opts.word) {
-      let stringRepresentation = this.toString()
+      let stringRepresentation = inputString.slice(
+        sourceOffset(inputString, this.source.start),
+        sourceOffset(inputString, this.source.end)
+      )
       let index = stringRepresentation.indexOf(opts.word)
       if (index !== -1) {
-        start = this.positionInside(index, stringRepresentation)
-        end = this.positionInside(index + opts.word.length, stringRepresentation)
+        start = this.positionInside(index)
+        end = this.positionInside(index + opts.word.length)
       }
     } else {
       if (opts.start) {
         start = {
           column: opts.start.column,
-          line: opts.start.line
+          line: opts.start.line,
+          offset: sourceOffset(inputString, opts.start)
         }
       } else if (opts.index) {
         start = this.positionInside(opts.index)
@@ -22349,7 +22517,8 @@ class Node {
       if (opts.end) {
         end = {
           column: opts.end.column,
-          line: opts.end.line
+          line: opts.end.line,
+          offset: sourceOffset(inputString, opts.end)
         }
       } else if (typeof opts.endIndex === 'number') {
         end = this.positionInside(opts.endIndex)
@@ -22362,7 +22531,11 @@ class Node {
       end.line < start.line ||
       (end.line === start.line && end.column <= start.column)
     ) {
-      end = { column: start.column + 1, line: start.line }
+      end = {
+        column: start.column + 1,
+        line: start.line,
+        offset: start.offset + 1
+      }
     }
 
     return { end, start }
@@ -22437,6 +22610,7 @@ class Node {
       } else if (typeof value === 'object' && value.toJSON) {
         fixed[name] = value.toJSON(null, inputs)
       } else if (name === 'source') {
+        if (value == null) continue
         let inputId = inputs.get(value.input)
         if (inputId == null) {
           inputId = inputsNextIndex
@@ -22476,14 +22650,10 @@ class Node {
     return result
   }
 
-  warn(result, text, opts) {
+  warn(result, text, opts = {}) {
     let data = { node: this }
     for (let i in opts) data[i] = opts[i]
     return result.warn(text, data)
-  }
-
-  get proxyOf() {
-    return this
   }
 }
 
@@ -22503,8 +22673,8 @@ Node.default = Node
 
 
 let Container = __webpack_require__(/*! ./container */ "./node_modules/postcss/lib/container.js")
-let Parser = __webpack_require__(/*! ./parser */ "./node_modules/postcss/lib/parser.js")
 let Input = __webpack_require__(/*! ./input */ "./node_modules/postcss/lib/input.js")
+let Parser = __webpack_require__(/*! ./parser */ "./node_modules/postcss/lib/parser.js")
 
 function parse(css, opts) {
   let input = new Input(css, opts)
@@ -22555,12 +22725,12 @@ Container.registerParse(parse)
 "use strict";
 
 
-let Declaration = __webpack_require__(/*! ./declaration */ "./node_modules/postcss/lib/declaration.js")
-let tokenizer = __webpack_require__(/*! ./tokenize */ "./node_modules/postcss/lib/tokenize.js")
-let Comment = __webpack_require__(/*! ./comment */ "./node_modules/postcss/lib/comment.js")
 let AtRule = __webpack_require__(/*! ./at-rule */ "./node_modules/postcss/lib/at-rule.js")
+let Comment = __webpack_require__(/*! ./comment */ "./node_modules/postcss/lib/comment.js")
+let Declaration = __webpack_require__(/*! ./declaration */ "./node_modules/postcss/lib/declaration.js")
 let Root = __webpack_require__(/*! ./root */ "./node_modules/postcss/lib/root.js")
 let Rule = __webpack_require__(/*! ./rule */ "./node_modules/postcss/lib/rule.js")
+let tokenizer = __webpack_require__(/*! ./tokenize */ "./node_modules/postcss/lib/tokenize.js")
 
 const SAFE_COMMENT_NEIGHBOR = {
   empty: true,
@@ -22698,7 +22868,7 @@ class Parser {
 
   colon(tokens) {
     let brackets = 0
-    let token, type, prev
+    let prev, token, type
     for (let [i, element] of tokens.entries()) {
       token = element
       type = token[0]
@@ -22822,12 +22992,12 @@ class Parser {
         let str = ''
         for (let j = i; j > 0; j--) {
           let type = cache[j][0]
-          if (str.trim().indexOf('!') === 0 && type !== 'space') {
+          if (str.trim().startsWith('!') && type !== 'space') {
             break
           }
           str = cache.pop()[1] + str
         }
-        if (str.trim().indexOf('!') === 0) {
+        if (str.trim().startsWith('!')) {
           node.important = true
           node.raws.important = str
           tokens = cache
@@ -22902,6 +23072,8 @@ class Parser {
       if (prev && prev.type === 'rule' && !prev.raws.ownSemicolon) {
         prev.raws.ownSemicolon = this.spaces
         this.spaces = ''
+        prev.source.end = this.getPosition(token[2])
+        prev.source.end.offset += prev.raws.ownSemicolon.length
       }
     }
   }
@@ -23146,7 +23318,7 @@ class Parser {
 
   unknownWord(tokens) {
     throw this.input.error(
-      'Unknown word',
+      'Unknown word ' + tokens[0][1],
       { offset: tokens[0][2] },
       { offset: tokens[0][2] + tokens[0][1].length }
     )
@@ -23176,24 +23348,24 @@ module.exports = Parser
 /* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
 
 
+let AtRule = __webpack_require__(/*! ./at-rule */ "./node_modules/postcss/lib/at-rule.js")
+let Comment = __webpack_require__(/*! ./comment */ "./node_modules/postcss/lib/comment.js")
+let Container = __webpack_require__(/*! ./container */ "./node_modules/postcss/lib/container.js")
 let CssSyntaxError = __webpack_require__(/*! ./css-syntax-error */ "./node_modules/postcss/lib/css-syntax-error.js")
 let Declaration = __webpack_require__(/*! ./declaration */ "./node_modules/postcss/lib/declaration.js")
-let LazyResult = __webpack_require__(/*! ./lazy-result */ "./node_modules/postcss/lib/lazy-result.js")
-let Container = __webpack_require__(/*! ./container */ "./node_modules/postcss/lib/container.js")
-let Processor = __webpack_require__(/*! ./processor */ "./node_modules/postcss/lib/processor.js")
-let stringify = __webpack_require__(/*! ./stringify */ "./node_modules/postcss/lib/stringify.js")
-let fromJSON = __webpack_require__(/*! ./fromJSON */ "./node_modules/postcss/lib/fromJSON.js")
 let Document = __webpack_require__(/*! ./document */ "./node_modules/postcss/lib/document.js")
-let Warning = __webpack_require__(/*! ./warning */ "./node_modules/postcss/lib/warning.js")
-let Comment = __webpack_require__(/*! ./comment */ "./node_modules/postcss/lib/comment.js")
-let AtRule = __webpack_require__(/*! ./at-rule */ "./node_modules/postcss/lib/at-rule.js")
-let Result = __webpack_require__(/*! ./result.js */ "./node_modules/postcss/lib/result.js")
+let fromJSON = __webpack_require__(/*! ./fromJSON */ "./node_modules/postcss/lib/fromJSON.js")
 let Input = __webpack_require__(/*! ./input */ "./node_modules/postcss/lib/input.js")
-let parse = __webpack_require__(/*! ./parse */ "./node_modules/postcss/lib/parse.js")
+let LazyResult = __webpack_require__(/*! ./lazy-result */ "./node_modules/postcss/lib/lazy-result.js")
 let list = __webpack_require__(/*! ./list */ "./node_modules/postcss/lib/list.js")
-let Rule = __webpack_require__(/*! ./rule */ "./node_modules/postcss/lib/rule.js")
-let Root = __webpack_require__(/*! ./root */ "./node_modules/postcss/lib/root.js")
 let Node = __webpack_require__(/*! ./node */ "./node_modules/postcss/lib/node.js")
+let parse = __webpack_require__(/*! ./parse */ "./node_modules/postcss/lib/parse.js")
+let Processor = __webpack_require__(/*! ./processor */ "./node_modules/postcss/lib/processor.js")
+let Result = __webpack_require__(/*! ./result.js */ "./node_modules/postcss/lib/result.js")
+let Root = __webpack_require__(/*! ./root */ "./node_modules/postcss/lib/root.js")
+let Rule = __webpack_require__(/*! ./rule */ "./node_modules/postcss/lib/rule.js")
+let stringify = __webpack_require__(/*! ./stringify */ "./node_modules/postcss/lib/stringify.js")
+let Warning = __webpack_require__(/*! ./warning */ "./node_modules/postcss/lib/warning.js")
 
 function postcss(...plugins) {
   if (plugins.length === 1 && Array.isArray(plugins[0])) {
@@ -23289,9 +23461,9 @@ postcss.default = postcss
 /* provided dependency */ var Buffer = __webpack_require__(/*! buffer */ "./node_modules/buffer/index.js")["Buffer"];
 
 
-let { SourceMapConsumer, SourceMapGenerator } = __webpack_require__(/*! source-map-js */ "?6f78")
 let { existsSync, readFileSync } = __webpack_require__(/*! fs */ "?2f81")
 let { dirname, join } = __webpack_require__(/*! path */ "?25fb")
+let { SourceMapConsumer, SourceMapGenerator } = __webpack_require__(/*! source-map-js */ "?6f78")
 
 function fromBase64(str) {
   if (Buffer) {
@@ -23330,12 +23502,14 @@ class PreviousMap {
     let charsetUri = /^data:application\/json;charset=utf-?8,/
     let uri = /^data:application\/json,/
 
-    if (charsetUri.test(text) || uri.test(text)) {
-      return decodeURIComponent(text.substr(RegExp.lastMatch.length))
+    let uriMatch = text.match(charsetUri) || text.match(uri)
+    if (uriMatch) {
+      return decodeURIComponent(text.substr(uriMatch[0].length))
     }
 
-    if (baseCharsetUri.test(text) || baseUri.test(text)) {
-      return fromBase64(text.substr(RegExp.lastMatch.length))
+    let baseUriMatch = text.match(baseCharsetUri) || text.match(baseUri)
+    if (baseUriMatch) {
+      return fromBase64(text.substr(baseUriMatch[0].length))
     }
 
     let encoding = text.match(/data:application\/json;([^,]+),/)[1]
@@ -23356,7 +23530,7 @@ class PreviousMap {
   }
 
   loadAnnotation(css) {
-    let comments = css.match(/\/\*\s*# sourceMappingURL=/gm)
+    let comments = css.match(/\/\*\s*# sourceMappingURL=/g)
     if (!comments) return
 
     // sourceMappingURLs from comments, strings, etc.
@@ -23442,14 +23616,14 @@ PreviousMap.default = PreviousMap
 "use strict";
 
 
-let NoWorkResult = __webpack_require__(/*! ./no-work-result */ "./node_modules/postcss/lib/no-work-result.js")
-let LazyResult = __webpack_require__(/*! ./lazy-result */ "./node_modules/postcss/lib/lazy-result.js")
 let Document = __webpack_require__(/*! ./document */ "./node_modules/postcss/lib/document.js")
+let LazyResult = __webpack_require__(/*! ./lazy-result */ "./node_modules/postcss/lib/lazy-result.js")
+let NoWorkResult = __webpack_require__(/*! ./no-work-result */ "./node_modules/postcss/lib/no-work-result.js")
 let Root = __webpack_require__(/*! ./root */ "./node_modules/postcss/lib/root.js")
 
 class Processor {
   constructor(plugins = []) {
-    this.version = '8.4.38'
+    this.version = '8.5.6'
     this.plugins = this.normalize(plugins)
   }
 
@@ -23523,12 +23697,16 @@ Document.registerProcessor(Processor)
 let Warning = __webpack_require__(/*! ./warning */ "./node_modules/postcss/lib/warning.js")
 
 class Result {
+  get content() {
+    return this.css
+  }
+
   constructor(processor, root, opts) {
     this.processor = processor
     this.messages = []
     this.root = root
     this.opts = opts
-    this.css = undefined
+    this.css = ''
     this.map = undefined
   }
 
@@ -23551,10 +23729,6 @@ class Result {
 
   warnings() {
     return this.messages.filter(i => i.type === 'warning')
-  }
-
-  get content() {
-    return this.css
   }
 }
 
@@ -23649,12 +23823,6 @@ let Container = __webpack_require__(/*! ./container */ "./node_modules/postcss/l
 let list = __webpack_require__(/*! ./list */ "./node_modules/postcss/lib/list.js")
 
 class Rule extends Container {
-  constructor(defaults) {
-    super(defaults)
-    this.type = 'rule'
-    if (!this.nodes) this.nodes = []
-  }
-
   get selectors() {
     return list.comma(this.selector)
   }
@@ -23663,6 +23831,12 @@ class Rule extends Container {
     let match = this.selector ? this.selector.match(/,\s*/) : null
     let sep = match ? match[0] : ',' + this.raw('between', 'beforeOpen')
     this.selector = values.join(sep)
+  }
+
+  constructor(defaults) {
+    super(defaults)
+    this.type = 'rule'
+    if (!this.nodes) this.nodes = []
   }
 }
 
@@ -24114,8 +24288,8 @@ module.exports = function tokenizer(input, options = {}) {
   let css = input.css.valueOf()
   let ignore = options.ignoreErrors
 
-  let code, next, quote, content, escape
-  let escaped, escapePos, prev, n, currentToken
+  let code, content, escape, next, quote
+  let currentToken, escaped, escapePos, n, prev
 
   let length = css.length
   let pos = 0
@@ -24724,6 +24898,7 @@ function sanitizeHtml(html, options, _recursing) {
     this.attribs = attribs || {};
     this.tagPosition = result.length;
     this.text = ''; // Node inner text
+    this.openingTagLength = 0;
     this.mediaChildren = [];
 
     this.updateParentNodeText = function() {
@@ -24846,6 +25021,10 @@ function sanitizeHtml(html, options, _recursing) {
 
   const parser = new htmlparser.Parser({
     onopentag: function(name, attribs) {
+      if (options.onOpenTag) {
+        options.onOpenTag(name, attribs);
+      }
+
       // If `enforceHtmlBoundary` is `true` and this has found the opening
       // `html` tag, reset the state.
       if (options.enforceHtmlBoundary && name === 'html') {
@@ -24895,12 +25074,20 @@ function sanitizeHtml(html, options, _recursing) {
             skipTextDepth = 1;
           }
         }
-        skipMap[depth] = true;
       }
       depth++;
       if (skip) {
         if (options.disallowedTagsMode === 'discard' || options.disallowedTagsMode === 'completelyDiscard') {
           // We want the contents but not this tag
+          if (frame.innerText && !hasText) {
+            const escaped = escapeHtml(frame.innerText);
+            if (options.textFilter) {
+              result += options.textFilter(escaped, name);
+            } else {
+              result += escaped;
+            }
+            addedText = true;
+          }
           return;
         }
         tempResult = result;
@@ -24914,7 +25101,14 @@ function sanitizeHtml(html, options, _recursing) {
         }
       }
 
-      if (!allowedAttributesMap || has(allowedAttributesMap, name) || allowedAttributesMap['*']) {
+      const isBeingEscaped = skip && (options.disallowedTagsMode === 'escape' || options.disallowedTagsMode === 'recursiveEscape');
+      const shouldPreserveEscapedAttributes = isBeingEscaped && options.preserveEscapedAttributes;
+
+      if (shouldPreserveEscapedAttributes) {
+        each(attribs, function(value, a) {
+          result += ' ' + a + '="' + escapeHtml((value || ''), true) + '"';
+        });
+      } else if (!allowedAttributesMap || has(allowedAttributesMap, name) || allowedAttributesMap['*']) {
         each(attribs, function(value, a) {
           if (!VALID_HTML_ATTRIBUTE_NAME.test(a)) {
             // This prevents part of an attribute name in the output from being
@@ -25058,12 +25252,13 @@ function sanitizeHtml(html, options, _recursing) {
               const allowedWildcardClasses = allowedClassesMap['*'];
               const allowedSpecificClassesGlob = allowedClassesGlobMap[name];
               const allowedSpecificClassesRegex = allowedClassesRegexMap[name];
+              const allowedWildcardClassesRegex = allowedClassesRegexMap['*'];
               const allowedWildcardClassesGlob = allowedClassesGlobMap['*'];
               const allowedClassesGlobs = [
                 allowedSpecificClassesGlob,
                 allowedWildcardClassesGlob
               ]
-                .concat(allowedSpecificClassesRegex)
+                .concat(allowedSpecificClassesRegex, allowedWildcardClassesRegex)
                 .filter(function (t) {
                   return t;
                 });
@@ -25124,6 +25319,7 @@ function sanitizeHtml(html, options, _recursing) {
         result = tempResult + escapeHtml(result);
         tempResult = '';
       }
+      frame.openingTagLength = result.length - frame.tagPosition;
     },
     ontext: function(text) {
       if (skipText) {
@@ -25146,11 +25342,11 @@ function sanitizeHtml(html, options, _recursing) {
         // your concern, don't allow them. The same is essentially true for style tags
         // which have their own collection of XSS vectors.
         result += text;
-      } else {
+      } else if (!addedText) {
         const escaped = escapeHtml(text, false);
-        if (options.textFilter && !addedText) {
+        if (options.textFilter) {
           result += options.textFilter(escaped, tag);
-        } else if (!addedText) {
+        } else {
           result += escaped;
         }
       }
@@ -25160,6 +25356,9 @@ function sanitizeHtml(html, options, _recursing) {
       }
     },
     onclosetag: function(name, isImplied) {
+      if (options.onCloseTag) {
+        options.onCloseTag(name, isImplied);
+      }
 
       if (skipText) {
         skipTextDepth--;
@@ -25201,9 +25400,21 @@ function sanitizeHtml(html, options, _recursing) {
         delete transformMap[depth];
       }
 
-      if (options.exclusiveFilter && options.exclusiveFilter(frame)) {
-        result = result.substr(0, frame.tagPosition);
-        return;
+      if (options.exclusiveFilter) {
+        const filterResult = options.exclusiveFilter(frame);
+        if (filterResult === 'excludeTag') {
+          if (skip) {
+            // no longer escaping the tag since it's not added at all
+            result = tempResult;
+            tempResult = '';
+          }
+          // remove the opening tag from the result
+          result = result.substring(0, frame.tagPosition) + result.substring(frame.tagPosition + frame.openingTagLength);
+          return;
+        } else if (filterResult) {
+          result = result.substring(0, frame.tagPosition);
+          return;
+        }
       }
 
       frame.updateParentNodeMediaChildren();
@@ -25449,7 +25660,7 @@ sanitizeHtml.defaults = {
     'main', 'nav', 'section',
     // Text content
     'blockquote', 'dd', 'div', 'dl', 'dt', 'figcaption', 'figure',
-    'hr', 'li', 'main', 'ol', 'p', 'pre', 'ul',
+    'hr', 'li', 'menu', 'ol', 'p', 'pre', 'ul',
     // Inline text semantics
     'a', 'abbr', 'b', 'bdi', 'bdo', 'br', 'cite', 'code', 'data', 'dfn',
     'em', 'i', 'kbd', 'mark', 'q',
@@ -25520,7 +25731,8 @@ sanitizeHtml.defaults = {
   allowedSchemesAppliedToAttributes: [ 'href', 'src', 'cite' ],
   allowProtocolRelative: true,
   enforceHtmlBoundary: false,
-  parseStyleAttributes: true
+  parseStyleAttributes: true,
+  preserveEscapedAttributes: false
 };
 
 sanitizeHtml.simpleTransform = function(newTagName, newAttribs, merge) {
@@ -26571,7 +26783,7 @@ function cloneChildren(childs) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getFeed = void 0;
+exports.getFeed = getFeed;
 var stringify_js_1 = __webpack_require__(/*! ./stringify.js */ "./node_modules/sanitize-html/node_modules/domutils/lib/stringify.js");
 var legacy_js_1 = __webpack_require__(/*! ./legacy.js */ "./node_modules/sanitize-html/node_modules/domutils/lib/legacy.js");
 /**
@@ -26589,7 +26801,6 @@ function getFeed(doc) {
             ? getAtomFeed(feedRoot)
             : getRssFeed(feedRoot);
 }
-exports.getFeed = getFeed;
 /**
  * Parse an Atom feed.
  *
@@ -26772,7 +26983,10 @@ function isValidFeed(value) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.uniqueSort = exports.compareDocumentPosition = exports.DocumentPosition = exports.removeSubsets = void 0;
+exports.DocumentPosition = void 0;
+exports.removeSubsets = removeSubsets;
+exports.compareDocumentPosition = compareDocumentPosition;
+exports.uniqueSort = uniqueSort;
 var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/sanitize-html/node_modules/domhandler/lib/index.js");
 /**
  * Given an array of nodes, remove any member that is contained by another
@@ -26808,7 +27022,6 @@ function removeSubsets(nodes) {
     }
     return nodes;
 }
-exports.removeSubsets = removeSubsets;
 /**
  * @category Helpers
  * @see {@link http://dom.spec.whatwg.org/#dom-node-comparedocumentposition}
@@ -26820,7 +27033,7 @@ var DocumentPosition;
     DocumentPosition[DocumentPosition["FOLLOWING"] = 4] = "FOLLOWING";
     DocumentPosition[DocumentPosition["CONTAINS"] = 8] = "CONTAINS";
     DocumentPosition[DocumentPosition["CONTAINED_BY"] = 16] = "CONTAINED_BY";
-})(DocumentPosition = exports.DocumentPosition || (exports.DocumentPosition = {}));
+})(DocumentPosition || (exports.DocumentPosition = DocumentPosition = {}));
 /**
  * Compare the position of one node against another node in any other document,
  * returning a bitmask with the values from {@link DocumentPosition}.
@@ -26886,7 +27099,6 @@ function compareDocumentPosition(nodeA, nodeB) {
     }
     return DocumentPosition.PRECEDING;
 }
-exports.compareDocumentPosition = compareDocumentPosition;
 /**
  * Sort an array of nodes based on their relative position in the document,
  * removing any duplicate nodes. If the array contains nodes that do not belong
@@ -26910,7 +27122,6 @@ function uniqueSort(nodes) {
     });
     return nodes;
 }
-exports.uniqueSort = uniqueSort;
 //# sourceMappingURL=helpers.js.map
 
 /***/ }),
@@ -26967,7 +27178,12 @@ Object.defineProperty(exports, "hasChildren", ({ enumerable: true, get: function
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getElementsByTagType = exports.getElementsByTagName = exports.getElementById = exports.getElements = exports.testElement = void 0;
+exports.testElement = testElement;
+exports.getElements = getElements;
+exports.getElementById = getElementById;
+exports.getElementsByTagName = getElementsByTagName;
+exports.getElementsByClassName = getElementsByClassName;
+exports.getElementsByTagType = getElementsByTagType;
 var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/sanitize-html/node_modules/domhandler/lib/index.js");
 var querying_js_1 = __webpack_require__(/*! ./querying.js */ "./node_modules/sanitize-html/node_modules/domutils/lib/querying.js");
 /**
@@ -27052,7 +27268,6 @@ function testElement(options, node) {
     var test = compileTest(options);
     return test ? test(node) : true;
 }
-exports.testElement = testElement;
 /**
  * Returns all nodes that match `options`.
  *
@@ -27068,7 +27283,6 @@ function getElements(options, nodes, recurse, limit) {
     var test = compileTest(options);
     return test ? (0, querying_js_1.filter)(test, nodes, recurse, limit) : [];
 }
-exports.getElements = getElements;
 /**
  * Returns the node with the supplied ID.
  *
@@ -27084,7 +27298,6 @@ function getElementById(id, nodes, recurse) {
         nodes = [nodes];
     return (0, querying_js_1.findOne)(getAttribCheck("id", id), nodes, recurse);
 }
-exports.getElementById = getElementById;
 /**
  * Returns all nodes with the supplied `tagName`.
  *
@@ -27100,7 +27313,21 @@ function getElementsByTagName(tagName, nodes, recurse, limit) {
     if (limit === void 0) { limit = Infinity; }
     return (0, querying_js_1.filter)(Checks["tag_name"](tagName), nodes, recurse, limit);
 }
-exports.getElementsByTagName = getElementsByTagName;
+/**
+ * Returns all nodes with the supplied `className`.
+ *
+ * @category Legacy Query Functions
+ * @param className Class name to search for.
+ * @param nodes Nodes to search through.
+ * @param recurse Also consider child nodes.
+ * @param limit Maximum number of nodes to return.
+ * @returns All nodes with the supplied `className`.
+ */
+function getElementsByClassName(className, nodes, recurse, limit) {
+    if (recurse === void 0) { recurse = true; }
+    if (limit === void 0) { limit = Infinity; }
+    return (0, querying_js_1.filter)(getAttribCheck("class", className), nodes, recurse, limit);
+}
 /**
  * Returns all nodes with the supplied `type`.
  *
@@ -27116,7 +27343,6 @@ function getElementsByTagType(type, nodes, recurse, limit) {
     if (limit === void 0) { limit = Infinity; }
     return (0, querying_js_1.filter)(Checks["tag_type"](type), nodes, recurse, limit);
 }
-exports.getElementsByTagType = getElementsByTagType;
 //# sourceMappingURL=legacy.js.map
 
 /***/ }),
@@ -27130,7 +27356,12 @@ exports.getElementsByTagType = getElementsByTagType;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.prepend = exports.prependChild = exports.append = exports.appendChild = exports.replaceElement = exports.removeElement = void 0;
+exports.removeElement = removeElement;
+exports.replaceElement = replaceElement;
+exports.appendChild = appendChild;
+exports.append = append;
+exports.prependChild = prependChild;
+exports.prepend = prepend;
 /**
  * Remove an element from the dom
  *
@@ -27153,7 +27384,6 @@ function removeElement(elem) {
     elem.prev = null;
     elem.parent = null;
 }
-exports.removeElement = removeElement;
 /**
  * Replace an element in the dom
  *
@@ -27177,7 +27407,6 @@ function replaceElement(elem, replacement) {
         elem.parent = null;
     }
 }
-exports.replaceElement = replaceElement;
 /**
  * Append a child to an element.
  *
@@ -27198,7 +27427,6 @@ function appendChild(parent, child) {
         child.prev = null;
     }
 }
-exports.appendChild = appendChild;
 /**
  * Append an element after another.
  *
@@ -27225,7 +27453,6 @@ function append(elem, next) {
         parent.children.push(next);
     }
 }
-exports.append = append;
 /**
  * Prepend a child to an element.
  *
@@ -27246,7 +27473,6 @@ function prependChild(parent, child) {
         child.next = null;
     }
 }
-exports.prependChild = prependChild;
 /**
  * Prepend an element before another.
  *
@@ -27269,7 +27495,6 @@ function prepend(elem, prev) {
     prev.next = elem;
     elem.prev = prev;
 }
-exports.prepend = prepend;
 //# sourceMappingURL=manipulation.js.map
 
 /***/ }),
@@ -27283,7 +27508,12 @@ exports.prepend = prepend;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.findAll = exports.existsOne = exports.findOne = exports.findOneChild = exports.find = exports.filter = void 0;
+exports.filter = filter;
+exports.find = find;
+exports.findOneChild = findOneChild;
+exports.findOne = findOne;
+exports.existsOne = existsOne;
+exports.findAll = findAll;
 var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/sanitize-html/node_modules/domhandler/lib/index.js");
 /**
  * Search a node and its children for nodes passing a test function. If `node` is not an array, it will be wrapped in one.
@@ -27300,7 +27530,6 @@ function filter(test, node, recurse, limit) {
     if (limit === void 0) { limit = Infinity; }
     return find(test, Array.isArray(node) ? node : [node], recurse, limit);
 }
-exports.filter = filter;
 /**
  * Search an array of nodes and their children for nodes passing a test function.
  *
@@ -27314,7 +27543,7 @@ exports.filter = filter;
 function find(test, nodes, recurse, limit) {
     var result = [];
     /** Stack of the arrays we are looking at. */
-    var nodeStack = [nodes];
+    var nodeStack = [Array.isArray(nodes) ? nodes : [nodes]];
     /** Stack of the indices within the arrays. */
     var indexStack = [0];
     for (;;) {
@@ -27346,7 +27575,6 @@ function find(test, nodes, recurse, limit) {
         }
     }
 }
-exports.find = find;
 /**
  * Finds the first element inside of an array that matches a test function. This is an alias for `Array.prototype.find`.
  *
@@ -27359,7 +27587,6 @@ exports.find = find;
 function findOneChild(test, nodes) {
     return nodes.find(test);
 }
-exports.findOneChild = findOneChild;
 /**
  * Finds one element in a tree that passes a test.
  *
@@ -27371,22 +27598,20 @@ exports.findOneChild = findOneChild;
  */
 function findOne(test, nodes, recurse) {
     if (recurse === void 0) { recurse = true; }
-    var elem = null;
-    for (var i = 0; i < nodes.length && !elem; i++) {
-        var node = nodes[i];
-        if (!(0, domhandler_1.isTag)(node)) {
-            continue;
+    var searchedNodes = Array.isArray(nodes) ? nodes : [nodes];
+    for (var i = 0; i < searchedNodes.length; i++) {
+        var node = searchedNodes[i];
+        if ((0, domhandler_1.isTag)(node) && test(node)) {
+            return node;
         }
-        else if (test(node)) {
-            elem = node;
-        }
-        else if (recurse && node.children.length > 0) {
-            elem = findOne(test, node.children, true);
+        if (recurse && (0, domhandler_1.hasChildren)(node) && node.children.length > 0) {
+            var found = findOne(test, node.children, true);
+            if (found)
+                return found;
         }
     }
-    return elem;
+    return null;
 }
-exports.findOne = findOne;
 /**
  * Checks if a tree of nodes contains at least one node passing a test.
  *
@@ -27396,12 +27621,11 @@ exports.findOne = findOne;
  * @returns Whether a tree of nodes contains at least one node passing the test.
  */
 function existsOne(test, nodes) {
-    return nodes.some(function (checked) {
-        return (0, domhandler_1.isTag)(checked) &&
-            (test(checked) || existsOne(test, checked.children));
+    return (Array.isArray(nodes) ? nodes : [nodes]).some(function (node) {
+        return ((0, domhandler_1.isTag)(node) && test(node)) ||
+            ((0, domhandler_1.hasChildren)(node) && existsOne(test, node.children));
     });
 }
-exports.existsOne = existsOne;
 /**
  * Search an array of nodes and their children for elements passing a test function.
  *
@@ -27414,7 +27638,7 @@ exports.existsOne = existsOne;
  */
 function findAll(test, nodes) {
     var result = [];
-    var nodeStack = [nodes];
+    var nodeStack = [Array.isArray(nodes) ? nodes : [nodes]];
     var indexStack = [0];
     for (;;) {
         if (indexStack[0] >= nodeStack[0].length) {
@@ -27428,17 +27652,14 @@ function findAll(test, nodes) {
             continue;
         }
         var elem = nodeStack[0][indexStack[0]++];
-        if (!(0, domhandler_1.isTag)(elem))
-            continue;
-        if (test(elem))
+        if ((0, domhandler_1.isTag)(elem) && test(elem))
             result.push(elem);
-        if (elem.children.length > 0) {
+        if ((0, domhandler_1.hasChildren)(elem) && elem.children.length > 0) {
             indexStack.unshift(0);
             nodeStack.unshift(elem.children);
         }
     }
 }
-exports.findAll = findAll;
 //# sourceMappingURL=querying.js.map
 
 /***/ }),
@@ -27455,7 +27676,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.innerText = exports.textContent = exports.getText = exports.getInnerHTML = exports.getOuterHTML = void 0;
+exports.getOuterHTML = getOuterHTML;
+exports.getInnerHTML = getInnerHTML;
+exports.getText = getText;
+exports.textContent = textContent;
+exports.innerText = innerText;
 var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/sanitize-html/node_modules/domhandler/lib/index.js");
 var dom_serializer_1 = __importDefault(__webpack_require__(/*! dom-serializer */ "./node_modules/sanitize-html/node_modules/dom-serializer/lib/index.js"));
 var domelementtype_1 = __webpack_require__(/*! domelementtype */ "./node_modules/domelementtype/lib/index.js");
@@ -27469,7 +27694,6 @@ var domelementtype_1 = __webpack_require__(/*! domelementtype */ "./node_modules
 function getOuterHTML(node, options) {
     return (0, dom_serializer_1.default)(node, options);
 }
-exports.getOuterHTML = getOuterHTML;
 /**
  * @category Stringify
  * @deprecated Use the `dom-serializer` module directly.
@@ -27482,7 +27706,6 @@ function getInnerHTML(node, options) {
         ? node.children.map(function (node) { return getOuterHTML(node, options); }).join("")
         : "";
 }
-exports.getInnerHTML = getInnerHTML;
 /**
  * Get a node's inner text. Same as `textContent`, but inserts newlines for `<br>` tags. Ignores comments.
  *
@@ -27502,7 +27725,6 @@ function getText(node) {
         return node.data;
     return "";
 }
-exports.getText = getText;
 /**
  * Get a node's text content. Ignores comments.
  *
@@ -27521,7 +27743,6 @@ function textContent(node) {
         return node.data;
     return "";
 }
-exports.textContent = textContent;
 /**
  * Get a node's inner text, ignoring `<script>` and `<style>` tags. Ignores comments.
  *
@@ -27540,7 +27761,6 @@ function innerText(node) {
         return node.data;
     return "";
 }
-exports.innerText = innerText;
 //# sourceMappingURL=stringify.js.map
 
 /***/ }),
@@ -27554,7 +27774,14 @@ exports.innerText = innerText;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.prevElementSibling = exports.nextElementSibling = exports.getName = exports.hasAttrib = exports.getAttributeValue = exports.getSiblings = exports.getParent = exports.getChildren = void 0;
+exports.getChildren = getChildren;
+exports.getParent = getParent;
+exports.getSiblings = getSiblings;
+exports.getAttributeValue = getAttributeValue;
+exports.hasAttrib = hasAttrib;
+exports.getName = getName;
+exports.nextElementSibling = nextElementSibling;
+exports.prevElementSibling = prevElementSibling;
 var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/sanitize-html/node_modules/domhandler/lib/index.js");
 /**
  * Get a node's children.
@@ -27566,7 +27793,6 @@ var domhandler_1 = __webpack_require__(/*! domhandler */ "./node_modules/sanitiz
 function getChildren(elem) {
     return (0, domhandler_1.hasChildren)(elem) ? elem.children : [];
 }
-exports.getChildren = getChildren;
 /**
  * Get a node's parent.
  *
@@ -27577,7 +27803,6 @@ exports.getChildren = getChildren;
 function getParent(elem) {
     return elem.parent || null;
 }
-exports.getParent = getParent;
 /**
  * Gets an elements siblings, including the element itself.
  *
@@ -27606,7 +27831,6 @@ function getSiblings(elem) {
     }
     return siblings;
 }
-exports.getSiblings = getSiblings;
 /**
  * Gets an attribute from an element.
  *
@@ -27619,7 +27843,6 @@ function getAttributeValue(elem, name) {
     var _a;
     return (_a = elem.attribs) === null || _a === void 0 ? void 0 : _a[name];
 }
-exports.getAttributeValue = getAttributeValue;
 /**
  * Checks whether an element has an attribute.
  *
@@ -27633,7 +27856,6 @@ function hasAttrib(elem, name) {
         Object.prototype.hasOwnProperty.call(elem.attribs, name) &&
         elem.attribs[name] != null);
 }
-exports.hasAttrib = hasAttrib;
 /**
  * Get the tag name of an element.
  *
@@ -27644,7 +27866,6 @@ exports.hasAttrib = hasAttrib;
 function getName(elem) {
     return elem.name;
 }
-exports.getName = getName;
 /**
  * Returns the next element sibling of a node.
  *
@@ -27660,7 +27881,6 @@ function nextElementSibling(elem) {
         (_a = next, next = _a.next);
     return next;
 }
-exports.nextElementSibling = nextElementSibling;
 /**
  * Returns the previous element sibling of a node.
  *
@@ -27676,7 +27896,6 @@ function prevElementSibling(elem) {
         (_a = prev, prev = _a.prev);
     return prev;
 }
-exports.prevElementSibling = prevElementSibling;
 //# sourceMappingURL=traversal.js.map
 
 /***/ }),
@@ -32781,7 +33000,8 @@ function initInjections (vm) {
             vm
           );
         });
-      } else {}
+      } else // removed by dead control flow
+{}
     });
     toggleObserving(true);
   }
@@ -33858,7 +34078,8 @@ function initRender (vm) {
     defineReactive$$1(vm, '$listeners', options._parentListeners || emptyObject, function () {
       !isUpdatingChildComponent && warn("$listeners is readonly.", vm);
     }, true);
-  } else {}
+  } else // removed by dead control flow
+{}
 }
 
 var currentRenderingInstance = null;
@@ -35026,7 +35247,8 @@ function initProps (vm, propsOptions) {
           );
         }
       });
-    } else {}
+    } else // removed by dead control flow
+{}
     // static props are already proxied on the component's prototype
     // during Vue.extend(). We only need to proxy props defined at
     // instantiation here.
@@ -35334,7 +35556,8 @@ function initMixin (Vue) {
     /* istanbul ignore else */
     if (true) {
       initProxy(vm);
-    } else {}
+    } else // removed by dead control flow
+{}
     // expose real self
     vm._self = vm;
     initLifecycle(vm);
@@ -42358,10 +42581,10 @@ Vue.compile = compileToFunctions;
 
 /***/ }),
 
-/***/ "?fe98":
-/*!**************************************!*\
-  !*** ./terminal-highlight (ignored) ***!
-  \**************************************/
+/***/ "?25fb":
+/*!**********************!*\
+  !*** path (ignored) ***!
+  \**********************/
 /***/ (() => {
 
 /* (ignored) */
@@ -42372,16 +42595,6 @@ Vue.compile = compileToFunctions;
 /*!********************!*\
   !*** fs (ignored) ***!
   \********************/
-/***/ (() => {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ "?25fb":
-/*!**********************!*\
-  !*** path (ignored) ***!
-  \**********************/
 /***/ (() => {
 
 /* (ignored) */
@@ -42408,34 +42621,13 @@ Vue.compile = compileToFunctions;
 
 /***/ }),
 
-/***/ "./node_modules/nanoid/non-secure/index.cjs":
-/*!**************************************************!*\
-  !*** ./node_modules/nanoid/non-secure/index.cjs ***!
-  \**************************************************/
-/***/ ((module) => {
+/***/ "?fe98":
+/*!**************************************!*\
+  !*** ./terminal-highlight (ignored) ***!
+  \**************************************/
+/***/ (() => {
 
-let urlAlphabet =
-  'useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict'
-let customAlphabet = (alphabet, defaultSize = 21) => {
-  return (size = defaultSize) => {
-    let id = ''
-    let i = size
-    while (i--) {
-      id += alphabet[(Math.random() * alphabet.length) | 0]
-    }
-    return id
-  }
-}
-let nanoid = (size = 21) => {
-  let id = ''
-  let i = size
-  while (i--) {
-    id += urlAlphabet[(Math.random() * 64) | 0]
-  }
-  return id
-}
-module.exports = { nanoid, customAlphabet }
-
+/* (ignored) */
 
 /***/ })
 
@@ -42532,38 +42724,38 @@ module.exports = { nanoid, customAlphabet }
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
 "use strict";
 /*!***********************************************************!*\
   !*** ./platform/core/base/resources/assets/js/vue-app.js ***!
   \***********************************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var sanitize_html__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sanitize-html */ "./node_modules/sanitize-html/index.js");
-/* harmony import */ var sanitize_html__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sanitize_html__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var sanitize_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sanitize-html */ "./node_modules/sanitize-html/index.js");
+/* harmony import */ var sanitize_html__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sanitize_html__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.__ = function (key) {
-  return lodash__WEBPACK_IMPORTED_MODULE_0___default().get(window.trans, key, key);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.__ = function (key) {
+  return lodash__WEBPACK_IMPORTED_MODULE_2___default().get(window.trans, key, key);
 };
-vue__WEBPACK_IMPORTED_MODULE_1__["default"].prototype.$sanitize = (sanitize_html__WEBPACK_IMPORTED_MODULE_2___default());
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.$sanitize = (sanitize_html__WEBPACK_IMPORTED_MODULE_1___default());
 var VueApp = /*#__PURE__*/function () {
   function VueApp() {
     _classCallCheck(this, VueApp);
-    this.vue = vue__WEBPACK_IMPORTED_MODULE_1__["default"];
+    this.vue = vue__WEBPACK_IMPORTED_MODULE_0__["default"];
     this.bootingCallbacks = [];
   }
   return _createClass(VueApp, [{

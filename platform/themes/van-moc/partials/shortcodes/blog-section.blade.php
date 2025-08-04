@@ -73,15 +73,15 @@
                                 <img src="{{ RvMedia::getImageUrl($post->image, 'medium', false, RvMedia::getDefaultImage()) }}" alt="{{ $post->name }}">
                             @else
                                 @if ($loop->index == 0)
-                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh_blog(2)/libary1.png') }}" alt="{{ $post->name }}">
+                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh_baiviet/alavar.png') }}" alt="{{ $post->name }}">
                                 @elseif ($loop->index == 1)
-                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh_blog(2)/libary2.png') }}" alt="{{ $post->name }}">
+                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh_baiviet/alavar1.png') }}" alt="{{ $post->name }}">
                                 @elseif ($loop->index == 2)
-                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh_blog(2)/libary3.png') }}" alt="{{ $post->name }}">
+                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh_baiviet/alavar2.png') }}" alt="{{ $post->name }}">
                                 @elseif ($loop->index == 3)
-                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh_blog(2)/libary4.png') }}" alt="{{ $post->name }}">
+                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh_baiviet/alavar3.png') }}" alt="{{ $post->name }}">
                                 @else
-                                    <img src="{{ RvMedia::getImageUrl(RvMedia::getDefaultImage(), 'medium') }}" alt="{{ $post->name }}">
+                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh_baiviet/alavar.png') }}" alt="{{ $post->name }}">
                                 @endif
                             @endif
                         </div>

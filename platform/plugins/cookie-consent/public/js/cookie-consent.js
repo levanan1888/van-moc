@@ -1,6 +1,5 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
 /*!*******************************************************************************!*\
   !*** ./platform/plugins/cookie-consent/resources/assets/js/cookie-consent.js ***!
   \*******************************************************************************/

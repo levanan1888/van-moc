@@ -27,3 +27,6 @@ Route::get('/ao-thun-team-building', function () {
 Route::get('/cart', 'Theme\VanMoc\Http\Controllers\VanMocController@getCart')->name('public.cart');
 Route::get('/checkout', 'Theme\VanMoc\Http\Controllers\VanMocController@getCheckout')->name('public.checkout');
 Route::post('/checkout', 'Theme\VanMoc\Http\Controllers\VanMocController@postCheckout')->name('public.checkout.post');
+
+// Custom Contact Form Route
+Route::post('/send-custom-contact', 'App\Http\Controllers\CustomContactController@postSendContact')->name('public.send.custom.contact');

@@ -1,6 +1,5 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
 /*!***********************************************************************!*\
   !*** ./platform/plugins/gallery/resources/assets/js/gallery-admin.js ***!
   \***********************************************************************/

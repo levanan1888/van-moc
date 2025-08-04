@@ -32468,7 +32468,8 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
   }
   // Check for `exports` after `define` in case a build optimizer adds it.
-  else {}
+  else // removed by dead control flow
+{}
 }.call(this));
 
 
@@ -32721,7 +32722,7 @@ process.umask = function() { return 0; };
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
 /*!*******************************************************!*\
   !*** ./platform/core/base/resources/assets/js/app.js ***!

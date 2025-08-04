@@ -1,1 +1,121 @@
-(()=>{"use strict";var e,r={239:(e,r,t)=>{function o(e){return o="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},o(e)}function n(e,r){for(var t=0;t<r.length;t++){var o=r[t];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,a(o.key),o)}}function a(e){var r=function(e,r){if("object"!=o(e)||!e)return e;var t=e[Symbol.toPrimitive];if(void 0!==t){var n=t.call(e,r||"default");if("object"!=o(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===r?String:Number)(e)}(e,"string");return"symbol"==o(r)?r:r+""}var i=$(".search-input"),c=$(".super-search"),s=$(".close-search"),u=$(".search-result"),l=null,f=function(){return e=function e(){!function(e,r){if(!(e instanceof r))throw new TypeError("Cannot call a class as a function")}(this,e)},r=[{key:"searchFunction",value:function(e){clearTimeout(l),l=setTimeout(function(){c.removeClass("search-finished"),u.fadeOut(),$.ajax({type:"GET",cache:!1,url:c.data("search-url"),data:{q:e},success:function(e){e.error?u.html(e.message):(u.html(e.data.items),c.addClass("search-finished")),u.fadeIn(500)},error:function(e){u.html(e.responseText),u.fadeIn(500)}})},500)}},{key:"bindActionToElement",value:function(){var e=this;s.on("click",function(r){r.preventDefault(),s.hasClass("active")?(c.removeClass("active"),u.hide(),s.removeClass("active"),$("body").removeClass("overflow"),$(".quick-search > .form-control").focus()):(c.addClass("active"),""!==i.val()&&e.searchFunction(i.val()),$("body").addClass("overflow"),s.addClass("active"))}),i.keyup(function(r){i.val(r.target.value),e.searchFunction(r.target.value)})}}],r&&n(e.prototype,r),t&&n(e,t),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,r,t}();$(document).ready(function(){(new f).bindActionToElement()})},389:()=>{}},t={};function o(e){var n=t[e];if(void 0!==n)return n.exports;var a=t[e]={exports:{}};return r[e](a,a.exports,o),a.exports}o.m=r,e=[],o.O=(r,t,n,a)=>{if(!t){var i=1/0;for(l=0;l<e.length;l++){for(var[t,n,a]=e[l],c=!0,s=0;s<t.length;s++)(!1&a||i>=a)&&Object.keys(o.O).every(e=>o.O[e](t[s]))?t.splice(s--,1):(c=!1,a<i&&(i=a));if(c){e.splice(l--,1);var u=n();void 0!==u&&(r=u)}}return r}a=a||0;for(var l=e.length;l>0&&e[l-1][2]>a;l--)e[l]=e[l-1];e[l]=[t,n,a]},o.d=(e,r)=>{for(var t in r)o.o(r,t)&&!o.o(e,t)&&Object.defineProperty(e,t,{enumerable:!0,get:r[t]})},o.o=(e,r)=>Object.prototype.hasOwnProperty.call(e,r),(()=>{var e={202:0,262:0};o.O.j=r=>0===e[r];var r=(r,t)=>{var n,a,[i,c,s]=t,u=0;if(i.some(r=>0!==e[r])){for(n in c)o.o(c,n)&&(o.m[n]=c[n]);if(s)var l=s(o)}for(r&&r(t);u<i.length;u++)a=i[u],o.o(e,a)&&e[a]&&e[a][0](),e[a]=0;return o.O(l)},t=self.webpackChunk=self.webpackChunk||[];t.forEach(r.bind(null,0)),t.push=r.bind(null,t.push.bind(t))})(),o.O(void 0,[262],()=>o(239));var n=o.O(void 0,[262],()=>o(389));n=o.O(n)})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	// The require scope
+/******/ 	var __webpack_require__ = {};
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+/*!****************************************************!*\
+  !*** ./platform/themes/ripple/assets/js/ripple.js ***!
+  \****************************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Ripple: () => (/* binding */ Ripple)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var searchInput = $('.search-input');
+var superSearch = $('.super-search');
+var closeSearch = $('.close-search');
+var searchResult = $('.search-result');
+var timeoutID = null;
+var Ripple = /*#__PURE__*/function () {
+  function Ripple() {
+    _classCallCheck(this, Ripple);
+  }
+  return _createClass(Ripple, [{
+    key: "searchFunction",
+    value: function searchFunction(keyword) {
+      clearTimeout(timeoutID);
+      timeoutID = setTimeout(function () {
+        superSearch.removeClass('search-finished');
+        searchResult.fadeOut();
+        $.ajax({
+          type: 'GET',
+          cache: false,
+          url: superSearch.data('search-url'),
+          data: {
+            'q': keyword
+          },
+          success: function success(res) {
+            if (!res.error) {
+              searchResult.html(res.data.items);
+              superSearch.addClass('search-finished');
+            } else {
+              searchResult.html(res.message);
+            }
+            searchResult.fadeIn(500);
+          },
+          error: function error(res) {
+            searchResult.html(res.responseText);
+            searchResult.fadeIn(500);
+          }
+        });
+      }, 500);
+    }
+  }, {
+    key: "bindActionToElement",
+    value: function bindActionToElement() {
+      var _this = this;
+      closeSearch.on('click', function (event) {
+        event.preventDefault();
+        if (closeSearch.hasClass('active')) {
+          superSearch.removeClass('active');
+          searchResult.hide();
+          closeSearch.removeClass('active');
+          $('body').removeClass('overflow');
+          $('.quick-search > .form-control').focus();
+        } else {
+          superSearch.addClass('active');
+          if (searchInput.val() !== '') {
+            _this.searchFunction(searchInput.val());
+          }
+          $('body').addClass('overflow');
+          closeSearch.addClass('active');
+        }
+      });
+      searchInput.keyup(function (e) {
+        searchInput.val(e.target.value);
+        _this.searchFunction(e.target.value);
+      });
+    }
+  }]);
+}();
+$(document).ready(function () {
+  new Ripple().bindActionToElement();
+});
+/******/ })()
+;

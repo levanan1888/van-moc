@@ -9,11 +9,13 @@
                     <img src="{{ RvMedia::getImageUrl($iconImage) }}" alt="icon image" class="menu-icon-image" />
                 @elseif ($row->icon_font)<i class='{{ trim($row->icon_font) }}'></i> @endif{{ $row->title }}<span class="underline-{{ $cls_root }}"></span>
                 @if ($row->has_child)
+                    <span class="toggle-icon">
                     @if($row->parent_id == 0)
-                        <span class="toggle-icon"><i class="fa fa-angle-down"></i></span>
+                            <i class="fa fa-chevron-down"></i>
                     @else
-                        <span class="toggle-icon" style="float: right"><i class="fa fa-angle-right"></i></span>
+                            <i class="fa fa-chevron-right"></i>
                     @endif
+                    </span>
                 @endif
             </a>
             @if ($row->has_child)

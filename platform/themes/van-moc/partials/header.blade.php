@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ theme_option('site_title', 'Vạn Mộc') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Prata&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('themes/van-moc/css/style.css') }}">
     {!! Theme::header() !!}
 </head>
@@ -38,8 +40,13 @@
             !!}
         </nav>
         <div class="header-icons">
-            <a href="#"><img src="{{ asset('themes/van-moc/images/search.png') }}" alt="Search"></a>
-            <a href="{{ route('public.cart') }}" class="cart-link"><img src="{{ asset('themes/van-moc/images/cart.svg') }}" alt="Cart"></a>
+            <a href="#" class="search-icon" title="Tìm kiếm">
+                <i class="fa fa-search"></i>
+            </a>
+            <a href="{{ route('public.cart') }}" class="cart-icon" title="Giỏ hàng">
+                <i class="fa fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </a>
         </div>
     </div>
 </header> 

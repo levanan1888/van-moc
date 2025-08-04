@@ -1,4 +1,38 @@
 /* Import Google Fonts */
+
+/* Custom styles for Hero Banner */
+.hero-banner-container {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.hero-banner-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #333; /* Adjust color as needed */
+    text-shadow: none; /* Remove any text shadow */
+}
+
+.hero-banner-image {
+    filter: none !important;
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+}
+
+/* Remove overlay */
+.hero-banner-container::before,
+.hero-banner-container::after {
+    display: none !important;
+}
+
+/* Remove circle icon */
+.hero-banner-container .dot-icon {
+    display: none !important;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Prata&display=swap');
 
 /* Reset and Base Styles */

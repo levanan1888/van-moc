@@ -55,6 +55,18 @@
         </div>
     </footer>
     
+    <div class="social-sticky">
+        {!! Theme::partial('social') !!}
+    </div>
+    
+    <div class="social-mobile-sticky">
+        {!! Theme::partial('mobile-social') !!}
+    </div>
+    
+    <div id="back2top">
+        <i class="fa fa-angle-up"></i>
+    </div>
+    
     {!! Theme::footer() !!}
     <script src="{{ asset('themes/van-moc/js/script.js') }}"></script>
     </body>

@@ -128,43 +128,60 @@
         <!-- 📋 4. Tab hiển thị: Mô tả, Thành phần, Cách dùng -->
         <div class="product-tabs-section">
             <div class="tab-buttons">
-                <button class="tab-btn active" onclick="showTab('description')">Mô tả</button>
-                <button class="tab-btn" onclick="showTab('ingredients')">Thành phần</button>
-                <button class="tab-btn" onclick="showTab('usage')">Cách dùng</button>
+                <button class="tab-btn active" data-tab="description">Mô tả</button>
+                <button class="tab-btn" data-tab="ingredients">Thành phần</button>
+                <button class="tab-btn" data-tab="usage">Cách dùng</button>
             </div>
             
             <div class="tab-content">
                 <div id="description" class="tab-pane active">
                     <div class="product-full-description">
-                        <h3>Thành phần chiết xuất 100% từ thiên nhiên</h3>
-                        <p>Sản phẩm của chúng tôi tự hào với công thức độc đáo, kết hợp các thành phần tinh túy từ thiên nhiên, được lựa chọn kỹ lưỡng để mang lại hiệu quả tối ưu và an toàn cho làn da của bạn. Mỗi thành phần đều có một vai trò quan trọng trong việc nuôi dưỡng và bảo vệ da.</p>
+                        <h3>Mô tả sản phẩm</h3>
+                        <p>Nước dưỡng tóc tinh dầu bưởi 140ml là sản phẩm chăm sóc tóc cao cấp được chiết xuất từ 100% thành phần thiên nhiên, đặc biệt là tinh dầu bưởi nguyên chất. Sản phẩm được nghiên cứu và phát triển để mang lại giải pháp toàn diện cho việc chăm sóc tóc và da đầu.</p>
+                        
+                        <h3>Công dụng chính:</h3>
                         <ul>
-                            <li><strong>Lá trầu không:</strong> Nổi tiếng với khả năng kháng khuẩn tự nhiên, giúp ức chế và ngăn chặn sự phát triển của vi khuẩn gây viêm, giữ cho vùng da nhạy cảm luôn sạch sẽ và khỏe mạnh.</li>
-                            <li><strong>Lactic acid:</strong> Là một AHA nhẹ nhàng, giúp duy trì độ pH cân bằng, bảo vệ lớp màng axit tự nhiên của da và ngăn ngừa các vấn đề về da.</li>
-                            <li><strong>Lô hội:</strong> Cung cấp độ ẩm sâu, làm dịu da tức thì, giúp vùng kín luôn mịn màng, hồng hào và đầy sức sống.</li>
-                            <li><strong>Chiết xuất cúc la mã:</strong> Với đặc tính chống viêm và làm dịu da, cúc la mã giúp giảm ngứa, ngăn ngừa mụn và các dấu hiệu kích ứng.</li>
-                            <li><strong>Chiết xuất nhụy hoa nghệ tây:</strong> Một thành phần quý giá giúp làm dịu, tăng cường sức đề kháng cho vùng da nhạy cảm, mang lại cảm giác thoải mái suốt cả ngày.</li>
+                            <li><strong>Giảm gãy rụng:</strong> Tinh dầu bưởi và các thành phần tự nhiên giúp tăng cường sức khỏe nang tóc, giảm thiểu tình trạng gãy rụng</li>
+                            <li><strong>Làm mềm tóc:</strong> Dưỡng ẩm sâu, làm mềm mượt tóc từ chân đến ngọn</li>
+                            <li><strong>Kích thích mọc tóc:</strong> Thúc đẩy quá trình tái tạo tế bào, kích thích mọc tóc mới</li>
+                            <li><strong>Làm sạch da đầu:</strong> Loại bỏ bụi bẩn, dầu thừa và tế bào chết</li>
+                            <li><strong>Kháng khuẩn tự nhiên:</strong> Ngăn ngừa gàu và các vấn đề về da đầu</li>
                         </ul>
                         
-                        <h3>Cam kết chất lượng</h3>
-                        <p>Chúng tôi cam kết sản phẩm không chứa cồn, paraben, sulfate hay dầu khoáng, đảm bảo an toàn tuyệt đối cho cả những làn da nhạy cảm nhất.</p>
+                        <h3>Đối tượng sử dụng:</h3>
+                        <ul>
+                            <li>Tóc khô, hư tổn do hóa chất</li>
+                            <li>Tóc gãy rụng nhiều</li>
+                            <li>Da đầu nhạy cảm, dễ bị kích ứng</li>
+                            <li>Mọi loại tóc và mọi lứa tuổi</li>
+                        </ul>
                     </div>
                 </div>
                 
                 <div id="ingredients" class="tab-pane">
                     <div class="product-ingredients">
                         <h3>Thành phần chi tiết:</h3>
-                        <p>Sản phẩm là sự kết hợp hoàn hảo giữa các thành phần thiên nhiên và khoa học, mang lại giải pháp chăm sóc da toàn diện.</p>
+                        <p>Sản phẩm là sự kết hợp hoàn hảo giữa các thành phần thiên nhiên và khoa học, mang lại giải pháp chăm sóc tóc toàn diện.</p>
                         <ul>
-                            <li><strong>Tinh dầu bưởi tự nhiên (Citrus Grandis Peel Oil):</strong> Giàu chất chống oxy hóa, giúp làm sáng da, mờ thâm và mang lại hương thơm tươi mát, thư giãn.</li>
-                            <li><strong>Vitamin E (Tocopherol):</strong> Một chất chống oxy hóa mạnh mẽ, giúp bảo vệ da khỏi các gốc tự do, dưỡng ẩm sâu và làm chậm quá trình lão hóa.</li>
-                            <li><strong>Dầu dừa nguyên chất (Cocos Nucifera Oil):</strong> Cung cấp độ ẩm cần thiết, giúp da mềm mại, mịn màng và tăng cường hàng rào bảo vệ da.</li>
-                            <li><strong>Chiết xuất từ thảo dược (Herbal Extracts):</strong> Bao gồm các loại thảo dược quý, có tác dụng kháng khuẩn, làm dịu da và giảm kích ứng.</li>
-                            <li><strong>Nước tinh khiết (Aqua):</strong> Là dung môi an toàn, giúp hòa tan các thành phần và mang lại cảm giác mát lạnh, sảng khoái khi sử dụng.</li>
+                            <li><strong>Tinh dầu bưởi tự nhiên (Citrus Grandis Peel Oil):</strong> Giàu vitamin C và chất chống oxy hóa, giúp làm sạch da đầu, kích thích mọc tóc và mang lại hương thơm tươi mát.</li>
+                            <li><strong>Chiết xuất lá trầu không:</strong> Có tính kháng khuẩn tự nhiên, giúp ngăn ngừa gàu và viêm da đầu.</li>
+                            <li><strong>Dầu dừa nguyên chất (Cocos Nucifera Oil):</strong> Dưỡng ẩm sâu, làm mềm tóc và bảo vệ tóc khỏi tác hại của môi trường.</li>
+                            <li><strong>Chiết xuất nha đam (Aloe Vera Extract):</strong> Làm dịu da đầu, giảm ngứa và kích ứng.</li>
+                            <li><strong>Vitamin E (Tocopherol):</strong> Chống oxy hóa, bảo vệ tóc khỏi tác hại của tia UV và môi trường.</li>
+                            <li><strong>Panthenol (Vitamin B5):</strong> Giúp tóc mềm mượt, dễ chải và tăng độ bóng.</li>
+                            <li><strong>Glycerin:</strong> Giữ ẩm cho tóc và da đầu, ngăn ngừa khô xơ.</li>
+                            <li><strong>Nước tinh khiết (Aqua):</strong> Là dung môi an toàn, giúp hòa tan các thành phần.</li>
                         </ul>
                         
                         <div class="ingredient-note">
-                            <p><strong>Lưu ý:</strong> Sản phẩm đã được kiểm nghiệm da liễu, không chứa paraben, sulfate, cồn hay các hóa chất độc hại khác, phù hợp với mọi loại da.</p>
+                            <h4>Thông tin bổ sung:</h4>
+                            <ul>
+                                <li>Không chứa Parabens, Sulfates, Silicones</li>
+                                <li>Không test trên động vật</li>
+                                <li>Phù hợp cho mọi loại tóc</li>
+                                <li>An toàn cho da nhạy cảm</li>
+                                <li>Đã được kiểm nghiệm da liễu</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -174,32 +191,39 @@
                         <h3>Hướng dẫn sử dụng chi tiết để đạt hiệu quả tốt nhất:</h3>
                         
                         <div class="usage-step">
-                            <h4>Bước 1: Làm sạch da</h4>
-                            <p>Luôn bắt đầu với một làn da sạch. Sử dụng sữa rửa mặt dịu nhẹ phù hợp với loại da của bạn để loại bỏ bụi bẩn và dầu thừa. Dùng khăn mềm thấm khô da nhẹ nhàng.</p>
+                            <h4>Bước 1: Làm sạch tóc</h4>
+                            <p>Gội sạch tóc với dầu gội thông thường để loại bỏ bụi bẩn và dầu thừa. Dùng khăn mềm thấm khô tóc nhẹ nhàng, không chà xát mạnh.</p>
                         </div>
                         
                         <div class="usage-step">
                             <h4>Bước 2: Thoa sản phẩm</h4>
-                            <p>Lấy một lượng sản phẩm vừa đủ, khoảng 2-3 giọt hoặc một lượng bằng hạt đậu, ra lòng bàn tay. Xoa nhẹ hai tay để làm ấm sản phẩm trước khi thoa đều lên mặt và cổ.</p>
+                            <p>Lấy 2-3ml nước dưỡng tóc, thoa đều từ chân tóc đến ngọn tóc. Đặc biệt chú ý đến những vùng tóc khô và hư tổn.</p>
                         </div>
                         
                         <div class="usage-step">
-                            <h4>Bước 3: Massage nhẹ nhàng</h4>
-                            <p>Dùng các đầu ngón tay massage nhẹ nhàng theo chuyển động tròn, từ trong ra ngoài và từ dưới lên trên. Việc này giúp sản phẩm thẩm thấu sâu hơn và kích thích tuần hoàn máu.</p>
+                            <h4>Bước 3: Massage da đầu</h4>
+                            <p>Dùng đầu ngón tay massage da đầu nhẹ nhàng theo chuyển động tròn trong 3-5 phút. Việc này giúp sản phẩm thẩm thấu sâu và kích thích tuần hoàn máu.</p>
                         </div>
                         
                         <div class="usage-step">
-                            <h4>Bước 4: Vỗ nhẹ và để yên</h4>
-                            <p>Sau khi massage, vỗ nhẹ lên da để sản phẩm thẩm thấu hoàn toàn. Chờ khoảng 5-10 phút trước khi tiếp tục các bước chăm sóc da tiếp theo như thoa kem dưỡng ẩm hoặc kem chống nắng.</p>
+                            <h4>Bước 4: Để yên và xả sạch</h4>
+                            <p>Giữ nguyên sản phẩm trong 10-15 phút để các thành phần thẩm thấu hoàn toàn. Sau đó xả lại bằng nước ấm.</p>
                         </div>
                         
                         <div class="usage-tips">
+                            <h4>Tần suất sử dụng:</h4>
+                            <ul>
+                                <li><strong>Sử dụng 2-3 lần/tuần:</strong> Để có kết quả tốt nhất</li>
+                                <li><strong>Có thể sử dụng hàng ngày:</strong> Nếu tóc khô và hư tổn nhiều</li>
+                                <li><strong>Không nên sử dụng quá 4 lần/tuần:</strong> Để tránh tóc bị bết dính</li>
+                            </ul>
+                            
                             <h4>Mẹo sử dụng hiệu quả:</h4>
                             <ul>
-                                <li><strong>Sử dụng đều đặn:</strong> Để có kết quả tốt nhất, hãy sử dụng sản phẩm 2 lần mỗi ngày, vào buổi sáng và buổi tối.</li>
-                                <li><strong>Thứ tự sử dụng:</strong> Áp dụng sản phẩm sau bước toner và trước bước kem dưỡng ẩm.</li>
-                                <li><strong>Bảo quản đúng cách:</strong> Giữ sản phẩm ở nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp để bảo toàn chất lượng.</li>
-                                <li><strong>Kiểm tra phản ứng da:</strong> Nếu bạn có làn da nhạy cảm, hãy thử sản phẩm trên một vùng da nhỏ trước khi sử dụng cho toàn bộ khuôn mặt.</li>
+                                <li><strong>Thời điểm tốt nhất:</strong> Sử dụng sau khi gội đầu, khi tóc còn ẩm</li>
+                                <li><strong>Bảo quản đúng cách:</strong> Giữ sản phẩm ở nơi khô ráo, thoáng mát, tránh ánh nắng trực tiếp</li>
+                                <li><strong>Kiểm tra phản ứng:</strong> Nếu có kích ứng, ngừng sử dụng và tham khảo ý kiến bác sĩ</li>
+                                <li><strong>Tránh dính vào mắt:</strong> Nếu không may dính vào mắt, rửa ngay bằng nước sạch</li>
                             </ul>
                         </div>
                     </div>
@@ -211,69 +235,173 @@
         <div class="customer-reviews-section">
             <div class="reviews-header">
                 <div>
-                    <h2 class="section-title">REVIEW {{ strtoupper($product->name) }}</h2>
-                    <p class="reviews-count">{{ $product->reviews_count }} đánh giá sản phẩm này</p>
+                    <h2 class="section-title">REVIEW NƯỚC DƯỠNG TÓC TINH DẦU BƯỞI 140ML</h2>
+                    <p class="reviews-count">23 đánh giá sản phẩm này</p>
                 </div>
-                <a href="#" class="view-all-reviews">Xem tất cả <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/button_arrow.svg') }}" alt="Arrow"></a>
+                <a href="#" class="view-all-reviews">Xem tất cả <i class="fas fa-chevron-right"></i></a>
             </div>
             <div class="customer-reviews-grid">
-                @if ($product->reviews && $product->reviews->count() > 0)
-                    @foreach ($product->reviews as $review)
                         <div class="review-item">
-                            <div class="review-author">
                                 <div class="review-avatar">
-                                    <img src="{{ $review->user->avatar_url ? RvMedia::getImageUrl($review->user->avatar_url, 'thumb') : Theme::asset()->url('images/default-avatar.jpg') }}" alt="{{ $review->user_name }}">
+                        <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property11.png') }}" alt="Lê Tuấn">
                                 </div>
-                                <div class="author-info">
-                                    <div class="author-name">{{ $review->user_name }}</div>
-                                    <div class="purchase-info">Đã mua 29 sản phẩm</div>
+                    <div class="review-content">
+                        <div class="review-header">
+                            <div class="author-name">Lê Tuấn</div>
+                            <div class="review-date">Đã mua 29 sản phẩm</div>
                                 </div>
+                        <div class="review-comment">
+                            <p>Sản phẩm dùng rất tốt, đúng như kỳ vọng của mình, nhân viên tư vấn bán hàng nhiệt tình, vui vẻ và giao hàng nhanh, sản phẩm chất lượng, đặc biệt khi trao đổi với nhân viên shop, rất nhiệt tình và giải đáp rất kĩ.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-item">
+                    <div class="review-avatar">
+                        <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property12.png') }}" alt="Trang Phạm">
+                    </div>
+                    <div class="review-content">
+                        <div class="review-header">
+                            <div class="author-name">Trang Phạm</div>
+                            <div class="review-date">Đã mua 29 sản phẩm</div>
                             </div>
                             <div class="review-comment">
-                                <p>{{ $review->comment }}</p>
+                            <p>Sản phẩm dùng rất tốt, đúng như kỳ vọng của mình, nhân viên tư vấn bán hàng nhiệt tình, vui vẻ và giao hàng nhanh, sản phẩm chất lượng, đặc biệt khi trao đổi với nhân viên shop, rất nhiệt tình và giải đáp rất kĩ.</p>
                             </div>
                         </div>
-                    @endforeach
-                @endif
+                </div>
+                <div class="review-item">
+                    <div class="review-avatar">
+                        <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property13.png') }}" alt="Đức Nguyễn">
+                    </div>
+                    <div class="review-content">
+                        <div class="review-header">
+                            <div class="author-name">Đức Nguyễn</div>
+                            <div class="review-date">Đã mua 29 sản phẩm</div>
+                        </div>
+                        <div class="review-comment">
+                            <p>Sản phẩm dùng rất tốt, đúng như kỳ vọng của mình, nhân viên tư vấn bán hàng nhiệt tình, vui vẻ và giao hàng nhanh, sản phẩm chất lượng, đặc biệt khi trao đổi với nhân viên shop, rất nhiệt tình và giải đáp rất kĩ.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-item">
+                    <div class="review-avatar">
+                        <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property14.png') }}" alt="An Nguyễn">
+                    </div>
+                    <div class="review-content">
+                        <div class="review-header">
+                            <div class="author-name">An Nguyễn</div>
+                            <div class="review-date">Đã mua 29 sản phẩm</div>
+                        </div>
+                        <div class="review-comment">
+                            <p>Sản phẩm dùng rất tốt, đúng như kỳ vọng của mình, nhân viên tư vấn bán hàng nhiệt tình, vui vẻ và giao hàng nhanh, sản phẩm chất lượng, đặc biệt khi trao đổi với nhân viên shop, rất nhiệt tình và giải đáp rất kĩ.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
         <!-- Related Products Section -->
         <div class="related-products-section">
+            <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Sản phẩm liên quan</h2>
-                <a href="#" class="view-all-link">Xem tất cả <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/button_arrow.svg') }}" alt="Arrow"></a>
+                    <div class="title-wrapper">
+                        <h2>SẢN PHẨM LIÊN QUAN</h2>
+                    </div>
+                    <div class="subtitle-wrapper">
+                        <a href="#" class="view-all">Xem tất cả sản phẩm <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/button_arrow.svg') }}" alt="arrow"></a>
+                    </div>
             </div>
             
-            <div class="related-products-grid">
-                @php
-                    $relatedProducts = get_related_products($product->id, 4);
-                    if (count($relatedProducts) == 0) {
-                        $relatedProducts = get_latest_products(4, [
-                            'author',
-                            'categories',
-                            'slugable',
-                        ]);
-                    }
-                @endphp
-                @foreach ($relatedProducts as $relatedProduct)
-                    <div class="product-card">
-                        <a href="{{ $relatedProduct->url }}">
-                            <img src="{{ RvMedia::getImageUrl($relatedProduct->image, 'medium', false, RvMedia::getDefaultImage()) }}" alt="{{ $relatedProduct->name }}" class="product-card-image">
-                        </a>
-                        <div class="product-card-info">
-                            <h4 class="product-card-name"><a href="{{ $relatedProduct->url }}">{{ $relatedProduct->name }}</a></h4>
-                            <div class="product-card-price">{{ number_format($relatedProduct->price, 0, ',', '.') }} ₫</div>
-                            <div class="product-card-rating">
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                                <span class="star">★</span>
+                <div class="product-grid">
+                    <div class="product-item">
+                        <div class="product-image">
+                            <a href="#">
+                                <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property11.png') }}" alt="Nước dưỡng tóc tinh dầu bưởi 140ml">
+                            </a>
+                            </div>
+                        <div class="product-info">
+                            <div class="product-text">
+                                <h3><a href="#">Nước dưỡng tóc tinh dầu bưởi 140ml</a></h3>
+                                <p class="product-brand">GIẢM GÃY RỤNG VÀ LÀM MỀM TÓC</p>
+                                <div class="price-wrapper">
+                                    <span class="price">179.660₫</span>
+                        </div>
+                    </div>
+                            <div class="add-to-cart">
+                                <button type="button" class="btn-add-to-cart-featured" title="Thêm vào giỏ hàng">
+                                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_cart.svg') }}" alt="Add to cart">
+                                </button>
                             </div>
                         </div>
                     </div>
-                @endforeach
+                    
+                    <div class="product-item">
+                        <div class="product-image">
+                            <a href="#">
+                                <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property12.png') }}" alt="Dầu gội Vân Hương Mộc Hương">
+                            </a>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-text">
+                                <h3><a href="#">Dầu gội Vân Hương Mộc Hương</a></h3>
+                                <p class="product-brand">PHỤC HỒI TÓC - GIẢM GÃY RỤNG</p>
+                                <div class="price-wrapper">
+                                    <span class="price">226.706₫</span>
+                                </div>
+                            </div>
+                            <div class="add-to-cart">
+                                <button type="button" class="btn-add-to-cart-featured" title="Thêm vào giỏ hàng">
+                                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_cart.svg') }}" alt="Add to cart">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-item">
+                        <div class="product-image">
+                            <a href="#">
+                                <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property13.png') }}" alt="Nước dưỡng tóc tinh dầu bưởi 140ml">
+                            </a>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-text">
+                                <h3><a href="#">Nước dưỡng tóc tinh dầu bưởi 140ml</a></h3>
+                                <p class="product-brand">GIẢM GÃY RỤNG VÀ LÀM MỀM TÓC</p>
+                                <div class="price-wrapper">
+                                    <span class="price">279.660₫</span>
+                                </div>
+                            </div>
+                            <div class="add-to-cart">
+                                <button type="button" class="btn-add-to-cart-featured" title="Thêm vào giỏ hàng">
+                                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_cart.svg') }}" alt="Add to cart">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-item">
+                        <div class="product-image">
+                            <a href="#">
+                                <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property14.png') }}" alt="Nước dưỡng tóc tinh dầu bưởi 140ml">
+                            </a>
+                            <div class="sale-badge">10% OFF</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-text">
+                                <h3><a href="#">Nước dưỡng tóc tinh dầu bưởi 140ml</a></h3>
+                                <p class="product-brand">GIẢM GÃY RỤNG VÀ LÀM MỀM TÓC</p>
+                                <div class="price-wrapper">
+                                    <span class="price">279.660₫</span>
+                                </div>
+                            </div>
+                            <div class="add-to-cart">
+                                <button type="button" class="btn-add-to-cart-featured" title="Thêm vào giỏ hàng">
+                                    <img src="{{ asset('themes/van-moc/images/VMM_ICON/VMM_ICON/icon_cart.svg') }}" alt="Add to cart">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -694,15 +822,27 @@
     color: #333;
     transition: all 0.3s ease;
     text-align: center;
+    position: relative;
+}
+
+.tab-btn:hover {
+    background: #e8e8e8;
+    transform: translateY(-1px);
 }
 
 .tab-btn.active {
     background: #28a745;
     color: white;
+    font-weight: 600;
+    border-bottom: 3px solid #218838;
 }
 
 .tab-pane {
     display: none;
+}
+
+.tab-pane.active {
+    display: block;
 }
 
 .product-full-description,
@@ -715,10 +855,10 @@
 .product-full-description h3,
 .product-ingredients h3,
 .product-usage h3 {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .product-full-description h4,
@@ -734,12 +874,14 @@
 .product-ingredients ul,
 .product-usage ul {
     padding-left: 20px;
+    margin-bottom: 20px;
 }
 
 .product-full-description li,
 .product-ingredients li,
 .product-usage li {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    line-height: 1.5;
 }
 
 .usage-step {
@@ -788,15 +930,17 @@
 }
 
 .section-title {
-    font-size: 22px; /* Adjusted font size */
-    font-weight: 600;
+    font-size: 24px;
+    font-weight: 700;
     margin: 0;
     color: #333;
+    text-transform: uppercase;
 }
 
 .reviews-count {
     color: #6c757d;
     margin-top: 5px;
+    font-size: 14px;
 }
 
 .view-all-reviews {
@@ -805,10 +949,17 @@
     font-weight: 500;
     display: flex;
     align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    transition: color 0.3s ease;
 }
 
-.view-all-reviews img {
-    margin-left: 8px;
+.view-all-reviews:hover {
+    color: #28a745;
+}
+
+.view-all-reviews i {
+    font-size: 12px;
 }
 
 .review-item {
@@ -817,146 +968,308 @@
     border-radius: 12px;
     padding: 25px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    min-width: 280px;
+    flex-shrink: 0;
+    text-align: center;
 }
 
-.review-author {
-    display: flex;
-    align-items: center;
+.review-avatar {
     margin-bottom: 15px;
 }
 
 .review-avatar img {
-    width: 50px; /* Adjusted size */
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    margin-right: 15px;
+    object-fit: cover;
 }
 
 .author-name {
-    font-weight: 600;
+    font-weight: 700;
     font-size: 16px;
+    margin-bottom: 5px;
+    color: #333;
 }
 
 .purchase-info {
     font-size: 14px;
     color: #6c757d;
+    margin-bottom: 15px;
 }
 
 .review-comment {
     color: #555;
-    line-height: 1.7;
+    line-height: 1.6;
     font-size: 14px;
+    text-align: left;
+}
+
+.customer-reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.review-item {
+    background: #FFFFFF;
+    border: 1px solid #EAEAEA;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.review-avatar {
+    flex-shrink: 0;
+}
+
+.review-avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f0f0f0;
+}
+
+.review-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.review-header {
+    margin-bottom: 8px;
+}
+
+.author-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 2px;
+}
+
+.review-date {
+    font-size: 11px;
+    color: #6c757d;
+}
+
+.review-comment {
+    color: #555;
+    line-height: 1.4;
+    font-size: 12px;
+    text-align: justify;
 }
 
 /* Related Products Section */
 .related-products-section {
     margin-top: 60px;
-    background-color: #FFFFFF; /* Ensure white background */
-    padding: 40px 0; /* Add padding for consistency */
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
-    padding-left: calc(50vw - 50%);
-    padding-right: calc(50vw - 50%);
+    background-color: #F9F9F9;
+    padding: 60px 0;
 }
 
-.section-header {
+.related-products-section .section-header {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     margin-bottom: 30px;
+    text-align: center;
 }
 
-.section-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: #333;
+.related-products-section .title-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.related-products-section .section-header h2 {
+    font-family: 'Prata', serif;
+    font-size: 28px;
+    text-align: center;
+    position: relative;
     margin: 0;
+    padding-bottom: 10px;
+    color: #244317;
 }
 
-.view-all-link {
-    color: #28a745;
-    text-decoration: none;
-    font-weight: 500;
+.related-products-section .section-header h2:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background-color: #4A7D4A;
+}
+
+.related-products-section .subtitle-wrapper {
+    margin-top: 5px;
+}
+
+.related-products-section .view-all {
     display: flex;
     align-items: center;
     gap: 5px;
+    font-weight: 500;
     font-size: 14px;
+    color: #666;
 }
 
-.view-all-link img {
+.related-products-section .view-all img {
     width: 16px;
     height: 16px;
 }
 
-.related-products-grid {
+.related-products-section .product-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
+    gap: 20px;
+    margin: 0 auto;
 }
 
-.product-card {
-    background: white;
-    border: 1px solid #eee;
-    border-radius: 12px;
+.related-products-section .product-item {
+    background-color: #FFFFFF;
+    border: 1px solid #EAEAEA;
+    border-radius: 5px;
     overflow: hidden;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    border-color: #28a745;
-}
-
-.product-card .product-image {
-    aspect-ratio: 1;
-    overflow: hidden;
-    background: #f8f9fa;
-}
-
-.product-card .product-image img {
-    width: 100%;
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
     height: 100%;
-    object-fit: cover;
+}
+
+.related-products-section .product-item:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.related-products-section .product-image {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0 10px;
+    background-color: #FFFFFF;
+}
+
+.related-products-section .product-image img {
+    object-fit: contain;
+    display: block;
     transition: transform 0.3s ease;
 }
 
-.product-card:hover .product-image img {
+.related-products-section .product-image a:hover img {
     transform: scale(1.05);
 }
 
-.product-card .product-info {
-    padding: 20px;
-}
-
-.product-card .product-name {
-    font-size: 16px;
+.related-products-section .sale-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #E57373;
+    color: white;
+    padding: 3px 8px;
+    font-size: 11px;
     font-weight: 600;
-    color: #333;
-    margin: 0 0 10px 0;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    border-radius: 3px;
 }
 
-.product-card .product-price {
-    font-size: 18px;
-    font-weight: 700;
-    color: #28a745;
-    margin-bottom: 8px;
+.related-products-section .product-info {
+    padding: 12px;
+    position: relative;
+    text-align: left;
+    flex-grow: 1;
+    background-color: #f9f9f9;
+    min-height: 100px;
 }
 
-.product-card .product-rating {
+.related-products-section .product-text {
     display: flex;
-    gap: 2px;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 0;
+    margin-bottom: 10px;
 }
 
-.product-card .product-rating .star {
-    color: #ffc107;
+.related-products-section .product-item h3 {
     font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.related-products-section .product-item h3 a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.related-products-section .product-item h3 a:hover {
+    color: #28a745;
+}
+
+.related-products-section .product-brand {
+    font-size: 10px;
+    color: #777;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.related-products-section .price-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.related-products-section .product-item .price {
+    font-size: 15px;
+    font-weight: 600;
+    color: #4A7D4A;
+}
+
+.related-products-section .add-to-cart {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+}
+
+.related-products-section .add-to-cart .btn-add-to-cart-featured {
+    background-color: #e8f5e9;
+    border-radius: 5px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.related-products-section .add-to-cart .btn-add-to-cart-featured img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Responsive for related products */
+@media (max-width: 1200px) {
+    .related-products-section .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .related-products-section .product-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Feedback Section */
@@ -1096,6 +1409,20 @@
         gap: 15px;
         text-align: center;
     }
+    
+    .customer-reviews-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .review-item {
+        padding: 15px;
+    }
+    
+    .review-avatar img {
+        width: 40px;
+        height: 40px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1112,7 +1439,8 @@
     }
     
     .related-products-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
     }
     
     .thumbnail-images {
@@ -1126,6 +1454,37 @@
     
     .review-form {
         padding: 20px;
+    }
+    
+    .customer-reviews-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .reviews-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .section-title {
+        font-size: 20px;
+    }
+    
+    .related-products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .product-card .product-action {
+        width: 28px;
+        height: 28px;
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    .product-card .product-action i {
+        font-size: 12px;
     }
 }
 
@@ -1247,24 +1606,7 @@ function changeQuantity(delta) {
     }
 }
 
-// Tab functionality
-function showTab(tabName) {
-    // Hide all tab panes
-    document.querySelectorAll('.tab-pane').forEach(pane => {
-        pane.classList.remove('active');
-    });
-    
-    // Remove active class from all buttons
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    
-    // Show selected tab pane
-    document.getElementById(tabName).classList.add('active');
-    
-    // Add active class to clicked button
-    event.target.classList.add('active');
-}
+// Tab functionality - Removed old showTab function to prevent conflicts
 
 // Add to cart functionality with animation
 function addToCart() {
@@ -1509,7 +1851,14 @@ function showNotification(message, type = 'success') {
     }, 2000);
 }
 
-// Initialize page
+
+
+// Initialize page - Prevent multiple executions
+if (window.productPageInitialized) {
+    return;
+}
+window.productPageInitialized = true;
+
 document.addEventListener('DOMContentLoaded', function() {
     // Set first thumbnail as active
     const firstThumbnail = document.querySelector('.thumbnail-item');
@@ -1519,5 +1868,46 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize cart counter
     updateCartCounter();
+    
+    // Add to cart functionality for related products
+    document.querySelectorAll('.related-products-section .btn-add-to-cart-featured').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const productItem = this.closest('.product-item');
+            const productName = productItem.querySelector('h3 a').textContent;
+            
+            showNotification(`Đã thêm "${productName}" vào giỏ hàng!`, 'success');
+        });
+    });
+    
+    // Initialize tab functionality
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+    
+    console.log('Found tab buttons:', tabButtons.length);
+    console.log('Found tab panes:', tabPanes.length);
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetTab = this.getAttribute('data-tab');
+            console.log('Clicked tab:', targetTab);
+            
+            // Remove active class from all buttons and panes
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            
+            // Add active class to clicked button and corresponding pane
+            this.classList.add('active');
+            const targetPane = document.getElementById(targetTab);
+            if (targetPane) {
+                targetPane.classList.add('active');
+                console.log('Activated tab pane:', targetTab);
+            } else {
+                console.error('Tab pane not found:', targetTab);
+            }
+        });
+    });
 });
 </script> 

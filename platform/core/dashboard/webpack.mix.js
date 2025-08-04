@@ -9,4 +9,4 @@ const dist = 'public/vendor/core/core/' + directory;
 mix.js(source + '/resources/assets/js/dashboard.js', dist + '/js').vue({ version: 2 });
 
 
-    .copy(dist + '/js/dashboard.js', source + '/public/js');
+mix.copy(dist + '/js/dashboard.js', source + '/public/js');
