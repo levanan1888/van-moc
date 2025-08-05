@@ -192,7 +192,7 @@ function saveToCart(cartItem) {
 
 function updateCartCounter() {
     const cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalItems = cart.length; // Đếm số loại sản phẩm khác nhau, không phải tổng quantity
     
     // Update cart counter if exists
     let cartCounter = document.querySelector('.cart-counter');

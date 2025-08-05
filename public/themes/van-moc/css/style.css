@@ -341,7 +341,7 @@ header nav ul .sub-menu .sub-menu {
     font-size: 18px;
 }
 
-.cart-count {
+.cart-counter {
     position: absolute;
     top: -5px;
     right: -5px;
@@ -354,6 +354,7 @@ header nav ul .sub-menu .sub-menu {
     min-width: 16px;
     text-align: center;
     line-height: 1;
+    z-index: 10;
 }
 
 

@@ -441,7 +441,7 @@
         } else {
             emptyCartContainer.style.display = 'none';
             cartItemsContainer.style.display = 'block';
-            cartSubtitle.textContent = `Có ${cart.length} sản phẩm trong giỏ hàng`;
+            cartSubtitle.textContent = `Có ${cart.length} loại sản phẩm trong giỏ hàng`;
 
             cart.forEach(item => {
                 const itemElement = document.createElement('div');

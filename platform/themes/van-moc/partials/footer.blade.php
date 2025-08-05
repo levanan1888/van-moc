@@ -102,6 +102,21 @@
                 }
             });
         }
+        
+        // Update cart counter on page load
+        function updateCartCounter() {
+            const cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
+            const totalItems = cart.length; // Đếm số loại sản phẩm khác nhau
+            
+            const cartCounter = document.querySelector('.cart-counter');
+            if (cartCounter) {
+                cartCounter.textContent = totalItems;
+                cartCounter.style.display = totalItems > 0 ? 'inline' : 'none';
+            }
+        }
+        
+        // Update cart counter when page loads
+        updateCartCounter();
     });
     </script>
     </body>

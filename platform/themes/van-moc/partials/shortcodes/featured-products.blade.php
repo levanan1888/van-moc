@@ -14,80 +14,7 @@
         $products = get_featured_products($limit);
     } else {
         // Fallback data nếu không có plugin ecommerce
-        $products = collect([
-            (object)[
-                'name' => 'Nước dưỡng tóc tinh dầu bưởi 140ml',
-                'description' => 'GIẢM GÃY RỤNG VÀ LÀM MỀM TÓC',
-                'price' => '179.660₫',
-                'original_price' => null,
-                'image' => null,
-                'url' => '#',
-                'sale_percentage' => null
-            ],
-            (object)[
-                'name' => 'Nước dưỡng tóc tinh dầu bưởi 140ml',
-                'description' => 'GIẢM GÃY RỤNG VÀ LÀM MỀM TÓC',
-                'price' => '279.660₫',
-                'original_price' => null,
-                'image' => null,
-                'url' => '#',
-                'sale_percentage' => null
-            ],
-            (object)[
-                'name' => 'Nước dưỡng tóc tinh dầu bưởi 140ml',
-                'description' => 'GIẢM GÃY RỤNG VÀ LÀM MỀM TÓC',
-                'price' => '279.660₫',
-                'original_price' => null,
-                'image' => null,
-                'url' => '#',
-                'sale_percentage' => null
-            ],
-            (object)[
-                'name' => 'Nước dưỡng tóc tinh dầu bưởi 140ml',
-                'description' => 'GIẢM GÃY RỤNG VÀ LÀM MỀM TÓC',
-                'price' => '279.660₫',
-                'original_price' => null,
-                'image' => null,
-                'url' => '#',
-                'sale_percentage' => '10% OFF'
-            ],
-            (object)[
-                'name' => 'Dầu gội kích thích mọc tóc thảo dược',
-                'description' => 'GIẢM GÃY RỤNG - KÍCH THÍCH MỌ...',
-                'price' => '162.000₫',
-                'original_price' => '279.660₫',
-                'image' => null,
-                'url' => '#',
-                'sale_percentage' => 'Giảm 40%'
-            ],
-            (object)[
-                'name' => 'Sữa hạt cao cấp Forganic',
-                'description' => 'DA DƯỠNG CHẤT - TĂNG ĐỀ KHÁNG',
-                'price' => '683.000₫',
-                'original_price' => null,
-                'image' => null,
-                'url' => '#',
-                'sale_percentage' => null
-            ],
-            (object)[
-                'name' => 'Tắm & gội trẻ em Mộc Hương tinh dầu',
-                'description' => 'AN TOÀN CHO BÉ - DỊU NHẸ',
-                'price' => '162.000₫',
-                'original_price' => '279.660₫',
-                'image' => null,
-                'url' => '#',
-                'sale_percentage' => 'Giảm 40%'
-            ],
-            (object)[
-                'name' => 'Sữa tắm tinh dầu thảo dược Mộc Hương',
-                'description' => 'THƯ GIÃN - LÀM SẠCH DA',
-                'price' => '284.000₫',
-                'original_price' => null,
-                'image' => null,
-                'url' => '#',
-                'sale_percentage' => null
-            ]
-        ]);
+        $products = collect([]);
     }
 @endphp
 
@@ -115,11 +42,7 @@
                     >
                         <div class="product-image">
                             <a href="{{ $product->url }}">
-                                @if ($product->image)
                                 <img src="{{ RvMedia::getImageUrl($product->image, 'medium', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}">
-                            @else
-                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property11.png') }}" alt="{{ $product->name }}">
-                            @endif
                             </a>
                             @if (isset($product->sale_percentage) && $product->sale_percentage)
                                 <div class="sale-badge">{{ $product->sale_percentage }}</div>
@@ -454,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Cart Counter Update --- //
     function updateCartCounter() {
         const cart = JSON.parse(localStorage.getItem('vanmoc_cart') || '[]');
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const totalItems = cart.length; // Đếm số loại sản phẩm khác nhau, không phải tổng quantity
         
         // Update cart counter if exists
         let cartCounter = document.querySelector('.cart-counter');

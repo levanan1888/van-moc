@@ -45,7 +45,7 @@
             </a>
             <a href="{{ route('public.cart') }}" class="cart-icon" title="Giỏ hàng">
                 <i class="fa fa-shopping-bag"></i>
-                <span class="cart-count">0</span>
+                <span class="cart-counter">0</span>
             </a>
         </div>
     </div>
