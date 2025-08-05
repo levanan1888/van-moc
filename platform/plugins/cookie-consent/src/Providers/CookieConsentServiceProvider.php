@@ -56,7 +56,8 @@ class CookieConsentServiceProvider extends ServiceProvider
                     );
             }
 
-            add_filter(THEME_FRONT_FOOTER, [$this, 'registerCookieConsent'], 1346);
+            // Disable cookie consent completely
+            // add_filter(THEME_FRONT_FOOTER, [$this, 'registerCookieConsent'], 1346);
         }
 
         theme_option()
@@ -212,6 +213,8 @@ class CookieConsentServiceProvider extends ServiceProvider
      */
     public function registerCookieConsent($html): string
     {
-        return $html . view('plugins/cookie-consent::index')->render();
+        // Disable cookie consent completely
+        return $html;
+        // return $html . view('plugins/cookie-consent::index')->render();
     }
 }
