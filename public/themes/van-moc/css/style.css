@@ -222,14 +222,15 @@ header nav ul .sub-menu .sub-menu {
         width: 100%;
         background: #FFFFFF;
         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        border-radius: 5px;
+        border-radius: 8px;
         margin-top: 10px;
+        overflow: hidden;
     }
     
     header nav ul li {
         margin: 0;
         width: 100%;
-        border-bottom: 1px solid #f5f5f5;
+        border-bottom: 1px solid #f0f0f0;
     }
     
     header nav ul li:last-child {
@@ -237,14 +238,36 @@ header nav ul .sub-menu .sub-menu {
     }
     
     header nav ul li a {
-        padding: 15px 20px;
+        padding: 16px 20px;
         width: 100%;
+        display: flex;
         justify-content: space-between;
         align-items: center;
+        color: #333;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        font-weight: 500;
+    }
+    
+    header nav ul li a:hover {
+        background-color: #f8f9fa;
     }
     
     header nav ul li a::after {
         display: none;
+    }
+    
+    /* Toggle icon for submenu */
+    header nav ul li.menu-item-has-children > a::before {
+        content: '▼';
+        font-size: 12px;
+        transition: transform 0.3s ease;
+        margin-left: auto;
+        color: #666;
+    }
+    
+    header nav ul li.menu-item-has-children.active > a::before {
+        transform: rotate(180deg);
     }
     
     header nav ul .sub-menu {
@@ -253,27 +276,65 @@ header nav ul .sub-menu .sub-menu {
         visibility: visible;
         transform: none;
         box-shadow: none;
-        background: #f8f8f8;
-        margin-left: 20px;
+        background: #f8f9fa;
+        margin-left: 0;
         border-radius: 0;
         padding: 0;
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.3s ease;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+        width: 100%;
     }
     
     header nav ul .sub-menu .sub-menu {
-        margin-left: 20px;
+        margin-left: 0;
         transform: none;
+        background: #e9ecef;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, padding 0.3s ease;
     }
     
     header nav ul li.menu-item-has-children.active .sub-menu {
-        max-height: 500px;
+        max-height: 200px;
+        padding: 10px 0;
+    }
+    
+    header nav ul .sub-menu li.menu-item-has-children.active .sub-menu {
+        max-height: 200px;
+        padding: 5px 0;
+    }
+    
+    header nav ul .sub-menu li {
+        border-bottom: none;
+        margin: 0;
     }
     
     header nav ul .sub-menu li a {
-        padding: 10px 20px;
-        border-bottom: 1px solid #e5e5e5;
+        padding: 12px 30px;
+        border-bottom: none;
+        justify-content: flex-start;
+        font-size: 14px;
+        color: #666;
+    }
+    
+    header nav ul .sub-menu li a::before {
+        display: none;
+    }
+    
+    header nav ul .sub-menu li a:hover {
+        background-color: #e9ecef;
+        color: #333;
+    }
+    
+    header nav ul .sub-menu .sub-menu li a {
+        padding: 10px 40px;
+        font-size: 13px;
+        background: #e9ecef;
+    }
+    
+    header nav ul .sub-menu .sub-menu li a:hover {
+        background-color: #dee2e6;
     }
     
     header nav ul .sub-menu li:last-child a {
@@ -1303,6 +1364,18 @@ header nav ul .sub-menu .sub-menu {
     height: 24px;
 }
 
+.social-icons svg {
+    width: 24px;
+    height: 24px;
+    color: #28a745;
+    transition: all 0.3s ease;
+}
+
+.social-icons svg:hover {
+    color: #218838;
+    transform: scale(1.1);
+}
+
 
 .signup-form {
     flex: 0.5;
@@ -1511,12 +1584,25 @@ footer .container {
         max-width: 100%; 
     }
     .banner-container { min-height: 500px; }
-    .banner-grid { flex-direction: column; }
-    .banner-item { height: 250px; }
+    .banner-grid { 
+        flex-direction: column; 
+        position: relative;
+    }
+    .banner-item { 
+        height: 250px; 
+        order: 2;
+    }
+    .hero-overlay {
+        order: 1;
+        position: relative;
+        z-index: 2;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 40px 20px;
+    }
     .van-moc-mall .container, .agent-signup .container { flex-direction: column; gap: 40px; }
     .van-moc-mall .container { height: auto; }
-    .van-moc-mall .text-side { order: 2; padding: 40px; }
-    .van-moc-mall .image-side { order: 1; }
+    .van-moc-mall .text-side { order: 1; padding: 40px; }
+    .van-moc-mall .image-side { order: 2; }
     .van-moc-mall h2 { font-size: 26px; }
     .van-moc-mall p { font-size: 14px; }
     .van-moc-mall .btn { width: auto; align-self: flex-start; }
@@ -1600,7 +1686,74 @@ footer .container {
         padding: 20px; 
     }
     .banner-container { min-height: 400px; }
-    .banner-item { height: 200px; }
+    .banner-item { 
+        height: 200px; 
+        order: 2;
+    }
+    .hero-overlay {
+        order: 1;
+        position: relative;
+        z-index: 2;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px 15px;
+        margin-bottom: 20px;
+    }
+    
+    .banner-item {
+        order: 2;
+        margin-bottom: 30px;
+    }
+    
+    /* Philosophy Vision Mission Mobile Responsive */
+    .philosophy-vision-mission {
+        padding: 40px 0;
+    }
+    
+    .philosophy-vision-mission .container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        grid-template-areas:
+            "philosophy"
+            "vision"
+            "mission";
+        gap: 12px;
+        height: auto;
+    }
+    
+    .philosophy-box,
+    .vision-content,
+    .mission-content {
+        height: 180px;
+        padding: 15px;
+    }
+    
+    .philosophy-content h3 {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+    
+    .philosophy-content p {
+        font-size: 12px;
+        margin-bottom: 12px;
+        line-height: 1.5;
+    }
+    
+    .vision-content h4,
+    .mission-content h4 {
+        font-size: 16px;
+        margin-bottom: 6px;
+    }
+    
+    .vision-content p,
+    .mission-content p {
+        font-size: 11px;
+        line-height: 1.4;
+    }
+    
+    .philosophy-content .btn {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
 }
 
 /* Social Icons Sticky */

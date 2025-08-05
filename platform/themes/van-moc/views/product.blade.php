@@ -298,26 +298,42 @@ function showNotification(message, type = 'success') {
                     @if ($product->image)
                         <img src="{{ RvMedia::getImageUrl($product->image, 'large', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}" id="mainProductImage">
                     @else
-                        <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property11.png') }}" alt="{{ $product->name }}" id="mainProductImage">
+                        <img src="{{ RvMedia::getDefaultImage() }}" alt="{{ $product->name }}" id="mainProductImage">
                     @endif
                 </div>
                 
                 <div class="thumbnail-images">
-                    @if (isset($product->images) && is_object($product->images) && method_exists($product->images, 'count') && $product->images->count() > 0)
-                        @foreach ($product->images->take(3) as $image)
+                    @php
+                        $productImages = collect();
+                        
+                        // Thêm ảnh chính nếu có
+                        if ($product->image) {
+                            $productImages->push((object)['image' => $product->image]);
+                        }
+                        
+                        // Thêm ảnh phụ nếu có
+                        if (isset($product->images) && is_object($product->images) && method_exists($product->images, 'count') && $product->images->count() > 0) {
+                            foreach ($product->images as $image) {
+                                if (!$productImages->contains('image', $image->image)) {
+                                    $productImages->push($image);
+                                }
+                            }
+                        }
+                        
+                        // Giới hạn tối đa 4 ảnh (1 ảnh chính + 3 ảnh phụ)
+                        $productImages = $productImages->take(4);
+                    @endphp
+                    
+                    @if ($productImages->count() > 0)
+                        @foreach ($productImages as $image)
                             <div class="thumbnail-item">
                                 <img src="{{ RvMedia::getImageUrl($image->image, 'thumb', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}" onclick="changeMainImage(this.src)">
                             </div>
                         @endforeach
                     @else
+                        {{-- Chỉ hiển thị 1 ảnh default khi không có ảnh nào --}}
                         <div class="thumbnail-item">
-                            <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property11.png') }}" alt="{{ $product->name }}" onclick="changeMainImage(this.src)">
-                        </div>
-                        <div class="thumbnail-item">
-                            <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property12.png') }}" alt="{{ $product->name }}" onclick="changeMainImage(this.src)">
-                        </div>
-                        <div class="thumbnail-item">
-                            <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property13.png') }}" alt="{{ $product->name }}" onclick="changeMainImage(this.src)">
+                            <img src="{{ RvMedia::getDefaultImage() }}" alt="{{ $product->name }}" onclick="changeMainImage(this.src)">
                         </div>
                     @endif
                 </div>
@@ -531,7 +547,7 @@ function showNotification(message, type = 'success') {
             <div class="customer-reviews-grid">
                         <div class="review-item">
                                 <div class="review-avatar">
-                        <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property11.png') }}" alt="Lê Tuấn">
+                        <img src="{{ RvMedia::getDefaultImage() }}" alt="Lê Tuấn">
                                 </div>
                     <div class="review-content">
                         <div class="review-header">
@@ -545,7 +561,7 @@ function showNotification(message, type = 'success') {
                 </div>
                 <div class="review-item">
                     <div class="review-avatar">
-                        <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property12.png') }}" alt="Trang Phạm">
+                        <img src="{{ RvMedia::getDefaultImage() }}" alt="Trang Phạm">
                     </div>
                     <div class="review-content">
                         <div class="review-header">
@@ -559,7 +575,7 @@ function showNotification(message, type = 'success') {
                 </div>
                 <div class="review-item">
                     <div class="review-avatar">
-                        <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property13.png') }}" alt="Đức Nguyễn">
+                        <img src="{{ RvMedia::getDefaultImage() }}" alt="Đức Nguyễn">
                     </div>
                     <div class="review-content">
                         <div class="review-header">
@@ -573,7 +589,7 @@ function showNotification(message, type = 'success') {
                 </div>
                 <div class="review-item">
                     <div class="review-avatar">
-                        <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property14.png') }}" alt="An Nguyễn">
+                        <img src="{{ RvMedia::getDefaultImage() }}" alt="An Nguyễn">
                     </div>
                     <div class="review-content">
                         <div class="review-header">
@@ -604,7 +620,7 @@ function showNotification(message, type = 'success') {
                     <div class="product-item">
                         <div class="product-image">
                             <a href="#">
-                                <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property11.png') }}" alt="Nước dưỡng tóc tinh dầu bưởi 140ml">
+                                <img src="{{ RvMedia::getDefaultImage() }}" alt="Nước dưỡng tóc tinh dầu bưởi 140ml">
                             </a>
                             </div>
                         <div class="product-info">
@@ -626,7 +642,7 @@ function showNotification(message, type = 'success') {
                     <div class="product-item">
                         <div class="product-image">
                             <a href="#">
-                                <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property12.png') }}" alt="Dầu gội Vân Hương Mộc Hương">
+                                <img src="{{ RvMedia::getDefaultImage() }}" alt="Dầu gội Vân Hương Mộc Hương">
                             </a>
                         </div>
                         <div class="product-info">
@@ -648,7 +664,7 @@ function showNotification(message, type = 'success') {
                     <div class="product-item">
                         <div class="product-image">
                             <a href="#">
-                                <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property13.png') }}" alt="Nước dưỡng tóc tinh dầu bưởi 140ml">
+                                <img src="{{ RvMedia::getDefaultImage() }}" alt="Nước dưỡng tóc tinh dầu bưởi 140ml">
                             </a>
                         </div>
                         <div class="product-info">
@@ -670,7 +686,7 @@ function showNotification(message, type = 'success') {
                     <div class="product-item">
                         <div class="product-image">
                             <a href="#">
-                                <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/hinh product/property14.png') }}" alt="Nước dưỡng tóc tinh dầu bưởi 140ml">
+                                <img src="{{ RvMedia::getDefaultImage() }}" alt="Nước dưỡng tóc tinh dầu bưởi 140ml">
                             </a>
                             <div class="sale-badge">10% OFF</div>
                         </div>
@@ -781,6 +797,8 @@ function showNotification(message, type = 'success') {
 .thumbnail-images {
     display: flex;
     gap: 15px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 .thumbnail-item {
@@ -791,6 +809,7 @@ function showNotification(message, type = 'success') {
     overflow: hidden;
     cursor: pointer;
     transition: border-color 0.3s ease;
+    flex-shrink: 0;
 }
 
 .thumbnail-item:hover,
@@ -802,6 +821,19 @@ function showNotification(message, type = 'success') {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* Responsive cho thumbnail */
+@media (max-width: 768px) {
+    .thumbnail-images {
+        gap: 10px;
+        justify-content: center;
+    }
+    
+    .thumbnail-item {
+        width: 60px;
+        height: 60px;
+    }
 }
 
 /* 📋 3. Thông tin sản phẩm */
@@ -1905,6 +1937,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const firstThumbnail = document.querySelector('.thumbnail-item');
     if (firstThumbnail) {
         firstThumbnail.classList.add('active');
+    }
+    
+    // Update main image to match first thumbnail if exists
+    const firstThumbnailImg = firstThumbnail?.querySelector('img');
+    if (firstThumbnailImg && firstThumbnailImg.src !== document.getElementById('mainProductImage').src) {
+        document.getElementById('mainProductImage').src = firstThumbnailImg.src;
     }
     
     // Initialize cart counter
