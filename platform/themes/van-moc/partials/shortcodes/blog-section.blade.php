@@ -73,15 +73,15 @@
                                 <img src="{{ RvMedia::getImageUrl($post->image, 'medium', false, RvMedia::getDefaultImage()) }}" alt="{{ $post->name }}">
                             @else
                                 @if ($loop->index == 0)
-                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/Hinh_blog/background1.png') }}" alt="{{ $post->name }}">
+                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/Hinh_blog_blog/background1.png') }}" alt="{{ $post->name }}">
                                 @elseif ($loop->index == 1)
                                     <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/frame604.png') }}" alt="{{ $post->name }}">
                                 @elseif ($loop->index == 2)
-                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/Hinh_blog/background4.png') }}" alt="{{ $post->name }}">
+                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/Hinh_blog_blog/background4.png') }}" alt="{{ $post->name }}">
                                 @elseif ($loop->index == 3)
-                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/Hinh_blog/background5.png') }}" alt="{{ $post->name }}">
+                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/Hinh_blog_blog/background5.png') }}" alt="{{ $post->name }}">
                                 @else
-                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/Hinh_blog/background6.png') }}" alt="{{ $post->name }}">
+                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/Hinh_blog_blog/background6.png') }}" alt="{{ $post->name }}">
                                 @endif
                             @endif
                         </div>
