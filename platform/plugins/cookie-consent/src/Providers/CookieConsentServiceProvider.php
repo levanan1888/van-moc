@@ -21,8 +21,6 @@ class CookieConsentServiceProvider extends ServiceProvider
             ->loadAndPublishViews()
             ->publishAssets();
 
-        // Comment out cookie consent to disable it completely
-        /*
         if (defined('THEME_FRONT_FOOTER') && theme_option('cookie_consent_enable', 'no') == 'yes') {
             $this->app->resolving(EncryptCookies::class, function (EncryptCookies $encryptCookies) {
                 $encryptCookies->disableFor(config('plugins.cookie-consent.general.cookie_name'));
@@ -36,34 +34,33 @@ class CookieConsentServiceProvider extends ServiceProvider
                 $view->with(compact('alreadyConsentedWithCookies', 'cookieConsentConfig'));
             });
 
-            if (!Cookie::has(config('plugins.cookie-consent.general.cookie_name'))) {
-                Theme::asset()
-                    ->usePath(false)
-                    ->add(
-                        'cookie-consent-css',
-                        asset('vendor/core/plugins/cookie-consent/css/cookie-consent.css'),
-                        [],
-                        [],
-                        '1.0.0'
-                    );
-                Theme::asset()
-                    ->container('footer')
-                    ->usePath(false)
-                    ->add(
-                        'cookie-consent-js',
-                        asset('vendor/core/plugins/cookie-consent/js/cookie-consent.js'),
-                        ['jquery'],
-                        [],
-                        '1.0.0'
-                    );
-            }
+            // Disable cookie consent assets completely
+            // if (!Cookie::has(config('plugins.cookie-consent.general.cookie_name'))) {
+            //     Theme::asset()
+            //         ->usePath(false)
+            //         ->add(
+            //             'cookie-consent-css',
+            //             asset('vendor/core/plugins/cookie-consent/css/cookie-consent.css'),
+            //             [],
+            //             [],
+            //             '1.0.0'
+            //         );
+            //     Theme::asset()
+            //         ->container('footer')
+            //         ->usePath(false)
+            //         ->add(
+            //             'cookie-consent-js',
+            //             asset('vendor/core/plugins/cookie-consent/js/cookie-consent.js'),
+            //             ['jquery'],
+            //             [],
+            //             '1.0.0'
+            //         );
+            // }
 
-            add_filter(THEME_FRONT_FOOTER, [$this, 'registerCookieConsent'], 1346);
+            // Disable cookie consent completely
+            // add_filter(THEME_FRONT_FOOTER, [$this, 'registerCookieConsent'], 1346);
         }
-        */
 
-        // Comment out theme options to hide from admin
-        /*
         theme_option()
             ->setSection([
                 'title' => trans('plugins/cookie-consent::cookie-consent.theme_options.name'),
@@ -208,7 +205,6 @@ class CookieConsentServiceProvider extends ServiceProvider
                     ],
                 ],
             ]);
-        */
     }
 
     /**
@@ -216,10 +212,10 @@ class CookieConsentServiceProvider extends ServiceProvider
      * @return string
      * @throws \Throwable
      */
-    /*
     public function registerCookieConsent($html): string
     {
-        return $html . view('plugins/cookie-consent::index')->render();
+        // Disable cookie consent completely
+        return $html;
+        // return $html . view('plugins/cookie-consent::index')->render();
     }
-    */
 }
