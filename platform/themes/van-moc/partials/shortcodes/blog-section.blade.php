@@ -2,56 +2,46 @@
     $title = $shortcode->title ?? 'BLOG LÀM ĐẸP TỰ NHIÊN';
     $limit = $shortcode->limit ?? 4;
     
-    // Lấy bài viết từ database
-    if (class_exists('Botble\Blog\Models\Post')) {
-        $posts = \Botble\Blog\Models\Post::where('status', 'published')
-            ->with(['slugable', 'categories', 'author'])
-            ->orderBy('created_at', 'desc')
-            ->limit($limit)
-            ->get();
-    } elseif (function_exists('get_recent_posts')) {
-        $posts = get_recent_posts($limit);
-    } else {
-        // Fallback data nếu không có plugin blog
-        $posts = collect([
-            (object)[
-                'name' => 'Chăm sóc da cho anh ấy: Quà tặng chu đáo',
-                'description' => 'Chăm sóc da cho anh ấy: Quà tặng chu đáo. Da nhạy cảm...',
-                'image' => null,
-                'url' => '#',
-                'author' => (object)['name' => 'Vạn Mộc'],
-                'created_at' => now()->subDays(5),
-                'categories' => collect([(object)['name' => 'Chăm sóc']])
-            ],
-            (object)[
-                'name' => 'Quy trình chăm sóc da tối ưu cho làn da nhạy cảm',
-                'description' => 'Da nhạy cảm không phải là điều tồi tệ. Chăm sóc da...',
-                'image' => null,
-                'url' => '#',
-                'author' => (object)['name' => 'Vạn Mộc'],
-                'created_at' => now()->subDays(3),
-                'categories' => collect([(object)['name' => 'Làm đẹp']])
-            ],
-            (object)[
-                'name' => 'Mọi thứ bạn muốn biết về chăm sóc da thời kỳ mãn kinh',
-                'description' => 'Chăm sóc da cho anh ấy: Quà tặng chu đáo...',
-                'image' => null,
-                'url' => '#',
-                'author' => (object)['name' => 'Vạn Mộc'],
-                'created_at' => now()->subDays(1),
-                'categories' => collect([(object)['name' => 'Đời sống']])
-            ],
-            (object)[
-                'name' => 'Hướng dẫn tối ưu về việc làm sạch lớp',
-                'description' => 'Việc sử dụng sữa rửa mặt đúng cách...',
-                'image' => null,
-                'url' => '#',
-                'author' => (object)['name' => 'Vạn Mộc'],
-                'created_at' => now(),
-                'categories' => collect([(object)['name' => 'Review']])
-            ]
-        ]);
-    }
+    // Sử dụng data cứng thay vì database
+    $posts = collect([
+        (object)[
+            'name' => 'Chăm sóc da cho anh ấy: Quà tặng chu đáo',
+            'description' => 'Chăm sóc da cho anh ấy: Quà tặng chu đáo. Da nhạy cảm cần được chăm sóc đặc biệt với các sản phẩm tự nhiên.',
+            'image' => null,
+            'url' => '#',
+            'author' => (object)['name' => 'Vạn Mộc'],
+            'created_at' => now()->subDays(5),
+            'categories' => collect([(object)['name' => 'Chăm sóc']])
+        ],
+        (object)[
+            'name' => 'Quy trình chăm sóc da tối ưu cho làn da nhạy cảm',
+            'description' => 'Da nhạy cảm không phải là điều tồi tệ. Chăm sóc da đúng cách với thảo dược tự nhiên sẽ giúp da khỏe mạnh.',
+            'image' => null,
+            'url' => '#',
+            'author' => (object)['name' => 'Vạn Mộc'],
+            'created_at' => now()->subDays(3),
+            'categories' => collect([(object)['name' => 'Làm đẹp']])
+        ],
+        (object)[
+            'name' => 'Mọi thứ bạn muốn biết về chăm sóc da thời kỳ mãn kinh',
+            'description' => 'Chăm sóc da cho phụ nữ trung niên với các sản phẩm tự nhiên giúp duy trì vẻ đẹp và sự trẻ trung.',
+            'image' => null,
+            'url' => '#',
+            'author' => (object)['name' => 'Vạn Mộc'],
+            'created_at' => now()->subDays(1),
+            'categories' => collect([(object)['name' => 'Đời sống']])
+        ],
+        (object)[
+            'name' => 'Hướng dẫn tối ưu về việc làm sạch da',
+            'description' => 'Việc sử dụng sữa rửa mặt đúng cách với các thành phần tự nhiên sẽ giúp da sạch và khỏe mạnh.',
+            'image' => null,
+            'url' => '#',
+            'author' => (object)['name' => 'Vạn Mộc'],
+            'created_at' => now(),
+            'categories' => collect([(object)['name' => 'Review']])
+        ]
+    ]);
+@endphp
 @endphp
 
 <section class="blog">
@@ -69,21 +59,17 @@
                     <div class="blog-post">
                         <div class="product-image">
                             <div class="blog-tag">{{ $post->categories->first()->name ?? 'Chăm sóc' }}</div>
-                            <!-- @if ($post->image)
-                                <img src="{{ RvMedia::getImageUrl($post->image, 'medium', false, RvMedia::getDefaultImage()) }}" alt="{{ $post->name }}">
-                            @else -->
-                                @if ($loop->index == 0)
-                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/background1.png') }}" alt="{{ $post->name }}">
-                                @elseif ($loop->index == 1)
-                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/frame604.png') }}" alt="{{ $post->name }}">
-                                @elseif ($loop->index == 2)
-                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/background4.png') }}" alt="{{ $post->name }}">
-                                @elseif ($loop->index == 3)
-                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/background5.png') }}" alt="{{ $post->name }}">
-                                @else
-                                    <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/background6.png') }}" alt="{{ $post->name }}">
-                                @endif
-                            <!-- @endif -->
+                            @if ($loop->index == 0)
+                                <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/background1.png') }}" alt="{{ $post->name }}">
+                            @elseif ($loop->index == 1)
+                                <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/frame604.png') }}" alt="{{ $post->name }}">
+                            @elseif ($loop->index == 2)
+                                <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/background4.png') }}" alt="{{ $post->name }}">
+                            @elseif ($loop->index == 3)
+                                <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/background5.png') }}" alt="{{ $post->name }}">
+                            @else
+                                <img src="{{ asset('themes/van-moc/images/VMM_image/VMM_image/background6.png') }}" alt="{{ $post->name }}">
+                            @endif
                         </div>
                         <div class="blog-content">
                             <h3>{{ $post->name }}</h3>
