@@ -14,7 +14,80 @@
         $products = get_featured_products($limit);
     } else {
         // Fallback data nếu không có plugin ecommerce
-        $products = collect([]);
+        $products = collect([
+            (object)[
+                'name' => 'Nước dưỡng tóc tinh dầu bưởi 140ml',
+                'description' => 'GIẢM GÃY RỤNG VÀ LÀM MỀM TÓC',
+                'price' => '179.660₫',
+                'original_price' => null,
+                'image' => null,
+                'url' => '#',
+                'sale_percentage' => null
+            ],
+            (object)[
+                'name' => 'Nước dưỡng tóc tinh dầu bưởi 140ml',
+                'description' => 'GIẢM GÃY RỤNG VÀ LÀM MỀM TÓC',
+                'price' => '279.660₫',
+                'original_price' => null,
+                'image' => null,
+                'url' => '#',
+                'sale_percentage' => null
+            ],
+            (object)[
+                'name' => 'Nước dưỡng tóc tinh dầu bưởi 140ml',
+                'description' => 'GIẢM GÃY RỤNG VÀ LÀM MỀM TÓC',
+                'price' => '279.660₫',
+                'original_price' => null,
+                'image' => null,
+                'url' => '#',
+                'sale_percentage' => null
+            ],
+            (object)[
+                'name' => 'Nước dưỡng tóc tinh dầu bưởi 140ml',
+                'description' => 'GIẢM GÃY RỤNG VÀ LÀM MỀM TÓC',
+                'price' => '279.660₫',
+                'original_price' => null,
+                'image' => null,
+                'url' => '#',
+                'sale_percentage' => '10% OFF'
+            ],
+            (object)[
+                'name' => 'Dầu gội kích thích mọc tóc thảo dược',
+                'description' => 'GIẢM GÃY RỤNG - KÍCH THÍCH MỌ...',
+                'price' => '162.000₫',
+                'original_price' => '279.660₫',
+                'image' => null,
+                'url' => '#',
+                'sale_percentage' => 'Giảm 40%'
+            ],
+            (object)[
+                'name' => 'Sữa hạt cao cấp Forganic',
+                'description' => 'DA DƯỠNG CHẤT - TĂNG ĐỀ KHÁNG',
+                'price' => '683.000₫',
+                'original_price' => null,
+                'image' => null,
+                'url' => '#',
+                'sale_percentage' => null
+            ],
+            (object)[
+                'name' => 'Tắm & gội trẻ em Mộc Hương tinh dầu',
+                'description' => 'AN TOÀN CHO BÉ - DỊU NHẸ',
+                'price' => '162.000₫',
+                'original_price' => '279.660₫',
+                'image' => null,
+                'url' => '#',
+                'sale_percentage' => 'Giảm 40%'
+            ],
+            (object)[
+                'name' => 'Sữa tắm tinh dầu thảo dược Mộc Hương',
+                'description' => 'THƯ GIÃN - LÀM SẠCH DA',
+                'price' => '284.000₫',
+                'original_price' => null,
+                'image' => null,
+                'url' => '#',
+                'sale_percentage' => null
+            ]
+        ]);
     }
 @endphp
 
@@ -37,12 +110,20 @@
                             data-id="{{ $product->id }}"
                             data-name="{{ e($product->name) }}"
                             data-price="{{ is_numeric($product->price) ? $product->price : preg_replace('/[^0-9]/', '', $product->price) }}"
-                            data-image="{{ RvMedia::getImageUrl($product->image, 'medium', false, RvMedia::getDefaultImage()) }}"
+                            data-image="@if (isset($product->image) && $product->image){{ RvMedia::getImageUrl($product->image) }}@elseif (method_exists($product, 'getImageAttribute') && $product->getImageAttribute()){{ RvMedia::getImageUrl($product->getImageAttribute()) }}@elseif (isset($product->thumbnail) && $product->thumbnail){{ RvMedia::getImageUrl($product->thumbnail) }}@else{{ RvMedia::getDefaultImage() }}@endif"
                         @endif
                     >
                         <div class="product-image">
                             <a href="{{ $product->url }}">
-                                <img src="{{ RvMedia::getImageUrl($product->image, 'medium', false, RvMedia::getDefaultImage()) }}" alt="{{ $product->name }}">
+                                @if (isset($product->image) && $product->image)
+                                    <img src="{{ RvMedia::getImageUrl($product->image) }}" alt="{{ $product->name }}">
+                                @elseif (method_exists($product, 'getImageAttribute') && $product->getImageAttribute())
+                                    <img src="{{ RvMedia::getImageUrl($product->getImageAttribute()) }}" alt="{{ $product->name }}">
+                                @elseif (isset($product->thumbnail) && $product->thumbnail)
+                                    <img src="{{ RvMedia::getImageUrl($product->thumbnail) }}" alt="{{ $product->name }}">
+                                @else
+                                    <img src="{{ RvMedia::getDefaultImage() }}" alt="{{ $product->name }}">
+                                @endif
                             </a>
                             @if (isset($product->sale_percentage) && $product->sale_percentage)
                                 <div class="sale-badge">{{ $product->sale_percentage }}</div>
