@@ -42,7 +42,6 @@
         ]
     ]);
 @endphp
-@endphp
 
 <section class="blog">
     <div class="container">
