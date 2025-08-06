@@ -14,6 +14,7 @@ return [
     'short_code_home_name' => 'Homepage Blog Posts',
     'short_code_home_description' => 'Homepage Blog Posts Description',
     'number_posts_in_home' => 'Number of posts in homepage',
+    'recent_posts' => 'Bài viết gần đây',
     'settings' => [
         'title' => 'Blog',
         'description' => 'Settings for Blog',

@@ -350,13 +350,13 @@ header nav ul .sub-menu .sub-menu {
 }
 
 .logo img, .footer-logo {
-    height: 60px;
-    width: 60px;
-    object-fit: cover;
+    height: 120px;
+    width: 120px;
+    /* object-fit: cover; */
     border-radius: 50%;
-    background-color: #FFFFFF;
-    filter: brightness(1);
-    border: 2px solid #f0f0f0;
+    /* background-color: #FFFFFF; */
+    /* filter: brightness(1); */
+    /* border: 2px solid #f0f0f0; */
 }
 
 .logo img {
@@ -1026,7 +1026,7 @@ header nav ul .sub-menu .sub-menu {
 .philosophy-content .btn {
     background: transparent;
     color: white;
-    border: 2px solid white;
+    border: 1px solid white;
     padding: 10px 25px;
     border-radius: 6px;
     text-decoration: none;
@@ -1131,7 +1131,7 @@ header nav ul .sub-menu .sub-menu {
 }
 
 .vision-content p, .mission-content p {
-    font-size: 14px;
+    /*font-size: 14px;*/
     line-height: 1.6;
     color: white;
 }
@@ -1570,7 +1570,7 @@ footer .container {
 }
 
 @media (max-width: 992px) {
-    header .container { flex-direction: row; flex-wrap: wrap; justify-content: space-between; height: auto; padding: 20px; }
+    header .container { flex-direction: row; flex-wrap: wrap; justify-content: space-between; height: auto; padding: 6px 14px 0; }
     .main-nav { display: none; width: 100%; text-align: center; padding-top: 20px; }
     .main-nav.active { display: block; }
     header nav ul { flex-direction: column; gap: 20px; }
@@ -1626,7 +1626,7 @@ footer .container {
     .philosophy-box,
     .vision-content,
     .mission-content {
-        height: 200px;
+        /* height: 200px; */
         padding: 20px;
     }
     
@@ -1723,8 +1723,8 @@ footer .container {
     .philosophy-box,
     .vision-content,
     .mission-content {
-        height: 180px;
-        padding: 15px;
+        /* height: 280px; */
+        padding: 60px 20px;
     }
     
     .philosophy-content h3 {
@@ -1733,9 +1733,9 @@ footer .container {
     }
     
     .philosophy-content p {
-        font-size: 12px;
-        margin-bottom: 12px;
-        line-height: 1.5;
+        font-size: 14px;
+        margin-bottom: 18px;
+        line-height: 1.8;
     }
     
     .vision-content h4,
@@ -1746,13 +1746,13 @@ footer .container {
     
     .vision-content p,
     .mission-content p {
-        font-size: 11px;
-        line-height: 1.4;
+        font-size: 14px;
+        line-height: 1.8;
     }
     
     .philosophy-content .btn {
         padding: 8px 16px;
-        font-size: 12px;
+        font-size: 14px;
     }
 }
 

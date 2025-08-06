@@ -94,7 +94,7 @@ class HookServiceProvider extends ServiceProvider
                         })->toArray();
                     }
 
-                    $social = @json_decode(theme_option('social_links'));
+                    $social = [];
                     $socialLinks = [];
                     foreach ($social as $item) {
                         $link = $item[3]->value ?? '';

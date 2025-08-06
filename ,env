@@ -1,0 +1,42 @@
+PP_NAME="Van Moc"
+# Disable debug mode by changing APP_DEBUG=false when your site is ready for live.
+APP_DEBUG=false
+APP_ENV=local
+# Must to change APP_URL to your website URL. Example: APP_URL=http://your-domain.com
+APP_URL=hthttp://127.0.0.1:8000/
+APP_KEY=base64:NiKOSMkqo6KCBS3MqxK7M+6JHYEIepiMTkOt1ae8nm8=
+LOG_CHANNEL=daily
+
+BROADCAST_DRIVER=log
+CACHE_DRIVER=file
+QUEUE_CONNECTION=sync
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+
+REDIS_CLIENT=predis
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+QUEUE_DRIVER=database
+
+# Change to your database credentials
+DB_CONNECTION=mysql
+# If you use Laravel Sail, just change DB_HOST to DB_HOST=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE="vmm_vanmoc"
+DB_USERNAME="vmm_root"
+DB_PASSWORD="abc123"
+DB_STRICT=false
+
+# You should change this value to hide your admin URL (DON'T use special characters). Example: ADMIN_DIR=hello-admin then your admin URL will be
+# http://your-domain.com/hello-admin
+ADMIN_DIR=admin
+
+BLOG_USE_LANGUAGE_VERSION_2=true
+PAGE_USE_LANGUAGE_VERSION_2=true
+BLOCK_USE_LANGUAGE_VERSION_2=true
+GALLERY_USE_LANGUAGE_VERSION_2=true
+CMS_ENABLE_MARKETPLACE_FEATURE=true
+
